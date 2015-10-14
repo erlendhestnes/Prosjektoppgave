@@ -1,0 +1,26 @@
+%This is chapter 2
+%%=========================================
+\chapter[Equations, etc]{Equations, Figures, and Tables}
+%The content of this chapter will vary with the topic of your thesis. 
+%\begin{remark}
+%If you want a shorter chapter or section title to appear in the Table of Contents and in the headings of the chapter, you just include the short title in square brackets before the title of the chapter/section.
+%\end{remark}
+
+%%=========================================
+\section{Simple Equations}
+This is how a simple equation is included:
+\begin{equation}
+F(t)=\int_0^t \exp(-\lambda x)\,dx
+\label{eq1}
+\end{equation}
+
+The equations are automatically given equation numbers -- here (\ref{eq1}) since this is the first equation in Chapter 2. Note that you can refer to the equation by referring to the ``label'' you specified as part of the equation environment.
+
+You can also include equations without numbers:
+\begin{equation*}
+F(t)=\sum_{i=1}^n \binom{n}{i}\sin(i\cdot t)
+\end{equation*}
+
+
+
+

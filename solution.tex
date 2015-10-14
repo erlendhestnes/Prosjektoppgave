@@ -1,0 +1,113 @@
+\chapter{Project}
+
+\section{Solution}
+
+\subsection{Choosing An Accelerometer}
+
+\begin{itemize}
+  \item Which sensor has the lowest sleep current
+  \item Which sensor is best suited for low-power operation
+\end{itemize}
+
+When selecting an accelerometer for an ultra-low power application, it is important to look at the ...
+
+In almost any accelerometer application, the accelerometer will do nothing most of the time. From a power perspective, it is therefore most important to choose the accelerometer the lowest sleep current. However, we also want the accelerometer take measurements when movement is detected. It is therefore quite common for accelerometers to incorporate a wake-up mode. In this scheme the accelerometer use a very low measurement rate to listen for any motion above a certain threshold. When the threshold is breached, the sensors is able to change state into something 
+
+What we really want is to have an accelerometer that is able to take measurements only when there is movement.  
+
+So in essence we want the accelerometer to consume as little power as possible while doing nothing
+
+and it is therefore very important to have and accelerometer with a low sleep current.
+
+From the comparison in Table \ref{tab:accel_comparison}
+
+\subsection{nRF51822}
+
+The nRF51822 is a Cortex-M0+ based System-on-Chip (SoC) from Nordic Semiconductor. The company is world leading in creating Bluetooth Low Energy solutions. This SoC was chosen mainly because of its advanced power saving features. 
+
+\begin{center}
+    \begin{tabular}{| l |}
+    \hline
+    6.3mA - TX at -4dBm (3V using on-chip DC-DC) \\ \hline
+    8.0mA - TX at 0dBm (3V using on-chip DC-DC) \\ \hline
+    11.8mA – TX at +4dBm (3V using on-chip DC-DC) \\ \hline
+    9.7mA – RX (3V using on-chip DC-DC) \\ \hline
+    13mA – RX at 1Mbps (No DC-DC) \\ \hline
+    10.5mA – TX at 0dBm (No DC-DC) \\ \hline
+    0.6µA – SYSTEM-OFF, no RAM retention \\ \hline
+    1.2µA - SYSTEM-OFF, 8KB RAM retention \\ \hline
+    2.6µA - SYSTEM-ON, All peripherals in idle mode \\ \hline
+    \end{tabular}
+\end{center}
+
+The nRF51822 features something the company calls Programmable Peripheral Interconnect (PPI). The PPI enables different peripherals in the device to interact autonomously with each other using tasks and events without use of the CPU. The PPI can automatically trigger a task in one peripheral as a result of an event occurring in another. For instance, an interrupt from an external device (i.e. accelerometer) can trigger the SPI module to initiate a block transfer to memory. The DMA in the nRF51822 is also able to move data autonomously between peripherals, so in turn one should be able to make a sensor data acquisition system that is able to collect accelerometer data and send it over radio without using the CPU.
+
+\subsection{DMA - Direct Memory Access}
+
+A DMA controller is a peripheral device that can be configured to move data from one location in memory to another. Usually, one i is also able to transfer from (and to) a serial peripheral such as SPI, I2C or UART. This makes it possible to do certain operations without any CPU intervention. This is very beneficial, since the DMA controller uses a lot less power than the CPU core. It is therefore an important power saving technique in modern embedded systems.  
+
+\subsection{Event system}
+
+Most modern microcontrollers are featuring a so-called event system for autonomous operation...
+
+\section{Power Estimation}
+
+The planned example will utilize the EasyDMA, Programmable Peripheral Interconnect (PPI) and SPI module on the nRF51822. The CPU should only be used for configuration of the system, and will be sleeping during data collection. The ADXL362 is configured to wake up when a motion is detectet, and then collect samples autonomously into its embedded FIFO. When the FIFO is full, the ADXL362 will send an interrupt to nRF51822. The PPI is configured to listen to for this interrupt, and to trigger a SPI block transfer when it is detected. As data is being transferred to the SPI module, the DMA shuffles data into the radio module. This entire operation is possible without any CPU intervention.
+
+\section{Possible IoT Application}
+
+This section discusses some possible IoT applications for ultra-low power accelerometers. 
+
+\subsection{Vibration Detection}
+
+For some construction applications it can be very beneficial to be able to monitor the vibrations inside the structure itself. Ultra low power sensors can for instance be submersed inside concrete walls and transmit during the entire life-span of the building. From this application one can really see the problem with changing batteries. As one would literally need to tear down the wall to change batteries. 
+
+\subsection{Motion Detection}
+
+Motion Sensing is something that is being widely used in electronic devices today. It is for example being used as control input for certain smart phone applications.
+
+\subsection{Health Monitoring}
+
+%%=========================================
+
+\section{Background}
+%In this section, you should present the problem that you are going to investigate or analyze; why this problem is of interest; what has, so far, been done to solve the problem, and which parts of the problem that remain.
+%%=========================================
+\subsection*{Problem Formulation}
+
+Modern embedded system features a lot of power saving techniques. The problem of this thesis evolves around using all of these techniques to acquire data from a ultra low power MEMS accelerometer with the lowest possible power consumption. Then use the results to conduct a feasibility study of which IoT application the solution will be best suited for.
+
+\subsection*{Literature Survey}
+%You should here present the main books and articles that treat problems that are similar to what  you are studying. If you,  later in your thesis, describe the ``state of the art'' -- with a detailed literature survey, you may just give a very brief survey here (approx. a quarter of a page). If this is the only literature survey, you need to go into more details. An objective of the literature survey is to show the reader that you are familiar with the main literature within your field of research -- so that you do not ``reinvent the wheel.''
+
+%%=========================================
+\subsection*{What Remains to be Done?}
+%After you have defined and delimited your problem -- and presented the relevant results found in the literature within this field, you should sum up which parts of the problem that remain to be solved.
+%%=========================================
+\section{Objectives}
+
+%The main objectives of this Master's project are
+%\begin{enumerate}
+%\item This is the first objective
+%\item This is the second objective
+%\item This is the third objective
+%\item More objectives
+%\end{enumerate}
+
+%All objectives shall be stated such that we, after having read the thesis, can see whether or not you have met the objective. ``To become familiar with \ldots'' is therefore not a suitable objective.
+
+%%=========================================
+\section{Limitations}
+%In this section you describe the limitations of your study. These may be related to the study object (physical limitations, operational limitations), to the thoroughness of the analysis, and so on.
+%%=========================================
+\section{Approach}
+%Here you should describe the (scientific) approach that you will use to solve the problem and meet your objectives. You should specify the approach for each objective.
+
+%If there are any ethical problems related to your approach, these should be highlighted and discussed.
+%%=========================================
+\section{Structure of the Report}
+%The rest of the report is structured as follows. Chapter 2 gives an introduction to \ldots
+
+\begin{remark}
+%Notice that chapter and section headings shall be written in lowercase, but that all main words should start with a capital letter.
+\end{remark}

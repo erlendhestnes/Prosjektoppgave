@@ -1,0 +1,117 @@
+\chapter{Background Theory}
+
+This section presents some necessary background knowledge about accelerometers, Microelectromechanical Systems (MEMS) and common low-power techniques.  
+
+\section{Low Power Design}
+
+\begin{itemize}
+  \item Dynamic switching currents
+  \item Charging and discharging capacitors
+  \item Leakage currents
+  \item Static currents
+  \item $P=IV^2$
+\end{itemize}
+
+\section{Accelerometers - Working principle} \label{sec:accel_working_principle}
+
+The working principle of an accelerometer can be viewed as a simple mechanical system, as illustrated in Figure \ref{fig:accel_working_principle}. A proof mass $m$ is connected to a frame by a flexible spring $k$. When an acceleration is imposed along the x-axis, the proof mass will begin to move. Due to Newton's law of inertia, the motion of the proof mass will lag the frame motion. This will cause an oscillation of the proof mass inside the frame. From this oscillation alone, it is possible to get the acceleration. However, to prevent excessive oscillation, the mass vibrations are usually damped by introducing a dampening material (such as gas or liquid) inside the package. This is represented by a dashpot $\gamma$ in Figure \ref{fig:accel_working_principle}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{fig/accelerometer_working_principle.png}
+\caption{Working principle of an accelerometer \cite[~p.34]{kaajakari09}}
+\label{fig:accel_working_principle}
+\end{figure}
+
+\subsubsection{Mechanical noise in accelerometers}
+
+The noise in an accelerometer is usually specified by the noise spectral density, given by Equation \ref{eq:noise_spectral_density}. If we analyse this equation more closely, we see that the thermal noise energy $k_b T$ is a constant irrespective of the system size \cite[~p.13]{kaajakari09}. This means that thermal noise induced in mechanical vibrations sets the lower limit for the measurable acceleration \cite[~p.41]{kaajakari09}. One can also see from Equation \ref{eq:noise_spectral_density} that increasing the mass $m$ and reducing the resonant frequency $\omega_0$ reduces the overall noise. The $Q$ factor or quality factor is a dimensionless parameter that describes how under-damped an oscillator or resonator is \cite{resonance}. Again, we can see from Equation \ref{eq:noise_spectral_density} that increasing it helps reducing the overall noise.
+
+\begin{equation}
+\bar{\ddot{X_n}} = \sqrt{\frac{4 k_b T \omega_0}{mQ}}
+\label{eq:noise_spectral_density}
+\end{equation}
+
+\section{Microelectromechanical Systems (MEMS)}
+
+Microelectromechanical Systems (MEMS) are embedded systems involving one or many micromachined components or structures\cite[p.~3]{maluf04}. The technique is used for a vast number of applications ranging from accelerometer and gyroscopes to fluid nozzles on a inkjet printer.
+
+Other definition: "Microelectromechanical systems is a loosely defined term for manmade mechanical components that are characterized by small size. Translated literally, MEMS should have dimensions in the micron-scale and have both electrical and mechanical components that form a system. "
+
+\subsection{MEMS Accelerometers}
+
+The basic working principles of an accelerometer, described in section \ref{sec:accel_working_principle}, also applies for all types of MEMS accelerometers. The different MEMS accelerometers do however differ in the way that they sense the displacement of the inertial mass. One of the most common methods involve sensing the change in capacitance when the inertial mass is displaced, then converting it into an amplified output voltage. Another method involves sensing the internal stress in the spring by using piezoresistors. One also see solutions were the spring is replaced with a piezoelectric element, providing a voltage in direct proportion to the displacement itself.
+
+The first micromachined accelerometer was demonstrated at Stanford University in 1979. However, it took nearly 15 years for the technology to become accepted into mainstream products \cite[p.~8]{maluf04}. The automotive industry has undoubtedly been a big contributor for the technology, as accelerometers has an apparent application in detecting crashes for airbag deployment systems. MEMS accelerometers has in recent years also found its way into other applications, such as smart phones, quad-copters and game controllers. 
+
+\subsection{MEMS Processing Techniques}
+
+\subsubsection{Surface Micromachining}
+
+Surface micromachining is based on patterning deposited thin film materials on top of a substrate wafer \cite[p.~5]{kaajakari09}. The production technique first appeared in the 1980s, and was primarily used as a low cost alternative to accelerometers for the automotive industry \cite[p.~101]{maluf04}. However, recent improvements in the production technique has made it possible to use the technique for other sensors such as pressure, gyroscopes and microphones. 
+
+The surface micromachining process bear a close resemblance to the traditional integrated circuit (IC) manufacturing process, which is also based on processing thin films on a silicon wafer. In fact, they are so close that retired IC manufacturing plants often are converted into a MEMS fabrication plant, as MEMS does not require the latest in fabrication technology \cite[p.~4]{kaajakari09}. The similarities between IC manufacturing and surface micromachinined MEMS has several advantages. It is for instance relatively easy to integrate MEMS architectures together with IC to make a single-chip solution, which often leads to better performance and reduced packing-cost. 
+
+\subsubsection{Surface Micromachined Accelerometers}
+
+Surface micromachined accelerometers incorporates a comb-like structure, as depicted in Figure \ref{fig:surface_micromachined}. The primary axis is located in the plane of the die, and is often referred to as an x-axis or y-axis. Two sets of electrodes are anchored down in the substrate. These two electrodes are interlaced with a third set connected to the inertial mass. This mass is being suspended over the surface by means of two long beams, acting as a suspension spring. Thereby, it is free to move about as acceleration is applied along the primary axis. When the inertial mass is displaced due to an acceleration, it is causing the capacitance to change between the fingers of the comb-like structure. The change in capacitance is typically very small, in the order of 100 $\si{\femto\farad}$. To mitigate this problem, several sensing fingers are often combined in parallel to increase the overall capacitance.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.3]{fig/surface_micromachined.png}
+\caption{Illustration of surface micromachined accelerometer from Analog Devices ADXL family. \cite[p.~101]{maluf04}}
+\label{fig:surface_micromachined}
+\end{figure}
+
+\subsubsection{Bulk Micromachining}
+
+Bulk micromachining defines structures by selectively etching the substrate \cite[p.~7]{kaajakari09}. This makes it possible to etch much thicker structures when being compared to the surface micromachining process. A typical thickness of bulk micromachined structure is between 500$\si{\micro\meter}$-700$\si{\micro\meter}$, which is about a 100 times the typical thickness of a surface micromachined structure \cite[p.~7]{kaajakari09}. A thicker structure means more mass, which is very beneficial in terms of reducing the noise, which can be seen from Equation \ref{eq:noise_spectral_density}. Bulk micromachined structures can also be made of a single-crystal silicon as opposed to thin film materials in surface micromachined structures. This is very beneficial, since these materials are very predictable and stable. Bulk micromachined accelerometers either use piezoresistive elements or capacative sensing to detect the displacement of the inertial mass.
+
+Pressure sensors and accelerometers were the first commercial products that utilized the bulk micromachining technique. These devices have been very successful, as 90\% of all sold pressure sensors utilize this technique \cite[p.~7]{kaajakari09}. 
+
+[need to check this, I have read mixed arguments about this]The process is however more complicated and expensive than surface micromachining, and has therefore lost market shares in the recent years.
+
+\subsubsection{Piezoresistive Bulk Micromachining Accelerometer}
+
+Electrical resistance changes due to mechanical stress. This effect occurs in all materials and it is called the piezoresistive effect \cite[p.~73]{kaajakari09}. For an accelerometer of this type, piezoresistive springs are used to sense the displacement of the inertial mass. In general, the sensing technique offers two advantages. The resistance measurement circuitry is very simple to implement compared to that of capacitive sensors. The second is that piezoresistors are inherently shielded structures, so no hermetic packaging is required. However, piezoresistive sensing suffers from noise, as the elements themselves has a large temperature dependency, and they also consumes a significant amount of power. Because of this, sensors with this sensing technique has lost market share to capacitive sensors.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.3]{fig/piezoresistive.png}
+\caption{Illustration of piezoresistive accelerometer from Endevco Corp. \cite[p.~98]{maluf04}}
+\label{fig:piezoresistive_accel}
+\end{figure}
+
+\subsubsection{Capacitive Bulk Micromachining Accelerometer}
+
+Measures the differential change in capacitance when the inertial mass is displaced. Capacitive sensors provides an excellent noise performance and low power consumption \cite[p.~91]{kaajakari09}. One of the main challenges with capacitive sensors is to accurately measure the change in capacitance, as these changes themselves are extremely small.  
+
+[need to write more here]
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.3]{fig/bulk_micromachined.png}
+\caption{Illustration of capacative bulk micromachined accelerometer. \cite[p.~100]{maluf04}}
+\label{fig:bulk_micromachined}
+\end{figure}
+
+\subsection{MEMS Accelerometer Parameters}
+
+\subsubsection{Accelerometer Interface}
+
+Primarily one differentiates between two interface types when it comes to accelerometers, analog and digital. Analog accelerometers have an output that is a continuous voltage proportional to the acceleration. An analog accelerometer is therefore best suited for a completely analog circuit. An analog to digital converter (ADC) is a required peripheral for a microcontroller to make use of such a sensor.
+
+Digital accelerometers typically use a serial communication interface like SPI or I2C for data transfer. They are therefore much better suited for a digital circuit, as most of today's microcontrollers usually features one or both of these serial interfaces.  
+
+\subsubsection{Number of axes}
+MEMS Accelerometers are able to measure acceleration along either one, two or three axes (x,y and z). Two axes (x and y) are usually sufficient for most applications, and are therefore the most common type. 3-axis accelerometers are however becoming more and more popular. Mainly because three axes are very useful for applications such as quad-copters, smart phones and game controllers.
+
+\subsubsection{Swing level/Measurement range/Resolution}
+Measurement range, sometimes called swing level or resolution, is defined as the level of acceleration that is supported by the sensor’s output signal specifications. This level is listed as a number $n$ times the earth’s gravity (i.e. $\pm$1g , $\pm$2g etc.). This number is an upper limit for the accurate measurement range of the part. For example, if the part is rated with a measurement range of $\pm$3g, it means that the part can measure the acceleration accurately up to an acceleration of $\pm$3g.  If the part is accelerated above this limit, the output might rail or be distorted at the output.
+
+\subsubsection{Sensitivity}
+The sensitivity is defined as the sensor's ratio of change in mechanical input to change in electrical output. Ideally, the ratio between the acceleration and the sensor output should be linear. In practice, all MEMS accelerometers suffers from non-linearity due to mechanical stresses and circuit temperature coefficients  \cite{analog_accel_guide}. For digital accelerometers, the sensitivity is usually specified at a specific voltage as units of mg/LSB. For example, if an accelerometer has a rating of 1mg/LSB, it means that when the lowest order bit in the output changes, the acceleration has changed by 0.001 g's (1mg).
+
+\subsubsection{Bandwidth}
+
+Output data rate (ODR) defines the data sample rate for digital accelerometers. The bandwidth is defined as the highest frequency signal that can be sampled without any aliasing by the specified ODR. As specified by the Nyquist criterion, the bandwidth is half the output data rate. 
