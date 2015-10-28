@@ -17,17 +17,19 @@ The accelerometers presented in Table \ref{tab:accel_comparison} represent the m
     
     Standby current & 10$\si{\nano\ampere}$ ,$V_s = 2.0 V$ & 1.8$\si{\nano\ampere}$ ,$V_s = 2.8 V$ & 400$\si{\nano\ampere}$ ,$V_s = 1.8 V$ & 500$\si{\nano\ampere}$ ,$V_s = 2.5 V$ & 900$\si{\nano\ampere}$ ,$V_s = 2.5 V$ \\ \hline
     
-    ODR current & 1.8$\si{\micro\ampere}$ / 13$\si{\micro\ampere}$ \footnote[2] & 40$\si{\micro\ampere}$ \footnote[1] & 4.7$\si{\micro\ampere}$ / 14$\si{\micro\ampere}$, (FIFO On) \footnote[4] & 11$\si{\micro\ampere}$ / 6$\si{\micro\ampere}$ \footnote[3] & 10$\si{\micro\ampere}$ / 145$\si{\micro\ampere}$ \\
+    Max ODR & 400Hz & 800Hz & 400Hz & 1.25/5kHz \footnote[3] & 25.6kHz \\ \hline
     
-    & $V_s = 2.0 V$, 100Hz ODR & $V_s = 2.8 V$, 100Hz ODR & 3.2$\si{\micro\ampere}$ / 8.4$\si{\micro\ampere}$, (FIFO Off) \footnote[4] & $V_s = 2.5 V$, 50Hz ODR  & $V_s = 2.5 V$, 50Hz ODR \\
+    ODR current & 1.8$\si{\micro\ampere}$ / 13$\si{\micro\ampere}$ \footnote[2] & 40$\si{\micro\ampere}$ \footnote[1] & 4.7$\si{\micro\ampere}$ / 14$\si{\micro\ampere}$, (FIFO On) \footnote[4] & 20$\si{\micro\ampere}$ / 10$\si{\micro\ampere}$ \footnote[3] & 21$\si{\micro\ampere}$ \\
+    
+    & $V_s = 2.0 V$, 100Hz ODR & $V_s = 2.8 V$, 100Hz ODR & 3.2$\si{\micro\ampere}$ / 8.4$\si{\micro\ampere}$, (FIFO Off) \footnote[4] & $V_s = 2.5 V$, 100Hz ODR  & $V_s = 2.5 V$, 100Hz ODR \\
     
     & & & $V_s = 1.8 V$, 50Hz ODR & &  \\ \hline
     
-    Sensitivity & 1mg/LSB (@ $\pm$2g) & 1mg/LSB (@ $\pm$1-8g) & - & 1mg/LSB (@ $\pm$2g) & - \\ \hline
+    Sensitivity & 1mg/LSB (@ $\pm$2g) & 1mg/LSB (@ $\pm$1-8g) & - & 1mg/LSB (@ $\pm$2g) & 16mg/LSB (@ $\pm$2g)\\ \hline
 
-    Spectral Noise (X,Y) & 550$\si{\micro}$g/$\sqrt{Hz}$ / 250$\si{\micro}$g/$\sqrt{Hz}$ \footnote[2] & - & 280$\si{\micro}$g/$\sqrt{Hz}$ & 220ug/$\sqrt{Hz}$ / N.A. \footnote[3] & - \\ 
+    Spectral Noise (X,Y) & 550$\si{\micro}$g/$\sqrt{Hz}$ / 250$\si{\micro}$g/$\sqrt{Hz}$ \footnote[2] & 1626ug/$\sqrt{Hz}$ \footnote[6] & 280$\si{\micro}$g/$\sqrt{Hz}$ & 220ug/$\sqrt{Hz}$ / N.A. \footnote[3] & \\ 
     
-    & $V_s = 2.0 V$,100Hz ODR & - & $V_s = 1.8 V$,50Hz ODR & $V_s = 2.5 V$,100Hz ODR & $V_s = 2.5 V$,50Hz ODR \\ \hline
+    & $V_s = 2.0 V$,100Hz ODR & $V_s = 2.8 V$,100Hz ODR & $V_s = 1.8 V$,50Hz ODR & $V_s = 2.5 V$,100Hz ODR & $V_s = 2.5 V$,50Hz ODR \\ \hline
     
     Digital Resolution & 12-bit & 14-bit & 14-bit & 16-bit & 16-bit \\ \hline
     
@@ -39,7 +41,7 @@ The accelerometers presented in Table \ref{tab:accel_comparison} represent the m
     
     & 270nA Motion detect mode  & 3x Interrupt pins  & 600nA Motion detect mode & Motion detect, free fall & Motion and tap detect   \\
     
-    & 2x Interrupt pins  &  & 1x Interrupt pin & 2x Interrupt pins & 2x Interrupt pins \\
+    & 2x Interrupt pins  & Automatic power-saving & 1x Interrupt pin & 2x Interrupt pins & 2x Interrupt pins \\
     
     & Temperature Sensor  &  &  & Temperature Sensor &  \\ \hline
     
@@ -55,11 +57,11 @@ The accelerometers presented in Table \ref{tab:accel_comparison} represent the m
 \footnotetext[3]{Normal mode/Low power mode}
 \footnotetext[4]{Low power mode/Precision mode}
 \footnotetext[5]{Low power mode/High resolution mode}
-
+\footnotetext[6]{$PSD = Nrms / BW$}
 
 \subsection{ADXL362}
 
-The ADXL362 from Analog Devices is currently the lowest power accelerometer in the industry \cite{analog12}. At a supply voltage of $V_s = 2.0 V$ it uses only 10nA in standby mode and 1.8$\si{\micro\ampere}$ at a ODR of 100Hz. It also has a lot of power-saving features, such as 270nA wake-up mode, two interrupt pins and a deep embedded FIFO that can hold 512 samples. The FIFO enables the accelerometer to autonomously collect samples for an extended period of time, without involving the host controller. 
+The ADXL362 from Analog Devices is currently the lowest power accelerometer in the industry, according to \cite{analog12}. At a supply voltage of $V_s = 2.0 V$ it uses only 10nA in standby mode and 1.8$\si{\micro\ampere}$ at a ODR of 100Hz. It also has a lot of power-saving features, such as 270nA wake-up mode, two interrupt pins and a deep embedded FIFO that can hold 512 samples. The FIFO enables the accelerometer to autonomously collect samples for an extended period of time, without involving the host controller. 
 The ADXL362 has a SPI interface which can handle a bus clock frequency of 8 MHz. This makes it possible for the host controller to acquire data at a very short amount of time, which is also an important aspect in a low-power design.
 
 However, as seen from Table \ref{tab:accel_comparison} this ultra low power consumption comes at cost. Of all of the compared accelerometers, the ADXL362 has the worst spectral noise density, the lowest resolution and the smallest measurement range. That being said, the ADXL362 also features a ultralow noise mode. This mode uses almost ten times more current, but halves the spectral noise, making the accelerometer on pair with it's competitors. Even more interestingly is that even with this ultralow noise mode enabled, the ADXL362 still has the lowest current draw for a 100Hz ODR. The ODR current was only specified at 50Hz ODR for the MC3610, LIS3DH and KX123, but one can assume that current would be around twice that of the 50Hz ODR.
@@ -69,7 +71,7 @@ mCube is a relatively new and small MEMS company in this comparison. Yet, they h
 
 \subsection{LIS3DH}
 
-The LIS3DH from STMicroelectronics is without doubt the most feature rich accelerometer in this comparison. The accelerometer features motion and free fall detection, two programmable interrupt pins, an integrated temperature sensor and an embedded FIFO. It also has something STMicroelectronics calls 4D/6D orientation detection, which essentially enables the accelerometer to generate an interrupt when the device is stable in a know direction. The LIS3DH also has the highest digital resolution and the best spectral noise density. The current consumption in sampling mode is competitive with the ADXL362. However, ST does not provide any numbers on the noise spectral density for the low power mode. They only state that the noise will increase when this mode is entered. The standby current is also relatively high when compared to the ADXL362 and the MMA8491QR1. 
+The LIS3DH from STMicroelectronics is without doubt the most feature rich accelerometer in this comparison. The accelerometer features motion and free fall detection, two programmable interrupt pins, an integrated temperature sensor and an embedded FIFO. The FIFO is able to hold 32 samples, but only at resolution of 10-bits. The LIS3DH also has something STMicroelectronics calls 4D/6D orientation detection, which essentially enables the accelerometer to generate an interrupt when the device is stable in a know direction. The LIS3DH also has the highest digital resolution of 16-bit and the best spectral noise density. The current consumption in sampling mode is competitive with the ADXL362. However, ST does not provide any numbers on the noise spectral density for the low power mode. They only state that the noise will increase when this mode is entered. The standby current is also relatively high when compared to the ADXL362 and the MMA8491QR1. 
 
 \subsection{KX123}
 

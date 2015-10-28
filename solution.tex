@@ -1,29 +1,41 @@
-\chapter{Project}
+\chapter{Discussion}
 
-\section{Solution}
+This chapter presents a discussion around choosing an accelerometer for an ultra-low power application.
 
-\subsection{Choosing An Accelerometer}
+\section{Choosing An Accelerometer}
 
-\begin{itemize}
-  \item Which sensor has the lowest sleep current
-  \item Which sensor is best suited for low-power operation
-\end{itemize}
+In almost any accelerometer based application, the accelerometer will do nothing 99\% of the time. From a power perspective, it is therefore most important to choose an accelerometer with a low sleep current. However, we still want the accelerometer to take measurements when movement is detected. It is therefore quite common for accelerometers to incorporate a low power wake-up mode. In this scheme the accelerometer use a very low measurement rate to listen for any motion above a certain threshold. When the threshold is breached, the sensors can enter normal operation and begin to sample at a much higher rate. From the comparison in Table \ref{tab:accel_comparison} we see that the ADXL362 from Analog Devices feature a motion detect mode which only consumes 270nA. In this mode the accelerometer samples at a rate of 6 Hz \cite{adxl362}, which should be more than enough to sense that an object is being moved. The threshold value can be specified in a dedicated register. When the specified threshold is breached, the accelerometer is able to respond autonomously by either entering full bandwidth measurement mode or by generating an interrupt. The ADXL362 also features an embedded FIFO that can hold 512 full resolution samples, which enables the accelerometer to autonomously collect samples without needing a poll request from the MCU. This is very beneficial, since it is often the MCU that consumes most power. The FIFO is also available in wake-up mode, which makes it possible to read out collected samples prior to the threshold breach. Some downsides with the ADXL362 is the relatively low output data rate, digital resolution of only 12-bits, as well as a relatively high spectral noise density. The last factor might be mitigated by using precision mode, but this comes at the cost of an increase in current consumption. The ODR rate and digital resolution might impose limitations on the number of applications that the accelerometer can be used for. The 6 Hz motion detect mode might noe be sufficient for detecting impacts. The LIS3DH and the KX123 both have a very high maximum ODR, and for these devices this mode is used to detect gestures such as double tapping. The closest competitor to the ADXL362 in terms of power consumtion is the MC3610 from mCube. This device uses 600nA in motion detect mode, which is over twice that of the ADXL362. One does however benefit from a better spectral noise density and a digital resolution of 14-bits. The MC3610 also have a FIFO, but it is only 32 samples deep. The LIS3DH from STMicroelectronics is also a interesting device. It has a high digital resolution of 16-bit, excellent spectral noise density and maximum ODR of 1.25kHz. It also has a lot of features, such as an embedded FIFO, free-fall and tap detection and a temperature sensor. Unfortunately the datasheet does not provide any numbers on current consumption for the wake-up mode. They do however state in an application note \cite{lis3dh_appnote} that the current consumption at 1 Hz ODR in low power mode is 2$\si{\micro\ampere}$. So it is very reasonable to assume that the current consumption will be somewhere in the $\si{\micro\ampere}$ range for this device. The MMA8491QR1 from Freescale Semiconductor has the lowest standby current and a digital resolution of 14-bit. A lot of the functionality in the device is automated, from power management to measurement range. This makes it simple for designer to use, but comes at a cost of reduced design flexibility. The device does not have FIFO, and only I2C is provided as digital interface. The supply voltage must also be greater than 1.95V for the device to work. 
 
-When selecting an accelerometer for an ultra-low power application, it is important to look at the ...
+The last device is the KX123 from Kionix. This features a very high resolution of 16-bit and a impressive 25.6kHz ODR. The KX123 also has a wake-up mode with a configurable measurement rate from 0.781Hz to 100Hz. At the lowest rate of 0.781Hz it consumes 1.8$\si{\micro\ampere}$. This is relatively much current when compared to the ADXL362 and MC3610. The supply voltage of 1.8V is also relatively high.
 
-In almost any accelerometer application, the accelerometer will do nothing most of the time. From a power perspective, it is therefore most important to choose the accelerometer the lowest sleep current. However, we also want the accelerometer take measurements when movement is detected. It is therefore quite common for accelerometers to incorporate a wake-up mode. In this scheme the accelerometer use a very low measurement rate to listen for any motion above a certain threshold. When the threshold is breached, the sensors is able to change state into something 
+Based on this analysis, it is quite easy to point out the ADXL362 as the most power efficient accelerometer. With an overall best in-class wake-up and ODR current. It also has a large FIFO, which enables us to use the CPU less frequently and thereby saving power. 
 
-What we really want is to have an accelerometer that is able to take measurements only when there is movement.  
 
-So in essence we want the accelerometer to consume as little power as possible while doing nothing
+\begin{center}
+    \begin{tabular}{ | p{2cm} | p{5cm} | p{5cm} |}
+    \hline
+    Device & Pros & Cons \\ \hline
+    ADXL362 & Lowest wake-up current \newline Lowest ODR current \newline Voltage operation at 1.6V \newline 512 Sample FIFO \newline SPI interface  & - \\ \hline
+    \end{tabular}
+\end{center}
 
-and it is therefore very important to have and accelerometer with a low sleep current.
+\subsection{Are we sometimes able to completely turn off the accelerometer?}
 
-From the comparison in Table \ref{tab:accel_comparison}
+As we see from table \ref{tab:accel_comparison} the lowest current consumption is in standby mode. A question arises from this, are we at some point able to assume that no motion is going to occur. If so, are we able to enter standby mode to further consume power? This scheme would require some external timer to wake the accelerometer. And one also need to assume that this timer is going to use less current than the wake-up mode itself. For most applications it would not be possible to predict whether motion is going to occur or not.
 
-\subsection{nRF51822}
+\section{Demo Board}
 
-The nRF51822 is a Cortex-M0+ based System-on-Chip (SoC) from Nordic Semiconductor. The company is world leading in creating Bluetooth Low Energy solutions. This SoC was chosen mainly because of its advanced power saving features. 
+A demo board was created to show some potential IoT applications that can be achieved with ultra low power sensor data acquisition. 
+
+The ADXL362 from Analog devices was chosen 
+
+\subsection{nRF51}
+
+The nRF51 is a Cortex-M0+ based System-on-Chip (SoC) from Nordic Semiconductor. The company is world leading in creating Bluetooth Low Energy solutions. This SoC was chosen mainly because of its advanced power saving features. 
+
+The nRF51 features several serial interfaces. However, only the SPI module has DMA capabilities. It is therefore necessary to choose an accelerometer with an SPI interface. This only rules out the MMA8491QR1 from Freescale Semiconductor.
+
+For optimal power efficiency it is optimal to use the lowest possible supply voltage. The nRF51822 can go as low as 1.8V.
 
 \begin{center}
     \begin{tabular}{| l |}
@@ -40,19 +52,36 @@ The nRF51822 is a Cortex-M0+ based System-on-Chip (SoC) from Nordic Semiconducto
     \end{tabular}
 \end{center}
 
-The nRF51822 features something the company calls Programmable Peripheral Interconnect (PPI). The PPI enables different peripherals in the device to interact autonomously with each other using tasks and events without use of the CPU. The PPI can automatically trigger a task in one peripheral as a result of an event occurring in another. For instance, an interrupt from an external device (i.e. accelerometer) can trigger the SPI module to initiate a block transfer to memory. The DMA in the nRF51822 is also able to move data autonomously between peripherals, so in turn one should be able to make a sensor data acquisition system that is able to collect accelerometer data and send it over radio without using the CPU.
+\subsubsection{Programmable Peripheral Interconnect (PPI)}
 
-\subsection{DMA - Direct Memory Access}
+The nRF51 features something the company calls Programmable Peripheral Interconnect (PPI). The PPI enables different peripherals in the device to interact autonomously with each other using tasks and events without using the CPU. The PPI can automatically trigger a task in one peripheral as a result of an event occurring in another. For instance, an interrupt from an external device (i.e. accelerometer) can trigger the SPI module to initiate a block transfer to memory. 
 
-A DMA controller is a peripheral device that can be configured to move data from one location in memory to another. Usually, one i is also able to transfer from (and to) a serial peripheral such as SPI, I2C or UART. This makes it possible to do certain operations without any CPU intervention. This is very beneficial, since the DMA controller uses a lot less power than the CPU core. It is therefore an important power saving technique in modern embedded systems.  
+\subsubsection{EasyDMA}
 
-\subsection{Event system}
+The EasyDMA function in the nRF51 is able to move data to and from RAM and autonomously between peripherals. The DMA can be configured to work in conjunction with the PPI system for fully autonomous operation.
 
-Most modern microcontrollers are featuring a so-called event system for autonomous operation...
+So in turn one should be able to make a sensor data acquisition system that is able to collect accelerometer data and send it over radio without using the CPU.
 
-\section{Power Estimation}
+\subsubsection{Bluetooth Low Energy}
 
-The planned example will utilize the EasyDMA, Programmable Peripheral Interconnect (PPI) and SPI module on the nRF51822. The CPU should only be used for configuration of the system, and will be sleeping during data collection. The ADXL362 is configured to wake up when a motion is detectet, and then collect samples autonomously into its embedded FIFO. When the FIFO is full, the ADXL362 will send an interrupt to nRF51822. The PPI is configured to listen to for this interrupt, and to trigger a SPI block transfer when it is detected. As data is being transferred to the SPI module, the DMA shuffles data into the radio module. This entire operation is possible without any CPU intervention.
+...maybe add something about Bluetooth Low Energy.
+
+\section{The Configuration}
+
+The planned example will utilize EasyDMA, PPI, SPI and the radio of the nRF51, as viewed with red boxes in Figure \ref{fig:accel_working_principle}. The Cortex-M0+ CPU should only be used for configuration of the system, and will be sleeping during data collection. The ADXL362 is configured to wake up when motion is detected, and then collect samples autonomously into its embedded FIFO. When the FIFO is full, the ADXL362 will send an interrupt to nRF51. The PPI is configured to listen to for this interrupt and to trigger a SPI block transfer when it is detected. As data is being transferred to the SPI module, the EasyDMA shuffles data either into the RAM or the radio module. This entire operation is possible without any CPU intervention.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{fig/nrf51822_edit.png}
+\caption{Nordic nRF51 System architecture. \cite{nRF51}}
+\label{fig:accel_working_principle}
+\end{figure}
+
+\subsection{Power Estimation}
+
+\begin{equation}
+I_total = 1.2µA + 0.6µA
+\end{equation}
 
 \section{Possible IoT Application}
 
@@ -67,6 +96,8 @@ For some construction applications it can be very beneficial to be able to monit
 Motion Sensing is something that is being widely used in electronic devices today. It is for example being used as control input for certain smart phone applications.
 
 \subsection{Health Monitoring}
+
+Fitness armbands, smart watches and so on.
 
 %%=========================================
 

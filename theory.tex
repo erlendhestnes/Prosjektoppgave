@@ -1,18 +1,41 @@
 \chapter{Background Theory}
 
-This section presents some necessary background knowledge about accelerometers, Microelectromechanical Systems (MEMS) and common low-power techniques.  
+This section presents some necessary background knowledge about accelerometers, microelectromechanical systems (MEMS) and common low-power techniques. These topics are necessary to understand the rest of the thesis. 
 
 \section{Low Power Design}
 
-\begin{itemize}
-  \item Dynamic switching currents
-  \item Charging and discharging capacitors
-  \item Leakage currents
-  \item Static currents
-  \item $P=IV^2$
-\end{itemize}
+\subsection{Power In CMOS}
 
-\section{Accelerometers - Working principle} \label{sec:accel_working_principle}
+The power consumption in CMOS circuitry can basically be divided into domains, static and dynamic power consumption. Static power consumption comes from leakage current in the transistor, which is a result of reverse-bias leakage between diffused regions and the
+substrate in the transistor \cite{static_dynamic_power}. Dynamic power consumption is result of switching the logic state of the transistor, which is given by the sum of the transient- and capacitive-load power consumption. The transient power consumption is from the current that flows through the transistor when the the transistor is switching logic state, while the capacitive-load power is from the additional current consumed in charging external load capacitance. 
+
+\begin{equation}
+P = V \cdot I^2
+\end{equation}
+
+\subsection{Power Saving Peripherals}
+
+\subsubsection{DMA - Direct Memory Access}
+
+A DMA controller is a peripheral device that can be configured to move data from one location in memory to another. Usually, one i is also able to transfer from (and to) a serial peripheral such as SPI, I2C or UART. This makes it possible to do certain operations without any CPU intervention. This is very beneficial, since the DMA controller uses a lot less power than the CPU core. It is therefore an important power saving technique in modern embedded systems.  
+
+\subsubsection{Event system}
+
+Most modern microcontrollers are featuring an event system. It is common for this event system to enable different peripherals in the device to interact autonomously with each other by using tasks and events. By using such a system one is able to do certain tasks without any CPU intervention, and thereby saving power.
+
+\subsubsection{Clock Gating}
+
+Is about turning off the clock in unused domains of the chip, thereby saving power.
+
+\subsubsection{Power Gating}
+
+Is about turning off power to unused blocks of the system, thereby saving both power and energy. 
+
+\subsection{Energy Harvesting}
+
+A battery will always run out of power, no matter how little current the system draws. So to be able to make a system that can continue indefinitely, one need to be able to have an infinite power source. Unfortunately, this does not exist. There is however a lot of research going into developing solutions that can turn energy from our surroundings into electrical energy. The principal is called energy harvesting, and it is truly a term that goes hand in hand with the IoT movement. Energy can be harvested from vibrations, sunlight, heat and a lot of other sources. A product that can implement one or more of these energy harvesting techniques has the potential to run indefinitely. Energy harvesting is something that has existed for a long time, but it is only with today's ultra low power components that it is actually possible to use this energy to power our devices.
+
+\section{Accelerometers - Working Principle} \label{sec:accel_working_principle}
 
 The working principle of an accelerometer can be viewed as a simple mechanical system, as illustrated in Figure \ref{fig:accel_working_principle}. A proof mass $m$ is connected to a frame by a flexible spring $k$. When an acceleration is imposed along the x-axis, the proof mass will begin to move. Due to Newton's law of inertia, the motion of the proof mass will lag the frame motion. This will cause an oscillation of the proof mass inside the frame. From this oscillation alone, it is possible to get the acceleration. However, to prevent excessive oscillation, the mass vibrations are usually damped by introducing a dampening material (such as gas or liquid) inside the package. This is represented by a dashpot $\gamma$ in Figure \ref{fig:accel_working_principle}.
 
@@ -84,7 +107,7 @@ Electrical resistance changes due to mechanical stress. This effect occurs in al
 
 \subsubsection{Capacitive Bulk Micromachining Accelerometer}
 
-Measures the differential change in capacitance when the inertial mass is displaced. Capacitive sensors provides an excellent noise performance and low power consumption \cite[p.~91]{kaajakari09}. One of the main challenges with capacitive sensors is to accurately measure the change in capacitance, as these changes themselves are extremely small.  
+Measures the differential change in capacitance when the inertial mass is displaced. Capacitive sensors provides an excellent noise performance and low power consumption \cite[p.~91]{kaajakari09}. One of the main challenges with capacitive sensors is to accurately measure the change in capacitance, as these changes themselves are extremely small. 
 
 [need to write more here]
 
@@ -94,6 +117,12 @@ Measures the differential change in capacitance when the inertial mass is displa
 \caption{Illustration of capacative bulk micromachined accelerometer. \cite[p.~100]{maluf04}}
 \label{fig:bulk_micromachined}
 \end{figure}
+
+\subsection{Integrating MEMS and ICs}
+
+Most MEMS based sensors must be bonded together with an IC for integration in larger electronic systems. The MEMS element itself is just a transducer, converting some physical parameter (motion, sound, pressure) into an electrical signal. Data converters, amplifiers and signal conditioning is required to be able to make use of the signal from the transducer, which requires additional logic on an IC.  
+
+MEMS and ICs can be integrated together in two separate fashions. The most common approach is to manufacture MEMS and ICs on separate substrates using dedicated production processes respectively, and then bond them together in the final system. This approach is typically referred to as a multi-chip solution or a system-in-package (SiP), depending on whether the chips are stacked horizontally or vertically. In the other integration approach, MEMS and ICs are manufactured on the same substrate, using consecutive or interlaced processing schemes. This approach is often referred to a system-on-chip (SoC) solution \cite{fischer15}. 
 
 \subsection{MEMS Accelerometer Parameters}
 
