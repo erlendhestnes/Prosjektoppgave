@@ -8,19 +8,65 @@
 
 %%=========================================
 \section{Simple Equations}
-This is how a simple equation is included:
+Power Spectral Density
 \begin{equation}
 F(t)=\int_0^t \exp(-\lambda x)\,dx
 \label{eq1}
 \end{equation}
 
-The equations are automatically given equation numbers -- here (\ref{eq1}) since this is the first equation in Chapter 2. Note that you can refer to the equation by referring to the ``label'' you specified as part of the equation environment.
-
-You can also include equations without numbers:
-\begin{equation*}
-F(t)=\sum_{i=1}^n \binom{n}{i}\sin(i\cdot t)
-\end{equation*}
+\begin{equation}
+N_{mech}=\frac{\sqrt{\frac{4 k_b T \omega}{m Q}}}{g}
+\label{eq1}
+\end{equation}
 
 
+\begin{equation}
+N^{2}_{rms}=\int_0^\infty{PSD(f)df}
+\label{eq2}
+\end{equation}
 
+\begin{equation}
+N^{2}_{rms}=\int_0^{BW}{PSD(f)df}
+\label{eq3}
+\end{equation}
 
+\begin{equation}
+N^{2}_{rms}=PSD \cdot (BW - 0)
+\label{eq4}
+\end{equation}
+
+\begin{equation}
+N_{rms}=\sqrt{PSD \cdot BW}
+\label{eq5}
+\end{equation}
+
+\begin{equation}
+PSD = \frac{N_{rms}}{\sqrt{BW}}
+\label{eq6}
+\end{equation}
+
+Calculating the effective number of bits
+
+\begin{equation}
+\frac{S_{rms}}{N_{rms}} = \frac{\frac{2^n}{2\sqrt{2}}}{\frac{1}{\sqrt{12}}} = 2^n \cdot \frac{\sqrt{3}}{\sqrt{2}}
+\label{eq7}
+\end{equation}
+
+\begin{equation}
+(\frac{S_{rms}}{N_{rms}})db = 20\log{2^n \cdot \frac{\sqrt{3}}{\sqrt{2}}}
+\label{eq7}
+\end{equation}
+
+\begin{equation}
+(\frac{S_{rms}}{N_{rms}})db = 20\log{2^n} + 20\log{1.225}
+\label{eq7}
+\end{equation}
+
+\begin{equation}
+(\frac{S_{rms}}{N_{rms}})db = 602n + 1.76
+\label{eq7}
+\end{equation}
+
+\begin{equation}
+n = \frac{SND(db)-1.76}{6.02}
+\end{equation}

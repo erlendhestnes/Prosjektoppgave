@@ -6,7 +6,7 @@ This section presents some necessary background knowledge about accelerometers, 
 
 \subsection{Power In CMOS}
 
-The power consumption in CMOS circuitry can basically be divided into domains, static and dynamic power consumption. Static power consumption comes from leakage current in the transistor, which is a result of reverse-bias leakage between diffused regions and the
+The power consumption in CMOS circuitry can in general be divided into domains, static and dynamic power consumption. Static power consumption comes from leakage current in the transistor, which is a result of reverse-bias leakage between diffused regions and the
 substrate in the transistor \cite{static_dynamic_power}. Dynamic power consumption is result of switching the logic state of the transistor, which is given by the sum of the transient- and capacitive-load power consumption. The transient power consumption is from the current that flows through the transistor when the the transistor is switching logic state, while the capacitive-load power is from the additional current consumed in charging external load capacitance. 
 
 \begin{equation}
@@ -47,8 +47,8 @@ The working principle of an accelerometer can be viewed as a simple mechanical s
 \end{figure}
 
 \subsubsection{Mechanical noise in accelerometers}
-
-The noise in an accelerometer is usually specified by the noise spectral density, given by Equation \ref{eq:noise_spectral_density}. If we analyse this equation more closely, we see that the thermal noise energy $k_b T$ is a constant irrespective of the system size \cite[~p.13]{kaajakari09}. This means that thermal noise induced in mechanical vibrations sets the lower limit for the measurable acceleration \cite[~p.41]{kaajakari09}. One can also see from Equation \ref{eq:noise_spectral_density} that increasing the mass $m$ and reducing the resonant frequency $\omega_0$ reduces the overall noise. The $Q$ factor or quality factor is a dimensionless parameter that describes how under-damped an oscillator or resonator is \cite{resonance}. Again, we can see from Equation \ref{eq:noise_spectral_density} that increasing it helps reducing the overall noise.
+\label{sec:mechanical_noise}
+The mechanical noise in an accelerometer is usually specified by the power spectral density (PSD), given by Equation \ref{eq:noise_spectral_density}. If we analyse this equation more closely, we see that the thermal noise energy $k_b T$ is a constant irrespective of the system size \cite[~p.13]{kaajakari09}. This means that thermal noise induced in mechanical vibrations sets the lower limit for the measurable acceleration \cite[~p.41]{kaajakari09}. One can also see from Equation \ref{eq:noise_spectral_density} that increasing the mass $m$ and reducing the resonant frequency $\omega_0$ reduces the overall noise. The $Q$ factor or quality factor is a dimensionless parameter that describes how under-damped an oscillator or resonator is \cite{resonance}. Again, we can see from Equation \ref{eq:noise_spectral_density} that increasing it helps reducing the overall noise.
 
 \begin{equation}
 \bar{\ddot{X_n}} = \sqrt{\frac{4 k_b T \omega_0}{mQ}}
@@ -58,8 +58,6 @@ The noise in an accelerometer is usually specified by the noise spectral density
 \section{Microelectromechanical Systems (MEMS)}
 
 Microelectromechanical Systems (MEMS) are embedded systems involving one or many micromachined components or structures\cite[p.~3]{maluf04}. The technique is used for a vast number of applications ranging from accelerometer and gyroscopes to fluid nozzles on a inkjet printer.
-
-Other definition: "Microelectromechanical systems is a loosely defined term for manmade mechanical components that are characterized by small size. Translated literally, MEMS should have dimensions in the micron-scale and have both electrical and mechanical components that form a system. "
 
 \subsection{MEMS Accelerometers}
 
@@ -120,17 +118,26 @@ Measures the differential change in capacitance when the inertial mass is displa
 
 \subsection{Integrating MEMS and ICs}
 
-Most MEMS based sensors must be bonded together with an IC for integration in larger electronic systems. The MEMS element itself is just a transducer, converting some physical parameter (motion, sound, pressure) into an electrical signal. Data converters, amplifiers and signal conditioning is required to be able to make use of the signal from the transducer, which requires additional logic on an IC.  
+Most MEMS based sensors must be bonded together with an IC for integration in larger electronic systems. The MEMS element itself is just a transducer, converting some physical parameter (motion, sound, pressure) into an electrical signal. Data converters, amplifiers and signal conditioning is required to be able to make use of the signal from the transducer, which requires additional logic on an IC. A typical functional block diagram of a MEMS accelerometer can be viewed in Figure \ref{fig:ADXL362_functional}. 
 
 MEMS and ICs can be integrated together in two separate fashions. The most common approach is to manufacture MEMS and ICs on separate substrates using dedicated production processes respectively, and then bond them together in the final system. This approach is typically referred to as a multi-chip solution or a system-in-package (SiP), depending on whether the chips are stacked horizontally or vertically. In the other integration approach, MEMS and ICs are manufactured on the same substrate, using consecutive or interlaced processing schemes. This approach is often referred to a system-on-chip (SoC) solution \cite{fischer15}. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{fig/ADXL362_functional_block.png}
+\caption{Functional block diagram of ADXL362 from Analog Devices.}
+\label{fig:ADXL362_functional}
+\end{figure}
 
 \subsection{MEMS Accelerometer Parameters}
 
 \subsubsection{Accelerometer Interface}
 
-Primarily one differentiates between two interface types when it comes to accelerometers, analog and digital. Analog accelerometers have an output that is a continuous voltage proportional to the acceleration. An analog accelerometer is therefore best suited for a completely analog circuit. An analog to digital converter (ADC) is a required peripheral for a microcontroller to make use of such a sensor.
+Primarily one differentiates between two interface types when it comes to accelerometers, analog and digital. Analog accelerometers have an output that is a continuous voltage proportional to the acceleration. An analog accelerometer is therefore best suited for a completely analog circuit. An analog to digital converter (ADC) is a required peripheral for a microcontroller to make use of such a sensor in a digital system.
 
-Digital accelerometers typically use a serial communication interface like SPI or I2C for data transfer. They are therefore much better suited for a digital circuit, as most of today's microcontrollers usually features one or both of these serial interfaces.  
+Digital accelerometers typically use a serial communication interface like SPI or I2C for data transfer. They are therefore much better suited for a digital circuit, as most of today's microcontrollers usually features one or both of these serial interfaces.
+
+From a power perspective, SPI is a more efficient communication interface than I2C. SPI is full-duplex and generally operates at a higher clock frequency than I2C. SPI also has less overhead than I2C, since it does not have to transmit the device address when reading device registers. 
 
 \subsubsection{Number of axes}
 MEMS Accelerometers are able to measure acceleration along either one, two or three axes (x,y and z). Two axes (x and y) are usually sufficient for most applications, and are therefore the most common type. 3-axis accelerometers are however becoming more and more popular. Mainly because three axes are very useful for applications such as quad-copters, smart phones and game controllers.
@@ -143,4 +150,25 @@ The sensitivity is defined as the sensor's ratio of change in mechanical input t
 
 \subsubsection{Bandwidth}
 
-Output data rate (ODR) defines the data sample rate for digital accelerometers. The bandwidth is defined as the highest frequency signal that can be sampled without any aliasing by the specified ODR. As specified by the Nyquist criterion, the bandwidth is half the output data rate. 
+Output data rate (ODR) defines the data sample rate for digital accelerometers. The bandwidth is defined as the highest frequency signal that can be sampled without any aliasing by the specified ODR. As specified by the Nyquist criterion, the bandwidth is half the output data rate \cite{analog_accel_guide}. 
+
+\subsubsection{Noise}
+
+The noise in a MEMS accelerometer is either from mechanical noise in the MEMS element, as described in section \ref{sec:mechanical_noise}, or as electronic noise in the IC itself. The overall noise in the system is usually given by the power spectral density (PSD) in the accelerometer datasheet, usually in the units of $\si{\micro}$g per square root Hz. The PSD noise describes how power is distributed with frequency. The noise in an accelerometer is predominantly considered to be Gaussian white noise, and thereby constant across all frequencies \cite{freescale_accel_guide}. The relationship between the PSD and the root-mean-square (RMS) noise is given by Equation \ref{eq:rms_noise}.
+
+\begin{equation}
+N^{2}_{rms}=\int_0^\infty{PSD(f)df}
+\label{eq:rms_noise}
+\end{equation}
+
+\subsubsection{Digital Resolution}
+
+An accelerometers digital resolution is normally specified as the number of bits of the ADC. The devices that are available today typically range between 12 and 16-bits. However, this number might sometimes be misleading. Every MEMS accelerometer suffers from system noise to a certain extent, which in turn will limit the number of effective bits in the ADC. It does not help to have a 16-bit ADC if four of the bits are noisy. The number of effective bits is possible to calculate if the system noise is specified in the datasheet.
+
+\begin{equation}
+SND(db) = 20\log{\frac{\frac{4g}{2\sqrt{2}}}{N_{rms}}}
+\end{equation}
+
+\begin{equation}
+n = \frac{SND(db)-1.76}{6.02}
+\end{equation}
