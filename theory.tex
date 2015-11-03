@@ -1,35 +1,47 @@
 \chapter{Background Theory}
 
-This section presents some necessary background knowledge about accelerometers, microelectromechanical systems (MEMS) and common low-power techniques. These topics are necessary to understand the rest of the thesis. 
+This section presents some necessary background knowledge about low-power design, accelerometers and microelectromechanical systems (MEMS).
 
 \section{Low Power Design}
 
 \subsection{Power In CMOS}
 
-The power consumption in CMOS circuitry can in general be divided into domains, static and dynamic power consumption. Static power consumption comes from leakage current in the transistor, which is a result of reverse-bias leakage between diffused regions and the
-substrate in the transistor \cite{static_dynamic_power}. Dynamic power consumption is result of switching the logic state of the transistor, which is given by the sum of the transient- and capacitive-load power consumption. The transient power consumption is from the current that flows through the transistor when the the transistor is switching logic state, while the capacitive-load power is from the additional current consumed in charging external load capacitance. 
+The power consumption in CMOS circuitry can in general be divided into two different domains, static and dynamic power consumption. Static power consumption comes from leakage current in the transistor, which is a result of reverse-bias leakage between diffused regions and the
+substrate in the transistor \cite{static_dynamic_power}. The static power consumption ($P_{static}$) is given by the product of the static current ($I_{static}$) and the supply voltage ($V_{ss}$), as seen in Equation \ref{eq:p_static}. 
 
 \begin{equation}
-P = V \cdot I^2
+P_{static} = I_{static} \cdot V_{ss}
+\label{eq:p_static}
 \end{equation}
+
+Dynamic power consumption is result of switching the logic state of the transistor, which is given by the sum of the transient- and capacitive-load power consumption. The transient power ($P_{transient}$) consumption is from the current that flows through the transistor when the the transistor is switching logic state, while the capacitive-load power ($P_{capacitive}$) is from the additional current consumed in charging external load capacitance ($C_{L}$). The dynamic power consumption is dependent on the frequency ($f$) as well as the number of transistors that are switching ($N$). The dynamic power consumption is also proportional to the supply voltage ($V_ss$) squared. This relationship can be seen in Equation \ref{eq:p_dynamic} \cite{cmos_power_consumption}.
+
+\begin{equation}
+P_{dynamic} = P_{transient} + P_{capacitive} = (C_L + C) \cdot V_{ss}^{2} \cdot f \cdot N^3
+\label{eq:p_dynamic}
+\end{equation}
+
+From Equation \ref{eq:p_dynamic} one can see that dynamic power consumption is proportional to the frequency. This means that a higher performance leads to a higher power consumption.
+
+The supply voltage is present both in the static and dynamic power consumption of CMOS circuits. Reducing the voltage is therefore very important when it comes to reducing the power in a CMOS circuit.
 
 \subsection{Power Saving Peripherals}
 
 \subsubsection{DMA - Direct Memory Access}
 
-A DMA controller is a peripheral device that can be configured to move data from one location in memory to another. Usually, one i is also able to transfer from (and to) a serial peripheral such as SPI, I2C or UART. This makes it possible to do certain operations without any CPU intervention. This is very beneficial, since the DMA controller uses a lot less power than the CPU core. It is therefore an important power saving technique in modern embedded systems.  
+A DMA controller is a peripheral device that can be configured to move data from one location in memory to another. Usually, one i is also able to transfer from and to a serial peripheral such as SPI, I2C or UART. This makes it possible to do certain operations without any CPU intervention. This is very beneficial, since the DMA controller uses less power than the CPU core. It is therefore an important power saving technique in modern embedded systems.  
 
 \subsubsection{Event system}
 
-Most modern microcontrollers are featuring an event system. It is common for this event system to enable different peripherals in the device to interact autonomously with each other by using tasks and events. By using such a system one is able to do certain tasks without any CPU intervention, and thereby saving power.
+Most modern microcontrollers have a variant of a so called event system. An event system enables different peripherals in the microcontroller to interact autonomously with each other by using tasks and events. By using such a system one is able to do certain tasks without any CPU intervention, and thereby saving power.
 
 \subsubsection{Clock Gating}
 
-Is about turning off the clock in unused domains of the chip, thereby saving power.
+A clock gating scheme is all about turning off the clock for the unused domains of the chip. Clock gating effectively removes the dynamic power consumption from the gated domain, which can be seen from Equation \ref{eq:p_dynamic}. The static power consumption is however still present, as voltage is still applied to the gated domain. Clock gating can for example be very beneficial for volatile memory. The user can reduce power consumption while still maintaining data.
 
 \subsubsection{Power Gating}
 
-Is about turning off power to unused blocks of the system, thereby saving both power and energy. 
+Power gating is about completely turning off the voltage to unused blocks of the system, thereby removing both static and dynamic power consumption. Modern microcontrollers often have the ability to power gate RAM blocks, giving the user the option to trade power for RAM or vice versa.
 
 \subsection{Energy Harvesting}
 
@@ -120,14 +132,14 @@ Measures the differential change in capacitance when the inertial mass is displa
 
 Most MEMS based sensors must be bonded together with an IC for integration in larger electronic systems. The MEMS element itself is just a transducer, converting some physical parameter (motion, sound, pressure) into an electrical signal. Data converters, amplifiers and signal conditioning is required to be able to make use of the signal from the transducer, which requires additional logic on an IC. A typical functional block diagram of a MEMS accelerometer can be viewed in Figure \ref{fig:ADXL362_functional}. 
 
-MEMS and ICs can be integrated together in two separate fashions. The most common approach is to manufacture MEMS and ICs on separate substrates using dedicated production processes respectively, and then bond them together in the final system. This approach is typically referred to as a multi-chip solution or a system-in-package (SiP), depending on whether the chips are stacked horizontally or vertically. In the other integration approach, MEMS and ICs are manufactured on the same substrate, using consecutive or interlaced processing schemes. This approach is often referred to a system-on-chip (SoC) solution \cite{fischer15}. 
-
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{fig/ADXL362_functional_block.png}
 \caption{Functional block diagram of ADXL362 from Analog Devices.}
 \label{fig:ADXL362_functional}
 \end{figure}
+
+MEMS and ICs can be integrated together in two separate fashions. The most common approach is to manufacture MEMS and ICs on separate substrates using their dedicated production processes respectively, and then bond them together in the final system. This approach is typically referred to as a multi-chip solution or a system-in-package (SiP), depending on whether the chips are stacked horizontally or vertically. In the other integration approach, MEMS and ICs are manufactured on the same substrate, using consecutive or interlaced processing schemes. This approach is often referred to a system-on-chip (SoC) solution \cite{fischer15}. 
 
 \subsection{MEMS Accelerometer Parameters}
 
@@ -137,7 +149,7 @@ Primarily one differentiates between two interface types when it comes to accele
 
 Digital accelerometers typically use a serial communication interface like SPI or I2C for data transfer. They are therefore much better suited for a digital circuit, as most of today's microcontrollers usually features one or both of these serial interfaces.
 
-From a power perspective, SPI is a more efficient communication interface than I2C. SPI is full-duplex and generally operates at a higher clock frequency than I2C. SPI also has less overhead than I2C, since it does not have to transmit the device address when reading device registers. 
+[From a power perspective, SPI is a more efficient communication interface than I2C. SPI is full-duplex and generally operates at a higher clock frequency than I2C. SPI also has less overhead than I2C, since it does not have to transmit the device address when reading device registers.] 
 
 \subsubsection{Number of axes}
 MEMS Accelerometers are able to measure acceleration along either one, two or three axes (x,y and z). Two axes (x and y) are usually sufficient for most applications, and are therefore the most common type. 3-axis accelerometers are however becoming more and more popular. Mainly because three axes are very useful for applications such as quad-copters, smart phones and game controllers.
