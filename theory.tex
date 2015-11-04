@@ -14,7 +14,7 @@ P_{static} = I_{static} \cdot V_{ss}
 \label{eq:p_static}
 \end{equation}
 
-Dynamic power consumption is result of switching the logic state of the transistor, which is given by the sum of the transient- and capacitive-load power consumption. The transient power ($P_{transient}$) consumption is from the current that flows through the transistor when the the transistor is switching logic state, while the capacitive-load power ($P_{capacitive}$) is from the additional current consumed in charging external load capacitance ($C_{L}$). The dynamic power consumption is dependent on the frequency ($f$) as well as the number of transistors that are switching ($N$). The dynamic power consumption is also proportional to the supply voltage ($V_ss$) squared. This relationship can be seen in Equation \ref{eq:p_dynamic} \cite{cmos_power_consumption}.
+Dynamic power consumption is result of switching the logic state of the transistor, which is given by the sum of the transient- and capacitive-load power consumption. The transient power ($P_{transient}$) consumption is from the current that flows through the transistor when the the transistor is switching logic state, while the capacitive-load power ($P_{capacitive}$) is from the additional current consumed in charging external load capacitance ($C_{L}$). The dynamic power consumption is dependent on the frequency ($f$) as well as the number of transistors that are switching ($N$). The dynamic power consumption is also proportional to the supply voltage ($V_{ss}$) squared. This relationship can be seen in Equation \ref{eq:p_dynamic} \cite{cmos_power_consumption}.
 
 \begin{equation}
 P_{dynamic} = P_{transient} + P_{capacitive} = (C_L + C) \cdot V_{ss}^{2} \cdot f \cdot N^3
@@ -37,7 +37,7 @@ Most modern microcontrollers have a variant of a so called event system. An even
 
 \subsubsection{Clock Gating}
 
-A clock gating scheme is all about turning off the clock for the unused domains of the chip. Clock gating effectively removes the dynamic power consumption from the gated domain, which can be seen from Equation \ref{eq:p_dynamic}. The static power consumption is however still present, as voltage is still applied to the gated domain. Clock gating can for example be very beneficial for volatile memory. The user can reduce power consumption while still maintaining data.
+A clock gating scheme is all about turning off the clock for the unused domains of the chip. Clock gating effectively removes the dynamic power consumption from the gated domain, which can be seen from Equation \ref{eq:p_dynamic}. The static power consumption is however still present, as voltage is still applied to the gated domain. Clock gating can for example be very beneficial for volatile memory, as the user can reduce power consumption while still maintaining data in memory.
 
 \subsubsection{Power Gating}
 
@@ -45,7 +45,16 @@ Power gating is about completely turning off the voltage to unused blocks of the
 
 \subsection{Energy Harvesting}
 
+[still don't know where to put this...]
+
 A battery will always run out of power, no matter how little current the system draws. So to be able to make a system that can continue indefinitely, one need to be able to have an infinite power source. Unfortunately, this does not exist. There is however a lot of research going into developing solutions that can turn energy from our surroundings into electrical energy. The principal is called energy harvesting, and it is truly a term that goes hand in hand with the IoT movement. Energy can be harvested from vibrations, sunlight, heat and a lot of other sources. A product that can implement one or more of these energy harvesting techniques has the potential to run indefinitely. Energy harvesting is something that has existed for a long time, but it is only with today's ultra low power components that it is actually possible to use this energy to power our devices.
+
+\section{Acceleration - Definition}
+
+[maybe incorporate a defenition similar to this somewhere]
+
+"Acceleration is the rate of change of velocity (the derivative of velocity) with respect to time. It is a vector which has magnitude and direction relative to the axis of sensitivity or other reference frame. The units are length/time2. Gravity "g" is
+an acceleration."
 
 \section{Accelerometers - Working Principle} \label{sec:accel_working_principle}
 
@@ -60,7 +69,7 @@ The working principle of an accelerometer can be viewed as a simple mechanical s
 
 \subsubsection{Mechanical noise in accelerometers}
 \label{sec:mechanical_noise}
-The mechanical noise in an accelerometer is usually specified by the power spectral density (PSD), given by Equation \ref{eq:noise_spectral_density}. If we analyse this equation more closely, we see that the thermal noise energy $k_b T$ is a constant irrespective of the system size \cite[~p.13]{kaajakari09}. This means that thermal noise induced in mechanical vibrations sets the lower limit for the measurable acceleration \cite[~p.41]{kaajakari09}. One can also see from Equation \ref{eq:noise_spectral_density} that increasing the mass $m$ and reducing the resonant frequency $\omega_0$ reduces the overall noise. The $Q$ factor or quality factor is a dimensionless parameter that describes how under-damped an oscillator or resonator is \cite{resonance}. Again, we can see from Equation \ref{eq:noise_spectral_density} that increasing it helps reducing the overall noise.
+The mechanical noise in an accelerometer is usually specified by the power spectral density (PSD), given by Equation \ref{eq:noise_spectral_density}. If we analyse this equation more closely, we see that the thermal noise energy $k_b T$ is a constant irrespective of the system size \cite[~p.13]{kaajakari09}. This means that thermal noise induced in mechanical vibrations sets the lower limit for the measurable acceleration \cite[~p.41]{kaajakari09}. One can also see from Equation \ref{eq:noise_spectral_density} that increasing the mass $m$ and reducing the resonant frequency $\omega_0$ reduces the overall noise. The $Q$ factor or quality factor is a dimensionless parameter that describes how under-damped an oscillator or resonator is \cite{resonance}. Again, we can see from Equation \ref{eq:noise_spectral_density} that increasing the Q factor helps reducing the overall noise.
 
 \begin{equation}
 \bar{\ddot{X_n}} = \sqrt{\frac{4 k_b T \omega_0}{mQ}}
@@ -119,11 +128,9 @@ Electrical resistance changes due to mechanical stress. This effect occurs in al
 
 Measures the differential change in capacitance when the inertial mass is displaced. Capacitive sensors provides an excellent noise performance and low power consumption \cite[p.~91]{kaajakari09}. One of the main challenges with capacitive sensors is to accurately measure the change in capacitance, as these changes themselves are extremely small. 
 
-[need to write more here]
-
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.3]{fig/bulk_micromachined.png}
+\includegraphics[scale=0.25]{fig/bulk_micromachined.png}
 \caption{Illustration of capacative bulk micromachined accelerometer. \cite[p.~100]{maluf04}}
 \label{fig:bulk_micromachined}
 \end{figure}
@@ -154,7 +161,7 @@ Digital accelerometers typically use a serial communication interface like SPI o
 \subsubsection{Number of axes}
 MEMS Accelerometers are able to measure acceleration along either one, two or three axes (x,y and z). Two axes (x and y) are usually sufficient for most applications, and are therefore the most common type. 3-axis accelerometers are however becoming more and more popular. Mainly because three axes are very useful for applications such as quad-copters, smart phones and game controllers.
 
-\subsubsection{Swing level/Measurement range/Resolution}
+\subsubsection{Measurement range}
 Measurement range, sometimes called swing level or resolution, is defined as the level of acceleration that is supported by the sensor’s output signal specifications. This level is listed as a number $n$ times the earth’s gravity (i.e. $\pm$1g , $\pm$2g etc.). This number is an upper limit for the accurate measurement range of the part. For example, if the part is rated with a measurement range of $\pm$3g, it means that the part can measure the acceleration accurately up to an acceleration of $\pm$3g.  If the part is accelerated above this limit, the output might rail or be distorted at the output.
 
 \subsubsection{Sensitivity}
@@ -162,25 +169,44 @@ The sensitivity is defined as the sensor's ratio of change in mechanical input t
 
 \subsubsection{Bandwidth}
 
-Output data rate (ODR) defines the data sample rate for digital accelerometers. The bandwidth is defined as the highest frequency signal that can be sampled without any aliasing by the specified ODR. As specified by the Nyquist criterion, the bandwidth is half the output data rate \cite{analog_accel_guide}. 
+The output data rate (ODR) defines the data sample rate for digital accelerometers. The bandwidth (BW) is defined as the highest frequency signal that can be sampled without any aliasing by the specified ODR. As specified by the Nyquist criterion, the bandwidth is half the output data rate \cite{analog_accel_guide}, as seen in Equation \ref{eq:bw}. 
+
+\begin{equation}
+BW = \frac{ODR}{2}
+\label{eq:bw}
+\end{equation}
 
 \subsubsection{Noise}
 
-The noise in a MEMS accelerometer is either from mechanical noise in the MEMS element, as described in section \ref{sec:mechanical_noise}, or as electronic noise in the IC itself. The overall noise in the system is usually given by the power spectral density (PSD) in the accelerometer datasheet, usually in the units of $\si{\micro}$g per square root Hz. The PSD noise describes how power is distributed with frequency. The noise in an accelerometer is predominantly considered to be Gaussian white noise, and thereby constant across all frequencies \cite{freescale_accel_guide}. The relationship between the PSD and the root-mean-square (RMS) noise is given by Equation \ref{eq:rms_noise}.
+The noise in a MEMS accelerometer is either from mechanical noise in the MEMS element, as described in Section \ref{sec:mechanical_noise}, or as electronic noise in the IC itself. The overall noise in the system is usually given by the power spectral density (PSD) in the accelerometer datasheet, usually in the units of $\si{\micro}$g per square root Hz. The PSD captures the frequency content of a stochastic process (noise) and describes how the power is distributed across different frequencies. The noise in an accelerometer is predominantly considered to be Gaussian white noise, and is thereby a constant value across all frequencies \cite{freescale_accel_guide}. The relationship between the PSD and the root-mean-square (RMS) noise is given by Equation \ref{eq:rms_noise}, and can be simplified to \ref{eq:rms_psd_bw}.
 
 \begin{equation}
-N^{2}_{rms}=\int_0^\infty{PSD(f)df}
+N^{2}_{rms}=\int_0^{BW}{PSD(f)df}
 \label{eq:rms_noise}
+\end{equation}
+
+\begin{equation}
+N_{rms}=\sqrt{PSD \cdot BW}
+\label{eq:rms_psd_bw}
+\end{equation}
+
+The PSD noise value that is listed in the component datasheets is actually the square root PSD from the derivation in Equation \ref{eq:rms_psd_bw}, which in turn gives us Equation \ref{eq:rms_psd_bw_2}.
+
+\begin{equation}
+N_{rms}=PSD_{datasheet} \cdot \sqrt{BW}
+\label{eq:rms_psd_bw_2}
 \end{equation}
 
 \subsubsection{Digital Resolution}
 
-An accelerometers digital resolution is normally specified as the number of bits of the ADC. The devices that are available today typically range between 12 and 16-bits. However, this number might sometimes be misleading. Every MEMS accelerometer suffers from system noise to a certain extent, which in turn will limit the number of effective bits in the ADC. It does not help to have a 16-bit ADC if four of the bits are noisy. The number of effective bits is possible to calculate if the system noise is specified in the datasheet.
+An accelerometers digital resolution is normally specified as the number of bits in the ADC. The devices that are available today typically range between 12 and 16-bits. However, this number might sometimes be misleading. Every MEMS accelerometer suffers from system noise to a certain extent, which in turn will limit the number of effective bits in the ADC. It does not help to have a 16-bit ADC if four of the bits are noisy. The number of effective bits (ENOB) is possible to calculate if the system noise is specified in the datasheet. One first need to calculate the system noise for a specific measurement range and bandwidth. This can be done by using Equation \ref{eq:system_noise} together with Equation \ref{eq:rms_psd_bw_2}. A measurement range of $\pm$2g (4g in total) is assumed in Equation \ref{eq:system_noise}. By combining Equation \ref{eq:effective_bits} with Equation \ref{eq:system_noise} one is able to calculate the number of effective bits. 
 
 \begin{equation}
 SND(db) = 20\log{\frac{\frac{4g}{2\sqrt{2}}}{N_{rms}}}
+\label{eq:system_noise}
 \end{equation}
 
 \begin{equation}
-n = \frac{SND(db)-1.76}{6.02}
+ENOB = \frac{SND(db)-1.76}{6.02}
+\label{eq:effective_bits}
 \end{equation}
