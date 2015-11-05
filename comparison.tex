@@ -1,11 +1,13 @@
 \chapter{Accelerometer Overview}
 \label{chap:overview}
 
-This section presents an overview of five of the most low power, consumer grade, MEMS accelerometers that are currently available on the market.
+This chapter presents an overview of five of the most low power, consumer grade, MEMS accelerometers that are currently available on the market.
 
 \section{Comparison of Ultra-Low Power Accelerometers}
 
-Five accelerometers from five different semiconductor vendors are presented in Table \ref{tab:accel_comparison}. The specifications are gathered from the datasheets of each individual component. All of the listed accelerometers uses the surface micromachined fabrication process. This is not surprising, as this process has become the de-facto standard for cheap, low-power MEMS designs.  
+Five accelerometers from five different semiconductor vendors are presented in Table \ref{tab:accel_comparison}. The accelerometers have been selected after carefully looking through the portfolio of every semiconductor company that provides consumer grade MEMS accelerometers. The search has been constrained by only looking at accelerometers with a shutdown current of less than 1$\si{\micro\ampere}$ and a sampling current of less than 500$\si{\nano\ampere}$/Hz. The search was further constrained by only looking at devices with a digital interface of either SPI or I2C.
+
+The specifications presented in Table \ref{tab:accel_comparison} are gathered from the datasheets of each individual component. All of numbers presented in Table \ref{tab:accel_comparison} denotes typical values, unless stated otherwise.
 
 \begin{figure}[h]
 \begin{center}
@@ -52,7 +54,7 @@ Five accelerometers from five different semiconductor vendors are presented in T
     
     \end{tabular}
     }
-    \caption{Comparison of ultra-low power MEMS accelerometers currently on the market. All figures represent typical values, unless stated otherwise.}
+    \caption{Comparison of ultra-low power MEMS accelerometers currently on the market.}
     \label{tab:accel_comparison}
 \end{center}
 \end{figure}
@@ -64,44 +66,56 @@ Five accelerometers from five different semiconductor vendors are presented in T
 \footnotetext[5]{Low power mode/High resolution mode}
 \footnotetext[6]{$PSD = Nrms / 4*sqrt(BW)$}
 
+\subsection{General Comments}
+
+[need to write more here]
+
+All of the listed accelerometers uses the surface micromachined fabrication process. This is not surprising, as this process has become the de-facto standard for cheap, low-power MEMS designs.
+
+The effective number of bits has been calculated for every accelerometer as well.
+
 \subsection{ADXL362}
 
-The ADXL362 from Analog Devices claim to be the lowest power accelerometer in the industry, according to Analog Devices themselves \cite{analog12}. At a supply voltage of $V_s = 2.0 V$ it uses only 10nA in shutdown mode and 1.8$\si{\micro\ampere}$ at a ODR of 100Hz in low power mode. It also has a lot of features, such as 270nA wake-up mode, two interrupt pins, a temperature sensor and a deep embedded FIFO that can hold 512 full resolution samples. The FIFO enables the accelerometer to autonomously collect samples for an extended period of time, without involving the host controller.
+The ADXL362 from Analog Devices claim to be the lowest power accelerometer in the industry, according to Analog Devices themselves \cite{analog12}. At a supply voltage of $V_s = 2.0 V$ it uses only 10nA in shutdown mode and 1.8$\si{\micro\ampere}$ at a ODR of 100Hz in low power mode. It also has a lot of features, such as 270nA wake-up mode, two interrupt pins, a temperature sensor and a deep embedded FIFO that can hold 512 full resolution samples. 
 
-The FIFO in the ADXL362 can be configured to either hold 170 sample sets of concurrent 3-axis data or 128 sample sets of concurrent 3-axis and temperature data. The FIFO also has lot of configuration options.  
+In the motion wake-up mode the accelerometer samples at a rate of 6Hz. A threshold value can be specified in a dedicated register, for which the device can wake from when breached. Upon wake-up, the sensor can either enter normal operation and begin to sample at a full bandwidth or signal an interrupt to the host controller. 
 
-The ADXL362 has a SPI interface which can handle a bus clock frequency of 8MHz. This makes it possible for the host controller to acquire data at a very short amount of time, which is also an important aspect in a low-power design.
+The FIFO in the ADXL362 can be configured to either hold 170 sample sets of concurrent 3-axis data or 128 sample sets of concurrent 3-axis and temperature data. The FIFO has a lot of configuration options and use-cases. It can for instance be used to autonomously collect samples for an extended period of time, without having to involve the host controller.
 
 However, as seen from Table \ref{tab:accel_comparison} this ultra low power consumption comes at cost. The ADXL362 has a relatively high spectral noise density, only 12-bit digital resolution and only three measurement ranges. The spectral noise for the ADXL362 can be reduced by using the ultra low noise mode. This ultra low noise mode uses almost ten times more current, but halves the spectral noise, making the accelerometer on pair with it's best competitors. Even more interestingly is that even with this ultra low noise mode enabled, the ADXL362 still has one of the lowest current draws for a 100Hz ODR, only beaten by the LIS3DH. The ODR current was only specified at 50Hz ODR for the MC3610, but one can assume that current would be around twice that of the 50Hz ODR, as the dynamic power consumption is proportional to the frequency, as seen from Equation \ref{eq:p_dynamic}.
 
+The ADXL362 has a SPI interface which can handle a bus clock frequency of 8MHz. This makes it possible for the host controller to acquire data at a very short amount of time, which is also an important aspect in a low-power design.
+
 \subsection{MMA8491QR1}
 
-The MMA8491QR1 from Freescale Semiconductor has by far the lowest shutdown current of all the compared accelerometers. It also features interrupt pins for each acceleration axis, which can be used for advanced tilt detection.
+The MMA8491QR1 from Freescale Semiconductor has the lowest shutdown current of all the compared accelerometers. Freescale do however state in the datasheet that this number is only evaluation data, and that it has not been actually tested in production. The device have interrupt pins for each acceleration axis, which can be used for advanced tilt detection.
 
-Freescale specifies that the current consumption for sampling is 400nA/Hz. They don't however specify whether this number is ODR or bandwidth. By assuming that this number refers to bandwidth, the current consumption of 100Hz ODR is 20$\si{\micro\ampere}$. 
-
-It also has ultra fast data output time of only 700$\si{\micro\second}$.
+Freescale specifies that the current consumption for sampling is 400nA/Hz. Freescale do not specify whether this number is ODR or bandwidth. It is therefore assumed to be bandwidth in this report, which in turn means that the current consumption of 100Hz ODR is 20$\si{\micro\ampere}$. 
 
 It is also has a full scale measurement range from $\pm$1-8g's.
 
-Some drawback with this component is that it requires a relatively high supply voltage of 1.95V, and that is only has a I2C interface.
+Some drawbacks with this component is that it requires a relatively high supply voltage of 1.95V, and that is only has a I2C interface with a speed of 400kHz.
 
-The component has otherwise very few configuration options, as much of the power saving techniques are automated according to Freescale.
+The component also has very few configuration options, as much of the power saving techniques are automated according to Freescale.
 
 \subsection{MC3610}
-mCube is a relatively new and small MEMS manufacturer in this comparison. Yet, they have managed to develop av very good and low-power solution with the MC3610. The accelerometer has the most versatile measurement range, a good digital resolution of 14-bit and many additional features such as an embedded FIFO and a motion activated wake-up mode. It is in the top league when it comes to current consumption and works at a very low supply voltage of 1.6V. However, there are some restrictions when it comes to using the component at lowest power settings. The FIFO does for instance use a lot of additional current when in use. The 600nA motion detect mode is also a nice feature.
+mCube is a relatively new and small MEMS manufacturer in this comparison. Yet, they have managed to develop av very good and low-power solution with the MC3610. The accelerometer has the most versatile measurement range, a good digital resolution of 14-bit and many additional features such as an embedded FIFO and a 600nA motion activated wake-up mode. It is one of the best accelerometers when it comes to current consumption and the device is able to work at a very low supply voltage of 1.6V. However, there are some restrictions when it comes to using the component at lowest power settings. The FIFO does for instance use a lot of additional current when in use. The shutdown current for the device is also relatively high compared to the ADXL362 and the MMA8491QR1.
 
-The shutdown current is also relatively high.
+The FIFO can only hold 32 samples with resolution of 12-bits. 
 
-The device has both SPI and I2C interface, however the SPI interface does only go up to 2MHz. Also, the device only has one interrupt pin.
+The noise spectral density is about the same as the ADXL362, although slightly worse.
+
+The device has both SPI and I2C interface, however the SPI interface does only go up to a speed of 2MHz. Also, the device only has one interrupt pin.
 
 \subsection{LIS3DH}
 
 The LIS3DH from STMicroelectronics is without doubt the most feature rich accelerometer in this comparison. The accelerometer comes with motion and free fall detection, two programmable interrupt pins, an integrated temperature sensor and an embedded FIFO. The FIFO is able to hold 32 samples, but only at resolution of 10-bits. The LIS3DH also has something STMicroelectronics calls 4D/6D orientation detection, which essentially enables the accelerometer to generate an interrupt when the device is stable in a known direction. The LIS3DH also has a high digital resolution of 16-bit and the best spectral noise density of the compared accelerometers. The current consumption in sampling mode is competitive with the ADXL362 if low power mode is selected. However, STMicroelectronics does not provide any numbers on the noise spectral density for the low power mode. They only state that the noise will increase when this mode is entered, thereby making it hard to compare againt the ADXL362. The shutdown current for LIS3DH is also relatively high, at least when compared to the ADXL362 and the MMA8491QR1. 
 
+The device has both SPI and I2C interface, with SPI interface that goes all the way up to 10MHz.
+
 \subsection{KX123}
 
-The KX123 from Kionix combines a very high digital resolution of 16-bits together with the highest ODR of all the accelerometers in the comparison. The device also has a large FIFO buffer of 2048 bytes, which are then able to hold 1024 full resolution samples. The FIFO also has lots of configuration options. 
+The KX123 from Kionix (A Rohm Semiconductor subsidiary) combines a very high digital resolution of 16-bits together with the highest ODR of all the accelerometers in the comparison. The device also has a large FIFO buffer of 2048 bytes, which are then able to hold 1024 full resolution samples. The FIFO also has lots of configuration options. 
 
 The device does however have the highest shutdown current. 
 
@@ -110,3 +124,5 @@ The ODR current is 21 $\si{\micro\ampere}$, which is on pair with the MMA8491QR1
 The device is quite feature rich, with single- and double tap detection as well as free fall detection.
 
 It also has a configurable wake-up mode. The lowest ODR for this mode is 0.781Hz, for which the device consumes 1.8$\si{\micro\ampere}$. 
+
+The device has both SPI and I2C interface, with SPI interface that goes all the way up to 10MHz.

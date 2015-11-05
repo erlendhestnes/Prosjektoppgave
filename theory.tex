@@ -1,6 +1,6 @@
 \chapter{Background Theory}
 
-This section presents some necessary background knowledge about low-power design, accelerometers and microelectromechanical systems (MEMS).
+This chapter presents some necessary background knowledge about low-power design, accelerometers and microelectromechanical systems (MEMS).
 
 \section{Low Power Design}
 
@@ -21,40 +21,37 @@ P_{dynamic} = P_{transient} + P_{capacitive} = (C_L + C) \cdot V_{ss}^{2} \cdot 
 \label{eq:p_dynamic}
 \end{equation}
 
-From Equation \ref{eq:p_dynamic} one can see that dynamic power consumption is proportional to the frequency. This means that a higher performance leads to a higher power consumption.
-
-The supply voltage is present both in the static and dynamic power consumption of CMOS circuits. Reducing the voltage is therefore very important when it comes to reducing the power in a CMOS circuit.
+From Equation \ref{eq:p_dynamic} one can see that the dynamic power consumption is proportional to the frequency. This means that a higher performance generally leads to a higher power consumption. Another important aspect to note, is that the supply voltage is present both in the static and dynamic power consumption of CMOS circuits. Reducing the voltage is therefore very important when it comes to reducing the power in a CMOS circuit.
 
 \subsection{Power Saving Peripherals}
 
-\subsubsection{DMA - Direct Memory Access}
+\subsubsection{DMAC - Direct Memory Access Controller}
 
-A DMA controller is a peripheral device that can be configured to move data from one location in memory to another. Usually, one i is also able to transfer from and to a serial peripheral such as SPI, I2C or UART. This makes it possible to do certain operations without any CPU intervention. This is very beneficial, since the DMA controller uses less power than the CPU core. It is therefore an important power saving technique in modern embedded systems.  
+Most of today's modern microcontrollers feature a DMA controller (DMAC). A DMAC is simply put a peripheral device that can be configured to move data from one location in memory to another. Usually, a DMAC is also able to transfer data from and to peripherals as well. The DMAC is primarily used as a technique to offload the CPU for large data transfers. This enables the CPU to do other work while the DMAC is moving data, thereby increasing overall system performance. However, a DMAC can also be used to improve power efficiency in a system. By combining a DMAC and an event system one is able to do certain operations without any CPU intervention. This is very beneficial, since both the event system and DMA controller uses much less power than the CPU core. This scheme is often utilized as a power saving technique in modern embedded systems.  
 
 \subsubsection{Event system}
 
-Most modern microcontrollers have a variant of a so called event system. An event system enables different peripherals in the microcontroller to interact autonomously with each other by using tasks and events. By using such a system one is able to do certain tasks without any CPU intervention, and thereby saving power.
+Most modern microcontrollers have a variant of a so called event system. An event system enables different peripherals in the microcontroller to interact autonomously with each other by using tasks and events. By using such a system one is able to let peripherals communicate with each other without involving the CPU, and thereby saving power.
 
 \subsubsection{Clock Gating}
 
-A clock gating scheme is all about turning off the clock for the unused domains of the chip. Clock gating effectively removes the dynamic power consumption from the gated domain, which can be seen from Equation \ref{eq:p_dynamic}. The static power consumption is however still present, as voltage is still applied to the gated domain. Clock gating can for example be very beneficial for volatile memory, as the user can reduce power consumption while still maintaining data in memory.
+A clock gating scheme is all about turning off the clock for the unused domains of the chip. Clock gating effectively removes the dynamic power consumption from the gated domain, which can be seen from Equation \ref{eq:p_dynamic}. The static power consumption is however still present, as voltage is still applied to the gated domain. Clock gating can for example be very beneficial for volatile memory (such as RAM), as the user can reduce power consumption while still maintaining data in memory.
 
 \subsubsection{Power Gating}
 
-Power gating is about completely turning off the voltage to unused blocks of the system, thereby removing both static and dynamic power consumption. Modern microcontrollers often have the ability to power gate RAM blocks, giving the user the option to trade power for RAM or vice versa.
+Power gating is about completely turning off the voltage to unused blocks of the system, thereby removing both static and dynamic power consumption. Modern microcontrollers often have the ability to power gate RAM blocks, giving the user the option to trade power for RAM or vice versa. It is also common to power gate peripherals that are not used for the application.
 
 \subsection{Energy Harvesting}
 
-[still don't know where to put this...]
+[still don't know where to put this section]
 
 A battery will always run out of power, no matter how little current the system draws. So to be able to make a system that can continue indefinitely, one need to be able to have an infinite power source. Unfortunately, this does not exist. There is however a lot of research going into developing solutions that can turn energy from our surroundings into electrical energy. The principal is called energy harvesting, and it is truly a term that goes hand in hand with the IoT movement. Energy can be harvested from vibrations, sunlight, heat and a lot of other sources. A product that can implement one or more of these energy harvesting techniques has the potential to run indefinitely. Energy harvesting is something that has existed for a long time, but it is only with today's ultra low power components that it is actually possible to use this energy to power our devices.
 
 \section{Acceleration - Definition}
 
-[maybe incorporate a defenition similar to this somewhere]
+[Maybe not necessary]
 
-"Acceleration is the rate of change of velocity (the derivative of velocity) with respect to time. It is a vector which has magnitude and direction relative to the axis of sensitivity or other reference frame. The units are length/time2. Gravity "g" is
-an acceleration."
+Acceleration is defined as the rate of change in velocity with respect to time. It is given by a vector with both magnitude and direction relative to a reference frame. The SI units are length divided by time squared.
 
 \section{Accelerometers - Working Principle} \label{sec:accel_working_principle}
 
@@ -69,7 +66,7 @@ The working principle of an accelerometer can be viewed as a simple mechanical s
 
 \subsubsection{Mechanical noise in accelerometers}
 \label{sec:mechanical_noise}
-The mechanical noise in an accelerometer is usually specified by the power spectral density (PSD), given by Equation \ref{eq:noise_spectral_density}. If we analyse this equation more closely, we see that the thermal noise energy $k_b T$ is a constant irrespective of the system size \cite[~p.13]{kaajakari09}. This means that thermal noise induced in mechanical vibrations sets the lower limit for the measurable acceleration \cite[~p.41]{kaajakari09}. One can also see from Equation \ref{eq:noise_spectral_density} that increasing the mass $m$ and reducing the resonant frequency $\omega_0$ reduces the overall noise. The $Q$ factor or quality factor is a dimensionless parameter that describes how under-damped an oscillator or resonator is \cite{resonance}. Again, we can see from Equation \ref{eq:noise_spectral_density} that increasing the Q factor helps reducing the overall noise.
+The mechanical noise in an accelerometer is usually specified by the power spectral density (PSD), given by Equation \ref{eq:noise_spectral_density}. If we analyse this equation more closely, we see that the thermal noise energy $k_b T$ is a constant irrespective of the system size \cite[~p.13]{kaajakari09}. This means that the thermal noise induced in mechanical vibrations sets the lower limit for the smallest, measurable acceleration \cite[~p.41]{kaajakari09}. One can also see from Equation \ref{eq:noise_spectral_density} that increasing the mass $m$ and reducing the resonant frequency $\omega_0$ reduces the overall noise. The $Q$ factor or quality factor is a dimensionless parameter that describes how under-damped an oscillator or resonator is \cite{resonance}. Again, we can see from Equation \ref{eq:noise_spectral_density} that increasing the Q factor helps reducing the overall noise.
 
 \begin{equation}
 \bar{\ddot{X_n}} = \sqrt{\frac{4 k_b T \omega_0}{mQ}}
@@ -90,9 +87,9 @@ The first micromachined accelerometer was demonstrated at Stanford University in
 
 \subsubsection{Surface Micromachining}
 
-Surface micromachining is based on patterning deposited thin film materials on top of a substrate wafer \cite[p.~5]{kaajakari09}. The production technique first appeared in the 1980s, and was primarily used as a low cost alternative to accelerometers for the automotive industry \cite[p.~101]{maluf04}. However, recent improvements in the production technique has made it possible to use the technique for other sensors such as pressure, gyroscopes and microphones. 
+Surface micromachining is based on patterning deposited thin film materials on top of a substrate wafer \cite[p.~5]{kaajakari09}. The production technique first appeared in the 1980s, and was primarily used as a low cost alternative to accelerometers for the automotive industry \cite[p.~101]{maluf04}. However, recent improvements in the production technique has made it possible to use the technique for other sensors such as pressure sensors, gyroscopes and microphones. 
 
-The surface micromachining process bear a close resemblance to the traditional integrated circuit (IC) manufacturing process, which is also based on processing thin films on a silicon wafer. In fact, they are so close that retired IC manufacturing plants often are converted into a MEMS fabrication plant, as MEMS does not require the latest in fabrication technology \cite[p.~4]{kaajakari09}. The similarities between IC manufacturing and surface micromachinined MEMS has several advantages. It is for instance relatively easy to integrate MEMS architectures together with IC to make a single-chip solution, which often leads to better performance and reduced packing-cost. 
+The surface micromachining process bear a close resemblance to the traditional integrated circuit (IC) manufacturing process, which is also based on processing thin films on a silicon wafer. In fact, the processes are so close that a retired IC manufacturing plant often are converted into a MEMS fabrication plant, as MEMS does not require the latest in fabrication technology \cite[p.~4]{kaajakari09}. The similarities between IC manufacturing and surface micromachined MEMS has several advantages. It is for instance relatively easy to integrate MEMS architectures together with IC to make a single-chip solution, which often leads to better performance and reduced packing-cost. 
 
 \subsubsection{Surface Micromachined Accelerometers}
 
@@ -126,7 +123,7 @@ Electrical resistance changes due to mechanical stress. This effect occurs in al
 
 \subsubsection{Capacitive Bulk Micromachining Accelerometer}
 
-Measures the differential change in capacitance when the inertial mass is displaced. Capacitive sensors provides an excellent noise performance and low power consumption \cite[p.~91]{kaajakari09}. One of the main challenges with capacitive sensors is to accurately measure the change in capacitance, as these changes themselves are extremely small. 
+A capacitive bulk micromachined accelerometer measures the differential change in capacitance when the inertial mass is displaced. Capacitive sensors provides an excellent noise performance and low power consumption \cite[p.~91]{kaajakari09}. One of the main challenges with capacitive sensors is to accurately measure the change in capacitance, as these changes themselves are extremely small. 
 
 \begin{figure}[h]
 \centering
