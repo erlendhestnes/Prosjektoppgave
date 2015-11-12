@@ -4,25 +4,16 @@ A custom printed circuit board (PCB) was created for this thesis. The board was 
 
 \section{Demo Board}
 
-The demo board consists of a microcontroller (nRF51), an accelerometer (ADXL362), a voltage regulator, LEDs and two tactile switches. A schematic of the demo board can be viewed in the Appendix \ref{chap:appendix_a}. 
+The demo board is comprised of a nRF51 system-on-chip (SoC), an accelerometer, a voltage regulator, LEDs and two tactile switches. 
+A schematic of the demo board can be viewed in the Appendix \ref{chap:appendix_a}. 
 
 \subsection{nRF51}
 
 The nRF51 is a Cortex-M0+ based System-on-Chip (SoC) from Nordic Semiconductor. The company is world leading in creating Bluetooth Low Energy solutions. This SoC was chosen mainly because of its advanced power saving features. 
 
-The nRF51 features several serial interfaces. However, only the SPI module has DMA capabilities. It was therefore necessary to choose an accelerometer with a SPI interface. This only ruled out the MMA8491QR1 from Freescale Semiconductor.
-
-The board is designed to run at supply voltage of 1.8V.
-
-For optimal power efficiency it is optimal to use the lowest possible supply voltage. The nRF51822 can go as low as 1.8V.
-
 \begin{center}
     \begin{tabular}{| l |}
     \hline
-    6.3mA - TX at -4dBm (3V using on-chip DC-DC) \\ \hline
-    8.0mA - TX at 0dBm (3V using on-chip DC-DC) \\ \hline
-    11.8mA – TX at +4dBm (3V using on-chip DC-DC) \\ \hline
-    9.7mA – RX (3V using on-chip DC-DC) \\ \hline
     13mA – RX at 1Mbps (No DC-DC) \\ \hline
     10.5mA – TX at 0dBm (No DC-DC) \\ \hline
     0.6µA – SYSTEM-OFF, no RAM retention \\ \hline
@@ -33,17 +24,15 @@ For optimal power efficiency it is optimal to use the lowest possible supply vol
 
 \subsubsection{Programmable Peripheral Interconnect (PPI)}
 
-The nRF51 features something the company calls Programmable Peripheral Interconnect (PPI). The PPI enables different peripherals in the device to interact autonomously with each other using tasks and events without using the CPU. The PPI can automatically trigger a task in one peripheral as a result of an event occurring in another. For instance, an interrupt from an external device (i.e. accelerometer) can trigger the SPI module to initiate a block transfer to memory. 
-
-\subsubsection{EasyDMA}
-
-The EasyDMA function in the nRF51 is able to move data to and from RAM and autonomously between peripherals. The DMA can be configured to work in conjunction with the PPI system for fully autonomous operation.
-
-So in turn one should be able to make a sensor data acquisition system that is able to collect accelerometer data and send it over radio without using the CPU.
+The nRF51 has something the company calls Programmable Peripheral Interconnect (PPI), which essentially is the same as an event system. The PPI enables different peripherals in the device to interact autonomously with each other using tasks and events. The PPI can automatically trigger a task in one peripheral as a result of an event occurring in another. 
 
 \subsubsection{GPIOTE}
 
-[Maybe write something about GPIOTE here...]
+The GPIO task and event system (GPIOTE) is a peripheral module in the nRF51 that is designed specifically for autonomous operation. The GPIOTE module is meant to work in conjunction the PPI system. A typical configuration is to configure a pin with GPIOTE to listen for an external interrupts. When an external interrupt is detected on this pin, the PPI system can notify another peripheral about this event. The notification can in turn trigger another operation.
+
+\subsubsection{EasyDMA}
+
+The DMA (called EasyDMA) function in the nRF51 is able to move data to and from RAM and autonomously between peripherals. EasyDMA can be configured to work in conjunction with the PPI system for execution of fully autonomous operations. For instance, an interrupt from an external device (i.e. accelerometer) can trigger the SPI module to initiate a DMA block transfer to memory, or to the radio. This essentially creates a sensor data acquisition system that is able to collect accelerometer data and send it over radio without using the CPU.
 
 \subsubsection{Bluetooth Low Energy}
 

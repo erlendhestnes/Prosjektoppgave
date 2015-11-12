@@ -20,29 +20,29 @@ The specifications presented in Table \ref{tab:accel_comparison} are gathered fr
     
     \textbf{Supply Voltage} & 1.6-3.5V  & 1.95-3.6V & 1.6-3.6V & 1.71-3.6V & 1.71-3.6V \\ \hline
     
-    \textbf{Shutdown current} & 10$\si{\nano\ampere}$ ,$V_s = 2.0 V$ & 1.8$\si{\nano\ampere}$ ,$V_s = 2.8 V$ & 400$\si{\nano\ampere}$ ,$V_s = 1.8 V$ & 500$\si{\nano\ampere}$ ,$V_s = 2.5 V$ & 900$\si{\nano\ampere}$ ,$V_s = 2.5 V$ \\ \hline
+    \textbf{Shutdown current} & 10$\si{\nano\ampere}$ ,$V_s = 2.0 V$ & 1.8$\si{\nano\ampere}$ ,$V_s = 2.8 V$ & 300$\si{\nano\ampere}$ ,$V_s = 1.8 V$ & 500$\si{\nano\ampere}$ ,$V_s = 2.5 V$ & 900$\si{\nano\ampere}$ ,$V_s = 2.5 V$ \\ \hline
     
     \textbf{Max ODR} & 400Hz & 800Hz & 400Hz & 1.25/5kHz \footnote[3] & 25.6kHz \\ \hline
     
-    \textbf{ODR current} & 1.8$\si{\micro\ampere}$ / 13$\si{\micro\ampere}$ \footnote[2] & 20$\si{\micro\ampere}$ \footnote[1] & 4.7$\si{\micro\ampere}$ / 14$\si{\micro\ampere}$, (FIFO On) \footnote[4] & 20$\si{\micro\ampere}$ / 10$\si{\micro\ampere}$ \footnote[3] & 21$\si{\micro\ampere}$ \\
+    \textbf{ODR current} & 1.8/13$\si{\micro\ampere}$ \footnote[2] & 20$\si{\micro\ampere}$ \footnote[1] & 6/9/26$\si{\micro\ampere}$, (FIFO On) \footnote[4] & 20/10$\si{\micro\ampere}$ \footnote[3] & 21$\si{\micro\ampere}$ \\
     
-    & $V_s = 2.0 V$, 100Hz ODR & $V_s = 2.8 V$, 100Hz ODR & 3.2$\si{\micro\ampere}$ / 8.4$\si{\micro\ampere}$, (FIFO Off) \footnote[4] & $V_s = 2.5 V$, 100Hz ODR  & $V_s = 2.5 V$, 100Hz ODR \\
+    & $V_s = 2.0 V$, 100Hz ODR & $V_s = 2.8 V$, 100Hz ODR & 3/6/17 $\si{\micro\ampere}$, (FIFO Off) \footnote[4] & $V_s = 2.5 V$, 100Hz ODR  & $V_s = 2.5 V$, 100Hz ODR \\
     
-    & & & $V_s = 1.8 V$, 50Hz ODR & &  \\ \hline
+    & & & $V_s = 1.8 V$, 100Hz ODR & &  \\ \hline
     
-    \textbf{Sensitivity} & 1mg/LSB (@ $\pm$2g) & 1mg/LSB (@ $\pm$2g) & 0.24-125mg/LSB & 1mg/LSB (@ $\pm$2g) & 0.6mg/LSB (@ $\pm$2g)\\ \hline
+    \textbf{Sensitivity} & 1mg/LSB (@ $\pm$2g) & N.A. & 0.24-125mg/LSB & 1mg/LSB (@ $\pm$2g) & 0.6mg/LSB (@ $\pm$2g)\\ \hline
 
-    \textbf{Spectral Noise (X,Y)} & 550$\si{\micro}$g/$\sqrt{Hz}$ / 250$\si{\micro}$g/$\sqrt{Hz}$ \footnote[2] & 406$\si{\micro}$g/$\sqrt{Hz}$ \footnote[6] & 565$\si{\micro}$g/$\sqrt{Hz}$/280$\si{\micro}$g/$\sqrt{Hz}$ \footnote[4] & 220ug/$\sqrt{Hz}$ / N.A. \footnote[3] & \\ 
+    \textbf{Spectral Noise (X,Y)} & 550 / 250$\si{\micro}$g/$\sqrt{Hz}$ \footnote[2] & 406$\si{\micro}$g/$\sqrt{Hz}$ \footnote[6] & 560/400/204$\si{\micro}$g/$\sqrt{Hz}$ \footnote[4] & 220 / N.A. $\si{\micro}$g/$\sqrt{Hz}$ \footnote[3] & \\ 
     
-    & $V_s = 2.0 V$,100Hz ODR & $V_s = 2.8 V$,100Hz ODR & $V_s = 1.8 V$,50Hz ODR & $V_s = 2.5 V$,100Hz ODR & $V_s = 2.5 V$,50Hz ODR \\ \hline
+    & $V_s = 2.0 V$,100Hz ODR & $V_s = 2.8 V$,100Hz ODR & $V_s = 1.8 V$,100Hz ODR & $V_s = 2.5 V$,100Hz ODR & $V_s = 2.5 V$,50Hz ODR \\ \hline
     
     \textbf{Digital Resolution} & 12-bit & 14-bit & 14-bit & 16-bit & 16-bit \\ \hline
     
-    \textbf{Effective bits (ENOB)} & 14-bit/17-bit \footnote[2] & 15-bit & 14-bit/16-bit \footnote[4] & 17-bit/N.A. \footnote[3] & N.A. \\ \hline
+    \textbf{Effective bits (ENOB)} & 14-bit/17-bit \footnote[2] & - & 14-bit/15-bit/18-bit \footnote[4] & 17-bit/N.A. \footnote[3] & N.A. \\ \hline
     
     \textbf{Interface} & SPI & I2C & SPI/I2C & SPI/I2C & SPI/I2C \\ \hline
     
-    \textbf{Measurement range} & $\pm$2,4,8g & $\pm$1-8g (full scale) & $\pm$2,4,8,12,16g & $\pm$2,4,8,16g & $\pm$2,4,8g \\ \hline
+    \textbf{Measurement range} & $\pm$2,4,8g & $\pm$8g & $\pm$2,4,8,12,16g & $\pm$2,4,8,16g & $\pm$2,4,8g \\ \hline
     
     \textbf{Additional features} & FIFO (512 Samples) & 3x Interrupt pins & FIFO (32 Samples) & FIFO (96 Samples) & FIFO (1024 Samples) \\
     
@@ -60,83 +60,67 @@ The specifications presented in Table \ref{tab:accel_comparison} are gathered fr
 \end{figure}
 
 \footnotetext[1]{Specified at 400nA/Hz in datasheet. 400nA * 50 = 20$\si{\micro\ampere}$}
-\footnotetext[2]{Normal mode/Ultralow noise mode}
+\footnotetext[2]{Normal mode/Ultra low noise mode}
 \footnotetext[3]{Normal mode/Low power mode}
-\footnotetext[4]{Low power mode/Precision mode}
+\footnotetext[4]{Ultra low power mode/Low power mode/Precision mode}
 \footnotetext[5]{Low power mode/High resolution mode}
 \footnotetext[6]{$PSD = Nrms / 4*sqrt(BW)$}
 
 \subsection{General Comments}
 
-All of the listed accelerometers in Table \ref{tab:accel_comparison} uses the surface micromachined fabrication process. This is not surprising, as this process has become the de-facto standard for cheap, low-power MEMS designs.
-
-[write something about ENOB]
+All of the listed accelerometers in Table \ref{tab:accel_comparison} uses the surface micromachined fabrication process. This is not surprising, as this process has become the de-facto standard for cheap, low-power MEMS designs. It is also nice to see that every accelerometer in this comparison has a digital resolution less than or equal to the effective number of bits.
 
 \subsection{ADXL362}
 
 The ADXL362 from Analog Devices claim to be the lowest power accelerometer in the industry, according to Analog Devices themselves \cite{analog12}. At a supply voltage of $V_s = 2.0 V$ it uses only 10nA in shutdown mode and 1.8$\si{\micro\ampere}$ at a ODR of 100Hz in low power mode. It also has numerous features, such as 270nA wake-up mode, two interrupt pins, a temperature sensor and a deep embedded FIFO that can hold 512 full resolution samples. 
 
-In the motion wake-up mode the accelerometer samples at a rate of 6Hz. A threshold value can be specified in a dedicated register, for which the device can wake from when breached. Upon wake-up, the sensor can either enter normal operation and begin to sample at a full bandwidth or signal an interrupt to the host controller. The latter can be very useful for a motion-activated application. 
+In the motion wake-up mode the accelerometer samples at a rate of 6Hz. A threshold value can be specified in a dedicated register, for which the device can wake from when breached. Upon wake-up, the sensor can either enter normal operation and begin to sample at a full bandwidth or signal an interrupt to the host controller.
 
-The FIFO in the ADXL362 can be configured to either hold 170 sample sets of concurrent 3-axis data or 128 sample sets of concurrent 3-axis and temperature data. The FIFO has three different configuration options; oldest-save mode, stream mode and triggered mode. In oldest save-mode, the  FIFO accumulates data until it is full and then stops. Additional data is collected only when space is made available by reading samples out of the FIFO buffer. In the stream-mode, the FIFO always contains the most recent data. The oldest sample is discarded when space is needed to make room for a newer sample. In triggered mode, the FIFO saves samples surrounding an activity detection event \cite[p~38]{ADXL362}.
+The FIFO in the ADXL362 can be configured to either hold 170 sample sets of concurrent 3-axis data or 128 sample sets of concurrent 3-axis and temperature data. The FIFO has three different configuration options; oldest-save mode, stream mode and triggered mode. In oldest save-mode, the  FIFO accumulates data until it is full and then stops. Additional data is collected only when space is made available by reading samples out of the FIFO buffer. In the stream-mode, the FIFO always contains the most recent data. The oldest sample is discarded when space is needed to make room for new samples. In triggered mode, the FIFO saves samples surrounding an activity detection event \cite[p~38]{ADXL362}.
 
-From Table \ref{tab:accel_comparison} on can see that ultra-low power consumptino of the ADXL362 comes at cost. The ADXL362 has a relatively high spectral noise density, only 12-bit digital resolution and only three measurement ranges. The spectral noise for the ADXL362 can be reduced by using the ultra low noise mode. This ultra low noise mode uses almost ten times more current, but halves the spectral noise, making the accelerometer on pair with it's best competitors. Interestingly, even with the ultra low noise mode enabled, the ADXL362 still has one of the lowest current draws for a 100Hz ODR, only beaten by the LIS3DH. The ODR current was only specified at 50Hz ODR for the MC3610, but one can assume that current would be around twice that of the 50Hz ODR, as the dynamic power consumption is proportional to the frequency, as seen from Equation \ref{eq:p_dynamic}.
+From Table \ref{tab:accel_comparison} one can see that ultra-low power consumption of the ADXL362 comes at cost. The ADXL362 has a relatively high spectral noise density, only 12-bit digital resolution and only three measurement ranges. The spectral noise for the ADXL362 can be reduced by using the ultra low noise mode. This ultra low noise mode uses almost ten times more current, but halves the spectral noise.
 
-The ADXL362 has a SPI interface which can handle a bus clock frequency of 8MHz. The digital interface also supports burst read and writes in order to reduce the number of communication cycles required to configure the part and retrieve data. The FIFO is implemented in such a way that consecutive samples can be read continuously, thereby enabling the usage of direct memory
-access (DMA) to read out the FIFO contents.
+The ADXL362 has a SPI interface which can handle a bus clock frequency of 8MHz. The digital interface also supports burst read and writes in order to reduce the number of communication cycles required to configure the part and retrieve data. The FIFO is also implemented in such a way that consecutive samples can be read continuously, thereby enabling the usage of direct memory access (DMA) to read out the FIFO contents.
 
 \subsection{MMA8491Q}
 
-The MMA8491Q from Freescale Semiconductor has the lowest shutdown current of the compared accelerometers. Freescale do however state in the datasheet \cite[p~9]{MMA8491Q} that this number is only evaluation data, and that it has not been actually tested in production. The current consumption for sampling is 400nA/Hz. However, Freescale does not specify whether this number is ODR or bandwidth. It is assumed to be bandwidth in this report, which in turn means that the current consumption of 100Hz ODR is 20$\si{\micro\ampere}$. Which is comparable to the current consumption of the LIS3DH and the KX123.  
+The MMA8491Q from Freescale Semiconductor has the lowest shutdown current (1.8$\si{\nano\ampere}$) of the compared accelerometers. The current consumption for sampling is listed as 400nA/Hz, which gives a current consumption of 20$\si{\micro\ampere}$ for a 100Hz ODR, making it comparable to the LIS3DH and KX123. The MMA8491Q has a good digital resolution of 14-bit and a maximum ODR of 800Hz. The MMA8491Q differs from the rest of accelerometers in this comparison, as all of its functionality is fully automated. There are no configuration registers, only data registers for X, Y and Z output. There are some benefits with this approach, in terms of saving time and money in development time for an application. 
 
-The MMA8491Q have interrupt pins for each acceleration axis, which is used for tilt detection. When the device is tilted 45 degrees along an axis, the device generates an interrupt on the corresponding axis pin. Unfortunately, there is no possibility to change the threshold value. In fact, the MMA8491Q does not have any configuration registers, as the functionality of the device is fully automated. 
+The MMA8491Q also have one unique feature when compared to the other accelerometers. It has three interrupt pins which are used for tilt detection. When the device is tilted 45 degrees along an axis, the device generates an interrupt on the corresponding axis pin. Since there are no configuration registers, there is no possibility to change the threshold value for the tilt detection. 
 
-It is also has a full scale measurement range from $\pm$1-8g's.
-
-Some drawbacks with this component is that it requires a relatively high supply voltage of 1.95V, and that it only has a I2C interface with a speed of 400kHz. The I2C interface supports burst read only. The MMA8491Q is also the only device in the comparison without a FIFO. 
-
+Some drawbacks with this component is that it requires a relatively high supply voltage of 1.95V, has only one measurement range of $\pm$8g and that it only has a I2C interface with a maximum speed of 400kHz. The MMA8491Q is also the only device in the comparison without a FIFO, which can be seen as an severe limitation in terms of power consumption.
 
 \subsection{MC3610}
 mCube is a relatively new and small MEMS manufacturer in this comparison. Yet, they have managed to develop av very good and low-power solution with the MC3610. The accelerometer has the most versatile measurement range in the comparison, a good digital resolution of 14-bit and many additional features such as an embedded FIFO and a 600nA motion activated wake-up mode. 
 
-The FIFO can hold 32 samples with a resolution of 12-bit. The FIFO has two different modes; normal mode and watermark mode. In normal mode the FIFO continues to accept new samples as long as there is space remaining in the FIFO. In watermark mode, the FIFO samples until the amount of samples in the FIFO reaches or
-exceeds a specified threshold level. When the limit is reached, the FIFO stops accepting new sample
-data and any additional sample data is dropped.
+The FIFO can hold 32 samples, 10 samples for each axis (X, Y and Z) or 16 samples for two axes. The FIFO sample resolution is limited to 12-bits. The FIFO has two different modes; normal mode and watermark mode. In normal mode the FIFO continues to accept new samples as long as there is space remaining in the FIFO, and stops when the FIFO is full. In watermark mode, the FIFO samples until the amount of samples in the FIFO reaches or exceeds a specified threshold level. When the limit is reached, the FIFO stops accepting new data and any additional samples are dropped.
 
-The motion activated wake-up mode operates at 6Hz. A threshold value can be specified in a dedicated register, for which the device can wake from when breached. Upon wake-up, the sensor can either enter normal operation and begin to sample at a full bandwidth or signal an interrupt to the host controller.
+The motion activated wake-up mode operates at 6Hz, which is the same as the ADXL362. A threshold value can be specified in a dedicated register, for which the device can wake from when breached. Upon wake-up, the sensor can either enter normal operation and begin to sample at full bandwidth or signal an interrupt to the host controller.
 
-The MC3610 is one of the best accelerometers when it comes to current consumption in sampling mode and the device is able to work at a very low supply voltage of 1.6V. However, there are some restrictions when it comes to using the component at lowest power settings. The FIFO does for instance use a lot of additional current when in use and the spectral noise is fairly high when operating in low power mode. As the ADXL362, the MC3610 also features a precision mode which trades increased current consumption for a better noise spectral density. With both FIFO and precision mode enabled, the device consumes 14$\si{\micro\ampere}$ at 50Hz ODR. 
+The device has three power modes; ultra low power, low power and precision mode. Each mode trades trades increased current consumption for a better noise spectral density. 
 
-Which is about the same as the ADXL362 consumes at a 100Hz ODR. The spectral density is also marginally worse than the ADXL362 at this setting. The shutdown current for the MC3610 is relatively high compared to the ADXL362 and the MMA8491QR1.
+The MC3610 is one of the best accelerometers when it comes to current consumption in sampling mode and the device is able to work at a very low supply voltage of 1.6V. However, there are some restrictions when it comes to using the component at lowest power settings. The FIFO does for instance use a lot of additional current when in use and the spectral noise is fairly high when operating in low power mode. As the ADXL362, the MC3610 also features a precision mode which trades increased current consumption for a better noise spectral density. With both FIFO and precision mode enabled, the device consumes 14$\si{\micro\ampere}$ at 100Hz ODR. 
 
-The device has both SPI and I2C, whereas the SPI interface goes up to a speed of 2MHz. The interface supports burst read for both I2C and SPI. The device has only one interrupt pin, although the operation of this pin is highly configurable.
+The device has both SPI and I2C, whereas the SPI interface goes up to a speed of 2MHz, and the I2C interface up to a speed of 400kHz. The interface supports burst read for both I2C and SPI. The device has only one interrupt pin.
 
 \subsection{LIS3DH}
 
 The LIS3DH from STMicroelectronics is the most feature rich accelerometer in this comparison. The accelerometer comes with motion and free fall detection, two programmable interrupt pins, an integrated temperature sensor and an embedded FIFO. The device can even be used as an auxiliary ADC.
 
-The FIFO is able to hold 32 samples for each axis (96 in total), but only at resolution of 10-bits. The FIFO has three modes; FIFO mode, stream mode and stream-to-FIFO mode. In FIFO mode, data from X, Y and Z channels are stored into the FIFO. The FIFO stops collecting samples when it is full. Stream mode is essentially the same as FIFO mode. The difference is that the FIFO does not stop collecting samples when it is full, instead it overwrites older data with new data. Stream-to-FIFO is a hybrid of the two first modes. The FIFO starts by operating in stream mode, but is able to transition into FIFO mode upon a event. The transition event can for example be generated upon an exceeded threshold or from an external interrupt.
+The FIFO is able to hold 32 samples for each axis (96 in total), but only at resolution of 10-bits. The FIFO has three modes; FIFO mode, stream mode and stream-to-FIFO mode. In FIFO mode, data from all axes are stored into the FIFO. The FIFO stops collecting samples when it is full. Stream mode is essentially the same as FIFO mode. The difference is that the FIFO does not stop collecting samples when it is full, instead it overwrites older data with new data. Stream-to-FIFO is a hybrid of the first two modes. The FIFO starts by operating in stream mode, but is able to transition into FIFO mode upon an event, thereby logging data prior to and after an event. The transition event can for example be generated when a threshold is exceeded.
 
-The LIS3DH has a motion activated wake-up mode. Unlike the ADXL362 and the MC3610, the measurement frequency can be configured in steps for this mode. The lowest selectable step is 1Hz ODR, where the device consumes 2$\si{\micro\ampere}$. The next step is 10Hz ODR, where the device consumes 3$\si{\micro\ampere}$. 
+The LIS3DH also has a motion activated wake-up mode. Unlike the ADXL362 and the MC3610, the measurement frequency can be configured in steps for this mode. The lowest selectable step is 1Hz ODR, where the device consumes 2$\si{\micro\ampere}$. The next step is 10Hz ODR, where the device consumes 3$\si{\micro\ampere}$. The device also has something STMicroelectronics calls 4D/6D orientation detection, which essentially enables the accelerometer to wake-up when the device is stable in a known direction. 
 
-The LIS3DH also has something STMicroelectronics calls 4D/6D orientation detection, which essentially enables the accelerometer to generate an interrupt when the device is stable in a known direction. 
-
-The LIS3DH has a high digital resolution of 16-bit and the best spectral noise density of the compared accelerometers. An additional nice feature here is that the device can be used as an auxiliary ADC. The device has three dedicated analog input pins (ADC1, ADC2, ADC3) which can be used to sample analog signals. 
-
-The current consumption in sampling mode is competitive with the ADXL362 if low power mode is selected. However, STMicroelectronics does not provide any numbers on the noise spectral density for the low power mode. They only state that the noise will increase when this mode is entered, thereby making it hard to compare against the ADXL362. The shutdown current for LIS3DH is also relatively high, at least when compared to the ADXL362 and the MMA8491Q. 
+The LIS3DH has a high digital resolution of 16-bit and the best spectral noise density of the compared accelerometers. An additional nice feature here is that the device can be used as an auxiliary ADC. For this purpose, the device has three dedicated analog input pins (ADC1, ADC2, ADC3) which can be used to sample analog signals. 
 
 The device has both SPI and I2C interface, with SPI interface that goes all the way up to 10MHz. Burst reads for both SPI and I2C are supported.
 
 \subsection{KX123}
 
-The KX123 from Kionix (A Rohm Semiconductor subsidiary) combines a very high digital resolution of 16-bits together with the highest ODR of all the accelerometers in the comparison. The device also has a large FIFO buffer of 2048 bytes, which are then able to hold 1024 full resolution samples. The FIFO also has four different modes; FIFO mode, stream mode, trigger mode and FILO mode. In FIFO mode the device collects samples until the FIFO is full, then stops. In stream mode, the device collects samples until the device is full. When full it overwrites the oldest samples with new ones. In triggered mode, the device essentially operates in stream mode until an event is detected, then the device enters FIFO mode and collects samples until the FIFO is full. FILO mode is the same as FIFO, except that data is read with the most recent samples first.
+The KX123 from Kionix (a Rohm Semiconductor subsidiary) combines a very high digital resolution of 16-bits together with the highest ODR of all the accelerometers in the comparison. The device also has a large FIFO able to hold 1024 full resolution samples. The device is also quite feature rich, with single- and double tap detection, free fall detection as well as a motion activated wake-up mode.
 
-The device does however have the highest shutdown current, of nearly a $\si{\micro\ampere}$. 
+The FIFO in the KX123 has four different modes; FIFO mode, stream mode, trigger mode and FILO mode. In FIFO mode the device collects samples until the FIFO is full, then stops. Stream mode is essentially the same as FIFO mode. The difference is that when the FIFO is full, it overwrites the oldest samples with new ones instead of stopping. In triggered mode, the device operates in stream mode until an event is detected. When an event is detected, the device enters FIFO mode and collects samples until the FIFO is full. FILO (First-in Last-out) mode is the same as FIFO, except that the most recent data is outputted first when the device is being read.
 
-The ODR current is 21 $\si{\micro\ampere}$, which is on pair with the MMA8491Q and the LIS3DH in normal mode. It only has three measurement ranges, as the ADXL362.
+Like the LIS3DH, the KX123 also has a configurable wake-up mode. The lowest ODR step for this mode is 0.781Hz, for which the device consumes 1.8$\si{\micro\ampere}$. The sampling current is 21 $\si{\micro\ampere}$ at 100Hz ODR, which is on pair with the MMA8491Q and the LIS3DH in normal mode. The KX123 only has three measurement ranges, as the ADXL362. The device also has the highest shutdown current of the compared accelerometers, of nearly a $\si{\micro\ampere}$. 
 
-The device is quite feature rich, with single- and double tap detection as well as free fall detection.
-
-It also has a configurable wake-up mode. The lowest ODR for this mode is 0.781Hz, for which the device consumes 1.8$\si{\micro\ampere}$. 
-
-The device has both SPI and I2C interface, with SPI interface that goes all the way up to 10MHz.
+The KX123 has both SPI and I2C interface, whereas the SPI interface that goes all the way up to 10MHz. The device supports burst reads in both SPI and I2C mode.
