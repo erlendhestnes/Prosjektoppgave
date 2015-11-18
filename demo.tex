@@ -4,7 +4,7 @@ A custom printed circuit board (PCB) was created for this thesis. The board was 
 
 \section{Demo Board}
 
-The demo board is comprised of a nRF51 system-on-chip (SoC), an accelerometer, a voltage regulator, LEDs and two tactile switches. 
+The demo board is comprised of a nRF51 system-on-chip (SoC), an ADXL362 accelerometer, a voltage regulator, LEDs and two tactile switches. 
 A schematic of the demo board can be viewed in the Appendix \ref{chap:appendix_a}. 
 
 \subsection{nRF51}
@@ -28,7 +28,7 @@ The nRF51 has something the company calls Programmable Peripheral Interconnect (
 
 \subsubsection{GPIOTE}
 
-The GPIO task and event system (GPIOTE) is a peripheral module in the nRF51 that is designed specifically for autonomous operation. The GPIOTE module is meant to work in conjunction the PPI system. A typical configuration is to configure a pin with GPIOTE to listen for an external interrupts. When an external interrupt is detected on this pin, the PPI system can notify another peripheral about this event. The notification can in turn trigger another operation.
+The GPIO task and event system (GPIOTE) is a peripheral module in the nRF51 that is designed specifically for autonomous operation. The GPIOTE module is meant to work in conjunction with the PPI system. A typical configuration is to configure a pin with GPIOTE to listen for an external interrupts. When an external interrupt is detected on this pin, the PPI system can notify another peripheral about this event, which in turn can trigger another operation.
 
 \subsubsection{EasyDMA}
 
@@ -38,7 +38,7 @@ The DMA (called EasyDMA) function in the nRF51 is able to move data to and from 
 
 Bluetooth Low Energy (BLE) is wireless communication protocol designed by the Bluetooth Special Interest Group. The protocol is aimed at healthcare, fitness and beacon applications. It is designed to have ultra-low peak, average and idle mode power consumption. This enables devices that uses BLE to run for years on a standard coin-cell battery. BLE has become a big part of IoT applications that are available today, and is considered to be an important protocol for future devices as well. Another benefit with BLE, is that most smart phones support the protocol and are therefore able to talk to other BLE devices. Low-power and connectivity was the main reason that BLE was chosen for this demo application. 
 
-\section{The Configuration}
+\section{Demo Board Configuration}
 
 The planned example will utilize EasyDMA, PPI, GPIOTE, SPI and the radio of the nRF51, as viewed with red boxes in Figure \ref{fig:accel_working_principle}. The Cortex-M0+ CPU should only be used for configuration of the system, and will be sleeping during data collection. The ADXL362 is configured to wake up when motion is detected, and then collect samples autonomously into its embedded FIFO. When the FIFO is full, the ADXL362 will send an interrupt to nRF51. The PPI is configured to listen to for this interrupt and to trigger a SPI block transfer when it is detected. As data is being transferred to the SPI module, the EasyDMA shuffles data either into the RAM or the radio module. This entire operation is possible without any CPU intervention.
 

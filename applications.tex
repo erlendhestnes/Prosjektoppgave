@@ -1,29 +1,37 @@
 \chapter{Possible IoT Applications for Ultra Low Power Accelerometers}
 
+This chapter is about possible IoT applications for low power accelerometers.
+
 \section{Types of measurement}
 
-Consumer grade MEMS accelerometers can typically measure from a range of $\pm2g$ to a range of $\pm16g$. This range is perfectly suited for measuring motion and vibration. 
+Consumer grade MEMS accelerometers can typically measure from a range of $\pm2g$ to a range of $\pm16g$. This range is perfectly suited for measuring motion and vibration.  However, this range excludes shock and impact detection, as these events typically range in units of several hundred or even thousands of g's.
 
-This excludes shock and impact detection, as these events typically range in units of several hundred g's.
+Light vibrations are in the order of 0.014 - 0.039g's, while the highest recorded earthquake was at its peak 2.99g's. The Bugatti Veyron supercar pulls 1.55g's when doing 0-100km/h in 2.4 seconds, while the space shuttle pulls at most 3g's during launch and reentry. A F-16 fighter jet is at most able to pull 9g-12g for limited amount of time.  while a baseball struck by a baseball bat is in the order of 3000g's.
 
-\subsection{Motion}
+For most accelerometer IoT applications it is therefore more than sufficient to be able to sense in range of $\pm2g$'s. There are however corner-cases. If the accelerometer for instance is to be used inside a baseball bat or soccer ball one might consider an accelerometer which a much higher measurement range.
 
-In this thesis, a motion is regarded as slow moving event such as the movement of game controller or smart phone.
-
-\section{Potential IoT Application}
-
-This section presents a discussion about possible IoT applications for low power accelerometers. 
 
 \subsection{Vibration Detection}
 
-For some construction applications it can be very beneficial to be able to monitor the vibrations inside the structure itself. Ultra low power sensors can for instance be submersed inside concrete walls and transmit during the entire life-span of the building. From this application one can really see the problem with changing batteries. As one would literally need to tear down the wall to change batteries. 
+For some construction applications it can be very beneficial to be able to monitor the vibrations inside the structure itself. Ultra low power sensors can for instance be submersed inside concrete walls and transmit during the entire life-span of the building. From this application one can really see the problem with changing batteries. As one would literally need to tear down a wall to change them. 
 
 \subsection{Motion Detection}
+
+In this thesis, a motion is regarded as slow moving event such as the movement of game controller or smart phone.
+
+Motion detection can in it simplest form be used as a trigger to wake an external system. 
+For some applications we might only be interested in the wake-up mode for an accelerometer. For such application it could be beneficial to use a special purpose device.
 
 Motion Sensing is something that is being widely used in electronic devices today. It is for example being used as control input for certain smart phone applications.
 
 \subsection{Health Monitoring}
 
-Fitness armbands, smart watches is something that has gained much popularity in the recent years. By having an ultra-low power sensor one could see a scenario where one could integrate health monitoring into clothes, shoes and other sports equipment.
+Fitness armbands and smart watches is something that has gained much popularity in the recent years. These devices have quite strict requirements when it comes to size, so there is often not much room for a battery. For such applications it is therefore crucial to use ultra low power sensors and efficient data acquisition techniques. However, the sensors also need to have good enough performance to acquire useful data, such as the number of steps taken, heart rate information and so forth.  
+
+\subsection{Pedometer}
+
+...
 
 \subsection{Navigation}
+
+...

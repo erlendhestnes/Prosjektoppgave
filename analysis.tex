@@ -1,7 +1,5 @@
 \chapter{Accelerometer Analysis}
 
-%The requirements of a sensor is highly dependent on which application it is going to be used for. Therefore, this chapter first presents specifications for a demo application, then a discussion around choosing an accelerometer from the overview in Chapter \ref{chap:overview}. The accelerometer is chosen 
-
 This chapter presents a discussion around choosing the accelerometer, from the overview in Chapter \ref{chap:overview}, that gives the best trade-off in terms of functionality and power consumption. The chosen accelerometer will be used for a custom demo board.
 
 \section{Important Criteria}
@@ -10,7 +8,7 @@ This chapter presents a discussion around choosing the accelerometer, from the o
 
 In almost any accelerometer based application, the accelerometer will do nothing 99\% of the time \cite{moldsvor15}. If the accelerometer is going to be used in an application where it is awoken by an external trigger, it may be most beneficial to select the component with the lowest shutdown current. 
 
-From the comparison in Table \ref{tab:accel_comparison} from Chapter \ref{chap:overview} we can see that the MMA8491Q from Freescale Semiconductor has the lowest shutdown current, consuming only 1.8nA. Freescale do however state in their datasheet \cite[p~9]{MMA8491Q} that this number is only evaluation data, and that it has not been tested in production. Which raises some questions whether this number can be trusted as a typical value or not. The maximum shutdown current for the device is rated to be 68nA. The ADXL362 from Analog Devices comes in at second place with a shutdown current consumption of 10nA. On third place we find the MC3610 with a consumption of 300nA, which is over 160 times more current than the MMA8491Q and 30 times more current the ADXL362. The LISDH and KX123 is even worse in this area, with a current consumption of 500nA and 900nA respectively. 
+From the comparison in Table \ref{tab:accel_comparison} from Chapter \ref{chap:overview} we can see that the MMA8491Q from Freescale Semiconductor has the lowest shutdown current, consuming only 1.8nA. Freescale do however state in their datasheet \cite[p~9]{MMA8491Q} that this number is only evaluation data, and that it has not been tested in production. Which raises some questions whether this number can be trusted as a typical value or not. The ADXL362 from Analog Devices comes in at second place with a shutdown current consumption of 10nA. On third place we find the MC3610 with a current consumption of 300nA, which is over 160 times more current than the MMA8491Q and 30 times more current the ADXL362. The LISDH and KX123 is even worse in this area, with a current consumption of 500nA and 900nA respectively. 
 
 \begin{figure}[h]
 \begin{center}
@@ -24,11 +22,43 @@ From the comparison in Table \ref{tab:accel_comparison} from Chapter \ref{chap:o
 \label{tab:shutdown_current}
 \end{figure}
 
+\begin{tikzpicture}
+    \begin{semilogyaxis}[
+        width  = 0.85*\textwidth,
+        height = 8cm,
+        major x tick style = transparent,
+        ybar,
+        bar width=14pt,
+        ymajorgrids = true,
+        ylabel = {Shutdown current (nA)},
+        symbolic x coords={ADXL362,MMA8491Q, MC3610, LIS3DH, KX123},
+        xtick = data,
+        enlarge x limits=0.5,
+        scaled y ticks = false,
+    ]
+        \addplot[style={bblue,fill=bblue,mark=none}]
+            coordinates {(ADXL362,10)};
+
+        \addplot[style={rred,fill=rred,mark=none}]
+             coordinates {(MMA8491Q,1.8)};
+
+        \addplot[style={ggreen,fill=ggreen,mark=none}]
+             coordinates {(MC3610,300)};
+
+        \addplot[style={ppurple,fill=ppurple,mark=none}]
+             coordinates {(LIS3DH,500)};
+        
+        \addplot[style={ppurple,fill=ppurple,mark=none}]
+             coordinates {(KX123,900)};
+
+        \legend{ADXL362,MMA8491Q,MC3610, LIS3DH, KX123}
+    \end{semilogyaxis}
+\end{tikzpicture}
 \subsection{Wake-up Current}
 
-However, shutdown current might be irrelevant for some applications. A more common use-case for an ultra low power accelerometer is to use the device as the trigger to wake-up the rest of the system when motion is detected. This approach is for instance used frequently for modern remote controls. For such a configuration, we would ideally want the accelerometer to take measurements only when movement is detected. To make such a scheme work, we would need to know when motion is going to be applied, which in most applications is not possible. A more common approach is to incorporate a low power wake-up mode. In this scheme the accelerometer is always turned on, but use a very low measurement rate to listen for any motion above a certain threshold. When the threshold is breached, the sensor can enter normal operation and begin to sample at a much higher rate. 
+Shutdown current might not be so relevant for all applications. A more common use-case for an ultra low power accelerometer is to use the device as the trigger to wake-up the rest of the system when motion is detected. This approach is for instance used frequently for modern remote controls. For such a configuration, we would ideally want the accelerometer to take measurements only when movement is detected. Such a scheme does however require the device to know when motion is going to be applied, which in most applications is not feasible. A more common approach is therefore to incorporate a low power wake-up mode. In this mode the accelerometer is always sampling, but with a very low sampling rate. When a motion is detected, a sample gets above a specified threshold, the sensor can enter normal operation and begin to sample at a normal rate. 
 
-From the comparison in Table \ref{tab:accel_comparison} we can see that the ADXL362 is the best device when it comes to current consumption in motion detect mode. The accelerometer only consumes 270nA sampling at a rate of 6Hz, which gives us an impressive 45nA/Hz for this mode. The rate of 6Hz should be more than enough to sense that an object is being moved, but may be insufficient to sense an impact. The next best device when it comes to wake-up current is the MC3610 from mCube. This device consumes 600nA at a rate of 6Hz, which gives us 100nA/Hz. This is an impressive number, but it is still over twice the current of the ADXL362. The MMA8491Q comes in at a third place with a current consumption of 400nA/Hz, which is four times more than MC3610 and almost nine times more than ADXL362. It is clear that the LIS3DH and KX123 can't compete in this area, with both devices having a wake-up current consumption in the region of 2000nA/Hz 
+From the comparison in Table \ref{tab:accel_comparison} we can see that the ADXL362 is the best device when it comes to current consumption in motion wake-up mode. The accelerometer only consumes 270nA sampling at a rate of 6Hz, which gives us an impressive 45nA/Hz for this mode. The rate of 6Hz should be more than enough to sense that an object is being moved, but may be insufficient to sense sudden events such as an impact. The next best device when it comes to wake-up current is the MC3610 from mCube. This device consumes 600nA at a rate of 6Hz, which translates into 100nA/Hz. This is an impressive number, but it is still over twice the current of the ADXL362. The MMA8491Q comes in at a third place with a current consumption of 400nA/Hz, which is four times more than MC3610 and almost nine times more than ADXL362. It is clear that the LIS3DH and KX123 can't compete in this area, with both devices having a wake-up current consumption in the region of 2000nA/Hz 
 
 \begin{figure}[h]
 \begin{center}
@@ -44,9 +74,9 @@ From the comparison in Table \ref{tab:accel_comparison} we can see that the ADXL
 
 \subsection{Embedded FIFO}
 
-It is usually the CPU that consumes the most power in an embedded system. From a power perspective it is therefore important to only use the CPU when absolutely necessary. An embedded FIFO can be of great importance when it comes to saving CPU cycles. Without a FIFO, a sensor would need to transfer samples one by one as soon as a sample was ready. Assuming no DMA or event system, the CPU would have to initiate a data transfer each time a new sample was ready in the sensor. If the sensor was fitted with a FIFO, the CPU would only have to initiate a transfer when the FIFO was full. The transfer would also benefit from less overhead, since transferring several elements in bulk uses less cycles than doing single data transfers. 
+It is usually the CPU that consumes the most power in an embedded system. From a power perspective it is therefore important to only use the CPU when absolutely necessary. An embedded FIFO can be of great importance when it comes to saving precious CPU cycles. Without a FIFO, a sensor would need to transfer samples one by one as soon as a sample was ready. Assuming no DMA or event system, the CPU would have to initiate a data transfer each time a new sample was ready in the sensor. If the sensor was fitted with a FIFO, the CPU would only have to initiate a transfer when the FIFO was full. The transfer would also benefit from less overhead, since transferring several elements in bulk uses less cycles than doing single data transfers. 
 
-All of the accelerometers in Table \ref{tab:accel_comparison}, except the MMA8491Q, has an embedded FIFO exactly for this purpose. The KX123 from Kionix has the both the largest and the most versatile FIFO amongst the compared accelerometers. It is able to hold 1024 samples at a resolution of 16-bit. It also highly configurable with four different modes. On second place we find the ADXL362, which is able to hold 512 samples at a resolution of 12-bit. The FIFO in the ADXL362 is also quite configurable, with three different settings. The LIS3DH comes in at third place with a FIFO that can hold 96 samples, but only at resolution of 10-bits. Considering that the ADC is capable of sampling at a 16-bit resolution, it is quite disappointing the the LIS3DH does not support a higher FIFO resolution. The MC3610 comes in at fourth place, and is able to hold 32 samples at a resolution of 12-bits. The MMA8491Q does not have a FIFO, which is considered to be a big drawback in this comparison.
+All of the accelerometers in Table \ref{tab:accel_comparison}, except the MMA8491Q, has an embedded FIFO exactly for this purpose. The KX123 from Kionix has the both the largest and the most versatile FIFO amongst the compared accelerometers. It is able to hold 1024 samples at a resolution of 16-bit. It also highly configurable with four different modes. On second place we find the ADXL362, which is able to hold 512 samples at a resolution of 12-bit. The FIFO in the ADXL362 is also quite configurable, with three different settings. The LIS3DH comes in at third place with a FIFO that can hold 96 samples, but only at resolution of 10-bits. Considering that the ADC in the LIS3DH is capable of sampling at a 16-bit resolution, it is quite disappointing the the device does not support a higher FIFO resolution. The MC3610 comes in at fourth place, and is able to hold 32 samples at a resolution of 12-bits. The MMA8491Q does not have a FIFO, which is considered to be a big drawback in this comparison.
 
 \begin{figure}[h]
 \begin{center}
@@ -63,7 +93,9 @@ All of the accelerometers in Table \ref{tab:accel_comparison}, except the MMA849
 
 \subsection{ODR Current}
 
-Even though the accelerometer spends most of it time in either a motion activated wake-up state or shutdown state, it is still important to take into account the current usage when sampling at normal bandwidth. From Table \ref{tab:accel_comparison} we that the ADXL362 is the best device when it comes to current consumption at 100Hz ODR, consuming only 1.8$\si{\micro\ampere}$ in low power mode. The MC3610 comes in at second place with current consumption of 3$\si{\micro\ampere}$ with the FIFO turned off and 6$\si{\micro\ampere}$ with the FIFO turned on. The third place goes to the LIS3DH in low power mode, consuming 10$\si{\micro\ampere}$ at this configuration. The fourth place is shared between the MMA8491Q and the KX123, with both devices consuming around 20$\si{\micro\ampere}$.
+Even though the accelerometer spends most of it time in either a motion activated wake-up state or shutdown state, it is still important to take into account the current usage when sampling at normal bandwidth. 
+
+From Table \ref{tab:accel_comparison} we see that the ADXL362 is the best device when it comes to current consumption at a 100Hz ODR, consuming only 1.8$\si{\micro\ampere}$ in its lowest power mode. The MC3610 comes in at second place with current consumption of 3$\si{\micro\ampere}$ with the FIFO turned off and 6$\si{\micro\ampere}$ with the FIFO turned on. This is also with low power mode enabled. The third place goes to the LIS3DH in low power mode, consuming 10$\si{\micro\ampere}$ at this configuration. The fourth place is shared between the MMA8491Q and the KX123, with both devices consuming around 20$\si{\micro\ampere}$ in their lowest power mode.
 
 \begin{figure}[h]
 \begin{center}
@@ -77,50 +109,39 @@ Even though the accelerometer spends most of it time in either a motion activate
 \label{tab:wake_current}
 \end{figure}
 
-\subsection{Noise}
+\subsection{Precision and Noise}
 
-...
+A good PSD and digital resolution is not that important if the accelerometer is only going to be used as a motion activated trigger. It does however become an important factor if the motion data is going to be used for the application. A pedometer does for instance require fairly accurate motion data to function properly, and a motion controlled game controller would require some degree of precision to be usable. Ideally, we would like to use the same sensor for both purposes. This is often difficult, as low power consumption often comes at the cost of additional noise and less precision.
 
-\subsection{Precision}
+The KX123 fro Kionix is the most precise device in this comparison, with a resolution of 16-bit and PSD noise of only 106$\si{\micro}$g/$\sqrt{Hz}$. The KX123 also has the highest output data rate of the compared accelerometers. The next best device when it comes to noise and resolution is the LIS3DH from STMicroelectronics. The LIS3DH has the same resolution as the KX123, but over twice the PSD. The third place goes to the MC3610 with a resolution of 14-bit and best spectral noise of 204$\si{\micro}$g/$\sqrt{Hz}$. Table \ref{tab:psd_resolution} shows the best achievable PSD noise at 100Hz ODR.  
 
-...
-
-\subsection{Old Stuff}
-
-The threshold value for the wake-up function can be specified in a dedicated register. When the specified threshold is breached, the accelerometer is able to respond autonomously by either entering full bandwidth measurement mode or by generating an interrupt. The ADXL362 also features an embedded FIFO that can hold 512 full resolution samples, which enables the accelerometer to autonomously collect samples without needing a poll request from the MCU. This is very beneficial, since it is often the MCU that consumes the most power. The FIFO is also available in wake-up mode, which makes it possible to read out collected samples prior to the threshold breach. Some downsides with using the ADXL362 is the relatively low output data rate, a digital resolution of only 12-bits, as well as a relatively high spectral noise density. The last factor might be mitigated by using precision mode, but this comes at the cost of an increase in current consumption. The ODR rate and digital resolution might impose limitations on the number of applications that the accelerometer can be used for. The 6 Hz motion detect mode might also be insufficient for detecting impacts. The LIS3DH and the KX123 both have a very high maximum ODR and digital resolution, and for these devices this mode is used to detect gestures such as double tapping. The closest competitor to the ADXL362 in terms of power consumption is the MC3610 from mCube. This device uses 600nA in motion detect mode, which is over twice that of the ADXL362. One does however benefit from a better spectral noise density and a better digital resolution of 14-bits. The MC3610 also have a FIFO, but it is only 32 samples deep, and consumes additional current when in use. 
-
-The LIS3DH from STMicroelectronics is also a interesting device in this comparison. It has a high digital resolution of 16-bit, excellent spectral noise density and maximum ODR of 1.25kHz. It also has a lot of features, such as an embedded FIFO, free-fall and tap detection and a temperature sensor. 
-
-Based on this analysis, the choice basically comes down to two accelerometers; the ADXL362 and the LIS3DH. Selecting one of them depends very much on the application they are going to be used for. If features and precision are a bigger requirement the power consumption, then the LIS3DH is the best choice. From a low power-perspective no one is able to compete with the ADXL362 from Analog Devices.
-
+\begin{figure}[h]
 \begin{center}
-    \begin{tabular}{| l | l | l | l |}
+    \begin{tabular}{| l | l | l | l | l | l |}
     \hline
-    Device & ADXL362 & MC3610 & LIS3DH \\ \hline
-    Wake-up current & 270nA & 600nA & 2$\si{\micro\ampere}$/3$\si{\micro\ampere}$ \\
-     & @ 6Hz & @ 6Hz & @ 1Hz/10Hz \\ \hline
-    ODR current & 1.8$\si{\micro\ampere}$ & 6$\si{\micro\ampere}$ & 10$\si{\micro\ampere}$ \\
-     & 100Hz ODR & 100Hz ODR & 100Hz ODR \\ \hline
-    FIFO & 512 samples & 32 samples & 96 samples \\ \hline
-    Interrupt pins & 2x & 1x & 2x \\ \hline
-
+    Device & ADXL362 & MMA8491Q & MC3610 & LIS3DH & KX123 \\ \hline
+    PSD @ 100Hz & 250$\si{\micro}$g/$\sqrt{Hz}$ & 406$\si{\micro}$g/$\sqrt{Hz}$ & 204$\si{\micro}$g/$\sqrt{Hz}$ & 220$\si{\micro}$g/$\sqrt{Hz}$ & 106$\si{\micro}$g/$\sqrt{Hz}$ \\ \hline
+    Resolution & 12-bit & 14-bit & 14-bit & 16-bit & 16-bit \\ \hline
     \end{tabular}
 \end{center}
+\caption{PSD noise and digital resolution}
+\label{tab:psd_resolution}
+\end{figure}
 
 \section{Demo Board Requirements}
 
-For the demo application in this thesis, the accelerometer is going to wake-up the rest of the system. Which means that wake-up current is going to be a more important factor than shutdown current. 
+The requirements of any sensor is highly dependent on which application it is going to be used for. It is therefore important to properly define the application requirements before selecting a sensor.
 
-The SoC selected for the demo application (nRF51) has both SPI and I2C interface. However, the EasyDMA peripheral on the device only supports SPI. Also, the maximum SPI frequency of nRF51 is 2MHz, which means that the frequency of the selected device must be equal to or above this value.
+\begin{itemize}
+\item For the demo application in this thesis, the accelerometer is going to be used as an external trigger that wakes up the rest of the system. This means that wake-up current is going to be a more important factor than shutdown current.
+\item The SoC selected for the demo application (nRF51) has both SPI and I2C interface. However, the DMA peripheral on the device only supports SPI. Which means that devices with SPI support is going to prioritized over those with only I2C. Bulk reads should also be supported by the device. 
+\item A low supply voltage is important for a low power consumption, as seen from section \ref{sec:cmos_power}. The nRF51 can operate at a minimum supply voltage of 1.8V, this voltage level has therefore been selected for the demo application. This further implies that the selected accelerometer will also need to support operation at this voltage level.
+\item The accelerometer should preferably have an embedded FIFO, since we want the accelerometer to work by itself most of the time.
+\item The accelerometer must have at least one interrupt pin, that can be configured to initiate a bulk transfer when the FIFO is full. 
+\end{itemize}
 
-The accelerometer must have a FIFO, since the device is going to work autonomously for most of the time. 
+The demo board requirements rules out the MMA8491Q from Freescale Semiconductor. The device has only I2C and requires a supply voltage greater than 1.95V for functional operation. The device does not have FIFO, which also limits the possibility of autonomous operation. The device do on the other hand have the lowest shutdown current, and could therefore be a very good option for a different application where the accelerometer is usually turned off. 
 
-The accelerometer must have at least one interrupt pin, that can be configured to initiate a bulk transfer when the FIFO is full.
+The four accelerometers we are left with can be further divided into two sub-categories. The first category consists of the ADXL362 and the MC3610, whereas the second category consists of the LIS3DH and the KX123. The first category devices focuses on ultra power consumption above anything else, while the second category devices have a more abundant focus on precision. 
 
-A low supply voltage is important for a low power consumption, as seen from section \ref{sec:cmos_power}. The lowest possible supply voltage has therefore been selected for the demo application. The nRF51 can work at a supply voltage down to 1.8V, this voltage level has therefore been selected for the demo application.
-
-The demo board requirements alone rules out the MMA8491Q from Freescale Semiconductor. The device has only I2C and requires a supply voltage greater than 1.95V for functional operation. The device does not have FIFO, which also limits the possibility of autonomous operation. The device do have the lowest shutdown current, and could therefore be a very good option for an application where the accelerometer is usually turned off. 
-
-The accelerometers we are left with are the ADXL362, the MC3610, the LIS3DH and the KX123. These four accelerometers can be divided into two sub-categories. The ADXL362 and the MC3610 are quite similar devices. It is clear from the specifications that they both focus on ultra power consumption above anything else. The ADXL362 is a winner in this area, but the MC3610 has a better digital resolution and more measurement ranges to chose from.
-
-The KX123 has a very high resolution of 16-bit and a impressive 25.6kHz ODR. The KX123 also has a wake-up mode with a configurable measurement rate from 0.781Hz to 100Hz. At the lowest rate of 0.781Hz it consumes 1.8$\si{\micro\ampere}$. This is relatively much current when compared to the ADXL362 and MC3610. The KX123 is without a doubt a precision device, but the cost of this precision is too high in terms of power consumption for the demo application.
+The low power requirement is far stronger than the precision requirement for the demo board, which means that the second category devices can be ruled out. We are then left with the ADXL362 and MC3610. When comparing these devices, it clear that the ADXL362 is the best device when it comes to power consumption. It uses half the current of the MC3610 both in wake-up mode and sampling mode. The MC3610 does on the other hand have better digital resolution and a larger number of measurement ranges than the ADXL362. However, what truly makes the biggest difference between the two is the FIFO. While the ADXL362 is able to hold 512 samples, the MC3610 is only able to hold 32 samples. 
