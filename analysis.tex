@@ -32,9 +32,10 @@ From the comparison in Table \ref{tab:accel_comparison} from Chapter \ref{chap:o
         ymajorgrids = true,
         ylabel = {Shutdown current (nA)},
         symbolic x coords={ADXL362,MMA8491Q, MC3610, LIS3DH, KX123},
-        xtick = data,
+        xtick=\empty,
         enlarge x limits=0.5,
         scaled y ticks = false,
+        legend pos=outer north east,
     ]
         \addplot[style={bblue,fill=bblue,mark=none}]
             coordinates {(ADXL362,10)};
@@ -48,12 +49,13 @@ From the comparison in Table \ref{tab:accel_comparison} from Chapter \ref{chap:o
         \addplot[style={ppurple,fill=ppurple,mark=none}]
              coordinates {(LIS3DH,500)};
         
-        \addplot[style={ppurple,fill=ppurple,mark=none}]
+        \addplot[style={ppurple,fill=oorange,mark=none}]
              coordinates {(KX123,900)};
 
         \legend{ADXL362,MMA8491Q,MC3610, LIS3DH, KX123}
     \end{semilogyaxis}
 \end{tikzpicture}
+
 \subsection{Wake-up Current}
 
 Shutdown current might not be so relevant for all applications. A more common use-case for an ultra low power accelerometer is to use the device as the trigger to wake-up the rest of the system when motion is detected. This approach is for instance used frequently for modern remote controls. For such a configuration, we would ideally want the accelerometer to take measurements only when movement is detected. Such a scheme does however require the device to know when motion is going to be applied, which in most applications is not feasible. A more common approach is therefore to incorporate a low power wake-up mode. In this mode the accelerometer is always sampling, but with a very low sampling rate. When a motion is detected, a sample gets above a specified threshold, the sensor can enter normal operation and begin to sample at a normal rate. 
@@ -71,6 +73,41 @@ From the comparison in Table \ref{tab:accel_comparison} we can see that the ADXL
 \caption{Wake-up current}
 \label{tab:wake_current}
 \end{figure}
+
+\begin{tikzpicture}
+    \begin{semilogyaxis}[
+        width  = 0.85*\textwidth,
+        height = 8cm,
+        major x tick style = transparent,
+        ybar,
+        bar width=14pt,
+        ymajorgrids = true,
+        ylabel = {Wake-up current (nA/Hz)},
+        symbolic x coords={ADXL362,MMA8491Q, MC3610, LIS3DH, KX123},
+        xtick=\empty,
+        enlarge x limits=0.5,
+        scaled y ticks = false,
+        legend pos=outer north east,
+    ]
+        \addplot[style={bblue,fill=bblue,mark=none}]
+            coordinates {(ADXL362,45)};
+
+        \addplot[style={rred,fill=rred,mark=none}]
+             coordinates {(MMA8491Q,400)};
+
+        \addplot[style={ggreen,fill=ggreen,mark=none}]
+             coordinates {(MC3610,100)};
+
+        \addplot[style={ppurple,fill=ppurple,mark=none}]
+             coordinates {(LIS3DH,2000)};
+        
+        \addplot[style={ppurple,fill=oorange,mark=none}]
+             coordinates {(KX123,2000)};
+
+        \legend{ADXL362,MMA8491Q,MC3610, LIS3DH, KX123}
+    \end{semilogyaxis}
+\end{tikzpicture}
+
 
 \subsection{Embedded FIFO}
 
@@ -109,6 +146,40 @@ From Table \ref{tab:accel_comparison} we see that the ADXL362 is the best device
 \label{tab:wake_current}
 \end{figure}
 
+\begin{tikzpicture}
+    \begin{semilogyaxis}[
+        width  = 0.85*\textwidth,
+        height = 8cm,
+        major x tick style = transparent,
+        ybar,
+        bar width=14pt,
+        ymajorgrids = true,
+        ylabel = {ODR Current ($\si{\micro\ampere}$)},
+        symbolic x coords={ADXL362,MMA8491Q, MC3610, LIS3DH, KX123},
+        xtick=\empty,
+        enlarge x limits=0.5,
+        scaled y ticks = false,
+        legend pos=outer north east,
+    ]
+        \addplot[style={bblue,fill=bblue,mark=none}]
+            coordinates {(ADXL362,1.8)};
+
+        \addplot[style={rred,fill=rred,mark=none}]
+             coordinates {(MMA8491Q,20)};
+
+        \addplot[style={ggreen,fill=ggreen,mark=none}]
+             coordinates {(MC3610,3)};
+
+        \addplot[style={ppurple,fill=ppurple,mark=none}]
+             coordinates {(LIS3DH,10)};
+        
+        \addplot[style={ppurple,fill=oorange,mark=none}]
+             coordinates {(KX123,21)};
+
+        \legend{ADXL362,MMA8491Q,MC3610, LIS3DH, KX123}
+    \end{semilogyaxis}
+\end{tikzpicture}
+
 \subsection{Precision and Noise}
 
 A good PSD and digital resolution is not that important if the accelerometer is only going to be used as a motion activated trigger. It does however become an important factor if the motion data is going to be used for the application. A pedometer does for instance require fairly accurate motion data to function properly, and a motion controlled game controller would require some degree of precision to be usable. Ideally, we would like to use the same sensor for both purposes. This is often difficult, as low power consumption often comes at the cost of additional noise and less precision.
@@ -128,6 +199,40 @@ The KX123 fro Kionix is the most precise device in this comparison, with a resol
 \label{tab:psd_resolution}
 \end{figure}
 
+\begin{tikzpicture}
+    \begin{axis}[
+        width  = 0.85*\textwidth,
+        height = 8cm,
+        major x tick style = transparent,
+        ybar,
+        bar width=14pt,
+        ymajorgrids = true,
+        ylabel = {PSD Noise ($\si{\micro}$g/$\sqrt{Hz}$)},
+        symbolic x coords={ADXL362,MMA8491Q, MC3610, LIS3DH, KX123},
+        xtick=\empty,
+        enlarge x limits=0.5,
+        scaled y ticks = false,
+        legend pos=outer north east,
+    ]
+        \addplot[style={bblue,fill=bblue,mark=none}]
+            coordinates {(ADXL362,250)};
+
+        \addplot[style={rred,fill=rred,mark=none}]
+             coordinates {(MMA8491Q,406)};
+
+        \addplot[style={ggreen,fill=ggreen,mark=none}]
+             coordinates {(MC3610,204)};
+
+        \addplot[style={ppurple,fill=ppurple,mark=none}]
+             coordinates {(LIS3DH,220)};
+        
+        \addplot[style={ppurple,fill=oorange,mark=none}]
+             coordinates {(KX123,106)};
+
+        \legend{ADXL362,MMA8491Q,MC3610, LIS3DH, KX123}
+    \end{axis}
+\end{tikzpicture}
+
 \section{Demo Board Requirements}
 
 The requirements of any sensor is highly dependent on which application it is going to be used for. It is therefore important to properly define the application requirements before selecting a sensor.
@@ -139,6 +244,8 @@ The requirements of any sensor is highly dependent on which application it is go
 \item The accelerometer should preferably have an embedded FIFO, since we want the accelerometer to work by itself most of the time.
 \item The accelerometer must have at least one interrupt pin, that can be configured to initiate a bulk transfer when the FIFO is full. 
 \end{itemize}
+
+\section{Choosing an Accelerometer}
 
 The demo board requirements rules out the MMA8491Q from Freescale Semiconductor. The device has only I2C and requires a supply voltage greater than 1.95V for functional operation. The device does not have FIFO, which also limits the possibility of autonomous operation. The device do on the other hand have the lowest shutdown current, and could therefore be a very good option for a different application where the accelerometer is usually turned off. 
 
