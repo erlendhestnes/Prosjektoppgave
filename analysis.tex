@@ -7,9 +7,13 @@ This chapter presents a thorough analysis of the accelerometers presented in Cha
 
 In almost any accelerometer based application, the accelerometer will only be active for a fraction of the time \cite{moldsvor15}. This means that the figures for the inactive period of the accelerometer should be emphasized when selecting a component for a low power system, as it is going to spend most of its time in this state. Even though this may be seen as an evident observation, we will soon see that there are several considerations that need to be taken into account when selecting a component for an ultra low power system. 
 
-\subsection{Shutdown Current}
+\subsection{Shutdown Power}
 
-Lets say that the accelerometer is going to be used in an application where it is awoken by an external trigger. For instance, the accelerometer is only turned on when the user is entering a certain smart phone application that requires the accelerometer for gesture control. For such an application it is most beneficial to select a component with a low shutdown current, as the component is going to spend most of its time in a powered-down state. In this state the accelerometer it power gated and can therefore do nothing useful. Still, all devices consume a small amount of current in this state due to leakage current from the power gating mechanism.   
+Lets say that the accelerometer is going to be used in an application where it is awoken by an external trigger. For instance, the accelerometer is only turned on when the user is entering a certain smart phone application that requires the accelerometer for gesture control. For such an application it is most beneficial to select a component with a low shutdown power, as the component is going to spend most of its time in a powered-down state. In this state the accelerometer it power gated and can therefore do nothing useful. Still, all devices consume a small amount of current in this state due to leakage from the power gating mechanism.   
+
+Current consumption is usually the only measure that is listed in a components datasheet. Which voltage level the vendor decides to test the components current consumption at can vary quite a bit, as seen from the overview in Table \ref{tab:accel_comparison}. A decrease in the operating voltage directly reduces the current consumption and the overall power drain, which means that current consumption can be quite misleading to compare \cite[~p.3]{holberg06}. To avoid an unfair comparison between the devices, the best course of action would have been to measure the current consumption of all devices at the same operating voltage. Another possibility would also have been to test the current consumption for each device at its lowest operating voltage, as this would have given us figures for the lowest possible power consumption for each device. Both of these possibilities would however require a reference board for each and every component, as well as testing. This was deemed to be out of scope for this specialization project. Fortunately, the test supply voltage is around $2V$ for each device in Table \ref{tab:accel_comparison}. The largest test voltage span is between the MMA8491Q and the MC3610.
+
+Power consumption is the product of operating voltage and current consumption. Since 
 
 From the comparison in Table \ref{tab:accel_comparison} from Chapter \ref{chap:overview} we can see that the MMA8491Q from Freescale Semiconductor has the lowest shutdown current, consuming only 1.8nA. Freescale do however state in their datasheet \cite[p~9]{MMA8491Q} that this number is only evaluation data, and that it has not been tested in production. Which raises some questions whether this number can be trusted as a typical value or not. The ADXL362 from Analog Devices comes in at second place with a shutdown current consumption of 10nA. On third place we find the MC3610 with a current consumption of 400nA, which is over 200 times more current than the MMA8491Q and 40 times more current the ADXL362. The LIS3DH and KX123 is even worse in this area, with a current consumption of 500nA and 900nA respectively. 
 
@@ -19,6 +23,8 @@ From the comparison in Table \ref{tab:accel_comparison} from Chapter \ref{chap:o
     \hline
     Device & ADXL362 & MMA8491Q & MC3610 & LIS3DH & KX123 \\ \hline
     Shutdown current & 10nA & 1.8nA & 400nA & 500nA & 900nA \\ \hline
+    Shutdown power & 16nW & 3.51nW & 640nW & 855nW & 1529nW \\
+     & @ 1.6V & @ 1.95V & @ 1.6V & @ 1.71 & @ 1.71 \\ \hline
     \end{tabular}
 \end{center}
 \caption{Shutdown current}
@@ -70,7 +76,9 @@ From the comparison in Table \ref{tab:accel_comparison} we can see that the ADXL
     \begin{tabular}{| l | l | l | l | l | l |}
     \hline
     Device & ADXL362 & MMA8491Q & MC3610 & LIS3DH & KX123 \\ \hline
-    Wake-up current & 45nA/Hz & 400nA/Hz & 100nA/Hz & 2000nA/Hz & 2000nA/Hz \\ \hline
+    Wake-up current & 45nA/Hz & 400nA/Hz & 100nA/Hz & 2$\si{\micro\ampere}$/Hz & 2$\si{\micro\ampere}$/Hz \\ \hline
+    Wake-up power & 72nW/Hz & 780nW/Hz & 160nW/Hz & 3.4$\si{\micro\watt}$/Hz & 3.4$\si{\micro\watt}$/Hz \\
+     & @ 1.6V & @ 1.95V & @ 1.6V & @ 1.71 & @ 1.71 \\ \hline
     \end{tabular}
 \end{center}
 \caption{Wake-up current}
@@ -142,7 +150,10 @@ From Table \ref{tab:accel_comparison} we see that the ADXL362 is the best device
     \begin{tabular}{| l | l | l | l | l | l |}
     \hline
     Device & ADXL362 & MMA8491Q & MC3610 & LIS3DH & KX123 \\ \hline
-    100Hz ODR & 1.8$\si{\micro\ampere}$ & 20$\si{\micro\ampere}$ & 3/6$\si{\micro\ampere}$ & 10$\si{\micro\ampere}$ & 21$\si{\micro\ampere}$ \\ \hline
+    Current consumption & 1.8$\si{\micro\ampere}$ & 20$\si{\micro\ampere}$ & 3/6$\si{\micro\ampere}$ & 10$\si{\micro\ampere}$ & 21$\si{\micro\ampere}$ \\
+    @ 100Hz ODR &  &  &  &  &  \\ \hline
+    Power consumption & 2.88$\si{\micro\watt}$ & 39$\si{\micro\watt}$ & 4.8/9.6$\si{\micro\watt}$ & 17.1$\si{\micro\watt}$ & 35.9$\si{\micro\watt}$ \\
+    @ 100Hz ODR & @ 1.6V & @ 1.95V & @ 1.6V & @ 1.71 & @ 1.71 \\ \hline
     \end{tabular}
 \end{center}
 \caption{FIFO size and resolution}

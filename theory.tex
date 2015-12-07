@@ -1,4 +1,5 @@
 \chapter{Background Theory}
+\label{chap:overview}
 
 To understand the rest of this thesis, some basic knowledge about low-power design, accelerometers in general and microelectromechanical systems (MEMS) are required. This chapter presents an overview of these topics. The presented theory in this chapter is regarded as well-established, and is covered in several books and papers.
 
@@ -6,9 +7,7 @@ It is assumed that the reader has a basic understanding of embedded systems, as 
 
 \section{Low Power Design}
 
-[Maybe include something about low power design in general]
-
-\cite{sarpeshkar12}
+A successful realization of the IoT requires devices that can operate for its entire lifespan on a tiny coin cell battery. A battery is basically a energy container, and for non-rechargeable batteries this energy is a limited resource. Power is the rate at which we consume energy, which means that reducing the power consumption translates into longer battery life \cite[~p.3]{holberg06}. The following section presents the two main contributors to power consumption in a modern CMOS circuit. 
 
 \subsection{Power In CMOS}
 \label{sec:cmos_power}
@@ -32,21 +31,31 @@ From Equation \ref{eq:p_dynamic} one can see that the dynamic power consumption 
 
 \subsection{Power Saving Peripherals}
 
+Information is always represented as states of variables in a physical system. Energy is consumed when changing or preserving such a state. In order to save energy, one therefore needs reduce the amount of information being processed. Which further implies that in order to save power, one needs to reduce the rate of information processing \cite{sarpeshkar12}.
+
+Modern microcontrollers feature several advanced peripherals which can be utilized to do certain operations more efficient, thereby saving power. In the following sections we are going to look at some of these peripherals.
+
 \subsubsection{DMAC - Direct Memory Access Controller}
 
-Most of today's modern microcontrollers feature a Direct Memory Access Controller (DMAC). A DMAC is simply put a peripheral device that can be configured to move data from one location in memory to another. Usually, a DMAC is also able to transfer data from and to peripherals as well. DMA is primarily used as a technique to offload the CPU for large data transfers. This enables the CPU to do other work while the DMAC is moving data, thereby increasing overall system performance. However, a DMAC can also be used to improve power efficiency in a system. By combining a DMAC and an event system one is able to do certain operations without any CPU intervention. This is very beneficial, since both the event system and DMAC uses much less power than the CPU core. This scheme is often utilized as a power saving technique in modern embedded systems \cite{ball03}.  
+A Direct Memory Access Controller (DMAC) is basically a peripheral device that can be configured to move data from one location in memory to another. Since peripheral devices almost always are memory mapped in a microcontroller, a DMAC is usually also able to transfer data from and to peripherals as well. 
+
+Direct Memory Access is primarily used as a technique to offload the CPU for large data transfers, as these operations can be very time consuming for the CPU to perform. It is also more power efficient to use a DMAC for such data transfers, since the DMAC both consumes less power and transfers data more efficient than the CPU. The DMAC is also able to work independently of the CPU, which means that the CPU can either do other work or sleep while the the DMAC is moving data. The former can be used to increase the overall system performance, while the latter can be exploited to achieve greater power efficiency \cite{ball03}.
 
 \subsubsection{Event system}
 
-Most modern microcontrollers have a variant of a so called event system. An event system enables different peripherals in the microcontroller to interact autonomously with each other by using tasks and events. By using such a system one is able to let peripherals communicate with each other without involving the CPU, and thereby saving power.
+An event system enables different peripherals in the microcontroller to interact autonomously with each other by using tasks and events. By using such a system one is able to let peripherals communicate with each other without involving the CPU. This can be exploited to do certain operations while the CPU is sleeping, thereby saving a lot of power.
 
 \subsubsection{Clock Gating}
 
-A clock gating scheme is all about turning off the clock for the unused domains of the chip. Clock gating effectively removes the dynamic power consumption from the gated domain, which can be seen from Equation \ref{eq:p_dynamic}. The static power consumption is however still present, as voltage is still applied to the gated domain. Clock gating can for example be very beneficial for volatile memory (such as RAM), as the user can reduce power consumption while still maintaining data in memory.
+A clock gating scheme is all about turning off the clock for the unused domains of the chip. Clock gating effectively removes the dynamic power consumption from the gated domain, which can be seen from Equation \ref{eq:p_dynamic}. The static power consumption is however still present, as voltage is still applied to the gated domain. Clock gating can for example be very beneficial for volatile memory (such as SRAM), as the user can reduce power consumption while still maintaining data in memory.
 
 \subsubsection{Power Gating}
 
-Power gating is about completely turning off the voltage to unused blocks of the system, thereby removing both static and dynamic power consumption. Modern microcontrollers often have the ability to power gate RAM blocks, giving the user the option to trade power for RAM or vice versa. It is also common to power gate peripherals that are not used for the application.
+Power gating is about completely turning off the voltage to unused blocks of the system, thereby removing both static and dynamic power consumption. Modern microcontrollers often have the ability to power gate SRAM blocks, giving the user the option to trade power for RAM or vice versa. It is also common to power gate peripherals that are not used for the application.
+
+\subsubsection{Power Modes}
+
+Both clock gating and power gating are usually incorporated into into different power modes. Some of these modes may offer a complete shutdown of the entire circuit (power gating), while others enables the user to shut down sections or peripherals that are not in use. The advantage of having multiple power modes is the flexibility it provides to shut down any part of the microcontroller that is not absolutely necessary to function at hand \cite[~p.4]{holberg06}.  
 
 \subsection{Energy Harvesting}
 
@@ -54,11 +63,9 @@ Power gating is about completely turning off the voltage to unused blocks of the
 
 A battery will always run out of power, no matter how little current the system draws. So to be able to make a system that can continue indefinitely, one need to be able to have an infinite power source. Unfortunately, this does not exist. There is however a lot of research going into developing solutions that can turn energy from our surroundings into electrical energy. The principal is called energy harvesting, and it is truly a term that goes hand in hand with the IoT movement. Energy can be harvested from vibrations, sunlight, heat and a lot of other sources. A product that can implement one or more of these energy harvesting techniques has the potential to run indefinitely. Energy harvesting is something that has existed for a long time, but it is only with today's ultra low power components that it is actually possible to use this energy to power our devices.
 
-\section{Acceleration}
+\section{Accelerometers - Working Principle} \label{sec:accel_working_principle}
 
 Acceleration is defined as the rate of change in velocity with respect to time. It is given by a vector with both magnitude and direction relative to a reference frame. The SI units are length divided by time squared \cite{elert98}.
-
-\section{Accelerometers - Working Principle} \label{sec:accel_working_principle}
 
 The working principle of an accelerometer can be viewed as a simple mechanical system, as illustrated in Figure \ref{fig:accel_working_principle}. A proof mass $m$ is connected to a frame by a flexible spring $k$. When an acceleration is imposed along the x-axis, the proof mass will begin to move. Due to Newton's law of inertia, the motion of the proof mass will lag the frame motion. This will cause an oscillation of the proof mass inside the frame. From this oscillation alone, it is possible to get the acceleration. However, to prevent excessive oscillation, the mass vibrations are usually damped by introducing a dampening material (such as gas or liquid) inside the package. This is represented by a dashpot $\gamma$ in Figure \ref{fig:accel_working_principle}.
 
@@ -89,6 +96,8 @@ The basic working principles of an accelerometer, described in section \ref{sec:
 The first micromachined accelerometer was demonstrated at Stanford University in 1979. However, it took nearly 15 years for the technology to become accepted into mainstream products \cite[p.~8]{maluf04}. The automotive industry has undoubtedly been a big contributor for the technology, as accelerometers has an apparent application in detecting crashes for airbag deployment systems. MEMS accelerometers has in recent years also found its way into other applications, such as smart phones, quad-copters and game controllers. 
 
 \subsection{MEMS Processing Techniques}
+
+The following sections presents the most common processing techniques for MEMS elements.  
 
 \subsubsection{Surface Micromachining}
 

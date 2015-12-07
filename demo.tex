@@ -3,9 +3,9 @@
 
 A custom printed circuit board (PCB) was created for this thesis. The board is planned to be used as development platform to showcase possible IoT applications that can be benefit from using an ultra low power accelerometer. 
 
-\section{Demo Board}
+\section{Board Spesification}
 
-The demo board is comprised of a nRF51 system-on-chip (SoC), an accelerometer, a voltage regulator, four LEDs and two tactile switches. Which accelerometer that is going to be used for the reference board will be determined after a thorough analysis of the accelerometers presented in the overview in Chapter \ref{chap:overview}.
+The reference board is comprised of a nRF51 system-on-chip (SoC), an accelerometer, a voltage regulator, four LEDs and two tactile switches. Which accelerometer that is going to be used for the reference board will be determined after a thorough analysis of the accelerometers presented in Chapter \ref{chap:overview}.
 
 %A schematic of the demo board can be viewed in Appendix \ref{chap:appendix_a}.
 
@@ -31,11 +31,11 @@ Bluetooth Low Energy (BLE) is wireless communication protocol designed by the Bl
 
 \section{Demo Board Configuration}
 
-The planned example will utilize EasyDMA, PPI, GPIOTE, SPI and the radio of the nRF51, as viewed with red boxes in Figure \ref{fig:accel_working_principle}. The Cortex-M0+ CPU should only be used for configuration of the system, and will be sleeping during data collection. The accelerometer should be configured to wake up when motion is detected, and then collect samples autonomously into its embedded FIFO. When the FIFO is full, the accelerometer will send an interrupt to nRF51. The PPI will be configured to listen to for this interrupt and to trigger a SPI block transfer when it is detected. As data is being transferred to the SPI module, the EasyDMA shuffles data either into the RAM. This data can further be broadcasted by the radio. This entire operation should be possible to do without any CPU intervention at all.
+The planned example will utilize EasyDMA, PPI, GPIOTE, SPI and the radio of the nRF51, as viewed with red boxes in Figure \ref{fig:accel_working_principle}. The Cortex-M0+ CPU core should only be used for configuration of the system, and will be sleeping during data collection. The accelerometer should be configured to wake up when motion is detected, and then collect samples autonomously into its embedded FIFO. When the FIFO is full, the accelerometer will send an interrupt to nRF51. The PPI will be configured to listen to for this interrupt and to trigger a SPI block transfer when it is detected. As data is being transferred to the SPI module, the EasyDMA shuffles data either into the RAM. This data can further be broadcasted by the radio. This entire operation should be possible to do without any CPU intervention at all.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{fig/nrf51822_edit.png}
-\caption{Nordic nRF51 System architecture \cite{nRF51}}. Figure is modified.
+\caption{Nordic nRF51 System architecture \cite{nRF51}}. The Figure has been modified.
 \label{fig:accel_working_principle}
 \end{figure}
