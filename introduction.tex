@@ -8,15 +8,19 @@
 
 Naturally, a vast amount of semiconductor companies want to be a part of this huge emerging market, and a lot of these companies are therefore increasing their product portfolio to be ready to meet the IoT demand. 
 
-\subsection{What Is IoT}
+\subsection{What is the IoT?}
 
 The Internet of Things (IoT) concerns the continuous expansion of network enabled devices that feature an IP address for Internet connectivity, as well as the communication that exist between them and other Internet-enabled devices and systems \cite{webopedia}. Three very important keywords when it comes to IoT is connectivity, ease-of-use and low-power. For a successful IoT realization, it is necessary to create solutions that are both practical and easy to deploy ubiquitously \cite{embedded_IoT}. %This can be achieved by creating both low power and reliable wireless sensor networks \cite{embedded_IoT}. 
 
-\subsection{A Problem with IoT}
+\subsection{A problem with IoT}
 
-It is quite reasonable to assume that you eventually will have more than a hundred IoT devices in your home. Say that each of these devices are using a battery, and that the average battery time for each device is about one or two years. Then you would have a huge job at hand for changing the batteries as they would ultimately run out of power. For the IoT market to be successful and fully appreciated by the customers, one need to be able make devices that does not require the user ever changing the battery. This is certainly a possibility as semiconductor companies continues to push the boundaries for ultra low power components.  
+It is projected that, by 2020, there will be around 50 billion smart objects connected to the Internet of Things \cite{jayakumar14}. Most of these devices will be battery-powered wireless devices. 
+
+It is quite reasonable to assume that you eventually will have more than a hundred IoT devices in your home. Say that each of these devices are using a battery, and that the average battery life for each device is about one or two years. Then you would have a huge job at hand for changing the batteries as they would ultimately run out of power. For the IoT market to be successful and fully appreciated by the customers, one need to be able make devices that does not require the user ever changing the battery. This is certainly a possibility as semiconductor companies continues to push the boundaries for ultra low power components.  
 
 \subsection{Sensors for IoT}
+
+This specialization project originates from a paper written by Hrishikesh Jayakumar. That paper address some of the fundamental challenges of designing ultra low power hardware platforms for the IoT. This thesis choose to look more closely at one of the necessary hardware aspects of an IoT connected device, namely sensors.  
 
 This project thesis focuses on a big part of IoT-applications, namely sensors. A sensor is, in its broadest definition, a device that is both able to detect and respond to some type of input from the physical environment \cite{wigmore12}. They are used in vast number of applications and are considered to be a fundamental building block of the IoT. This thesis targets a specific type of sensor that is used to detect motion, specifically accelerometers. The thesis presents a thorough analysis of five commercially available microelectromechanical (MEMS) 3-axis accelerometers. The analysis focuses primarily on finding the sensor with the lowest power consumption, but other considerations are also taken into account. From this analysis, an accelerometer is chosen to be used for a reference board. This board will be used in a later report to further explore different IoT applications that could benefit from having an ultra low power accelerometer.
 
@@ -24,9 +28,16 @@ This project thesis focuses on a big part of IoT-applications, namely sensors. A
 
 \subsection{Goals and main contributions}
 
-The full potential of the IoT has not yet been fully unleashed. It is therefore an excellent opportunity to study possible applications that can help accelerate the trend. The primary goal for this work has been to identify and explore the most low power accelerometers that are available on the market today, as well as to study some of the fundamental principles and limitations behind these products. %A secondary goal has been to investigate possible IoT applications for such sensors.  
+There is still a lot of challenges that need to be solved before the full potential of the IoT can be unleashed. It is therefore an excellent opportunity to confront and try to solve some of these problems, such that new applications can emerge and help accelerate the IoT trend. This thesis choose to further investigate one of the problems, namely the power consumption for motion enabled devices. The primary goal is that discoveries made from this investigation can lead to new applications for the IoT. 
+
+The primary goal for this work has been to identify and explore the most low power accelerometers that are available on the market today, as well as to study some of the embedded data acquisition techniques that can be used to acquire data at the lowest possible power budget. A secondary objective has been to investigate possible IoT applications that can be realized with such ultra low power accelerometers, as this is something that is going to be very relevant for a future master thesis.
+%fundamental principles and limitations behind these products. 
+
+An extensive literature study has been used accomplish the goals stated in the section above.
 
 This thesis has first and foremost contributed by laying a theoretical groundwork for a possible master thesis. The exploration of fundamental aspects of microelectromechanical (MEMS) accelerometers has given valuable insight into the physical limitations with regards to mechanical noise and power consumption for these devices. The insight gained from this exploration has further been used to suggest some possible applications that could certainly benefit from using an ultra low power accelerometer. 
+
+In addition to this, the thesis has proposed a state of the art data acquisition scheme that exploits modern power saving peripherals found in modern microcontrollers.
 
 \subsection{Thesis Outline}
 
