@@ -3,24 +3,24 @@
 
 To understand the rest of this thesis, some basic knowledge about low-power design, accelerometers in general and microelectromechanical systems (MEMS) are required. This chapter presents an overview of these topics. The presented theory in this chapter is regarded as well-established, and is covered in several books and papers.
 
-It is assumed that the reader has a basic understanding of embedded systems, as well as some knowledge of basic physical principles. 
+It is assumed that the reader has a good understanding of embedded systems, as well as some knowledge of basic physical principles. 
 
 \section{Low Power Design}
 
-A successful realization of the IoT requires devices that can operate for its entire lifespan on a tiny coin cell battery. A battery is basically a energy container, and for non-rechargeable batteries this energy is a limited resource. Power is the rate at which we consume energy, which means that reducing the power consumption translates into longer battery life \cite[~p.3]{holberg06}. The following section presents the two main contributors to power consumption in a modern CMOS circuit. 
+A successful realization of the IoT requires devices that can operate their entire lifespan on a tiny coin cell battery. A battery is basically an energy container, and for non-rechargeable batteries this energy is a limited resource. Power is the rate at which we consume energy, which means that reducing the power consumption translates into longer battery life \cite[~p.3]{holberg06}. The following section presents the two main contributors to power consumption in a modern CMOS circuit. 
 
 \subsection{Power In CMOS}
 \label{sec:cmos_power}
 
-The power consumption in CMOS circuitry can in general be divided into two different domains, static and dynamic power consumption. Static power consumption comes from leakage current in the transistor, which is a result of reverse-bias leakage between diffused regions and the
-substrate in the transistor \cite{static_dynamic_power}. The static power consumption ($P_{static}$) is given by the product of the static current ($I_{static}$) and the supply voltage ($V_{ss}$), as seen in Equation \ref{eq:p_static}. 
+The power consumption in CMOS circuitry can in general be divided into two different domains, static and dynamic power consumption. Static power consumption ($P_{static}$) comes from leakage current in the transistor, which is a result of reverse-bias leakage between diffused regions and the
+substrate in the transistor \cite{static_dynamic_power}. The static power consumption is given by the product of the static current ($I_{static}$) and the supply voltage ($V_{ss}$), as seen in Equation \ref{eq:p_static}. 
 
 \begin{equation}
 P_{static} = I_{static} \cdot V_{ss}
 \label{eq:p_static}
 \end{equation}
 
-Dynamic power consumption is result of switching the logic state of the transistor, which is given by the sum of the transient- and capacitive-load power consumption. The transient power ($P_{transient}$) consumption is from the current that flows through the transistor when the the transistor is switching logic state, while the capacitive-load power ($P_{capacitive}$) is from the additional current consumed in charging external load capacitance ($C_{L}$) \cite{cmos_power_consumption}. The dynamic power consumption is dependent on the frequency ($f$) as well as the number of transistors that are switching ($N$). The dynamic power consumption is also proportional to the supply voltage ($V_{ss}$) squared. This relationship can be seen in Equation \ref{eq:p_dynamic}.
+Dynamic power consumption ($P_{dynamic}$) is result of switching the logic state of the transistor, which is given by the sum of the transient- and capacitive load power consumption. The transient power ($P_{transient}$) consumption is from the current that flows through the transistor when the the transistor is switching logic state, while the capacitive load power ($P_{capacitive}$) is from the additional current consumed in charging external load capacitance ($C_{L}$) \cite{cmos_power_consumption}. The dynamic power consumption is dependent on the frequency ($f$) as well as the number of transistors that are switching ($N$). The dynamic power consumption is also proportional to the supply voltage ($V_{ss}$) squared. This relationship can be seen in Equation \ref{eq:p_dynamic}.
 
 \begin{equation}
 P_{dynamic} = P_{transient} + P_{capacitive} = (C_L + C) \cdot V_{ss}^{2} \cdot f \cdot N^3
@@ -55,7 +55,7 @@ Power gating is about completely turning off the voltage to unused blocks of the
 
 \subsubsection{Power Modes}
 
-Both clock gating and power gating are usually incorporated into into different power modes. Some of these modes may offer a complete shutdown of the entire circuit (power gating), while others enables the user to shut down sections or peripherals that are not in use. The advantage of having multiple power modes is the flexibility it provides to shut down any part of the microcontroller that is not absolutely necessary to function at hand \cite[~p.4]{holberg06}.  
+Both clock gating and power gating are usually incorporated into different power modes. Some of these modes may offer a complete shutdown of the entire circuit, while others enables the user to shut down sections or peripherals that are not in use. The advantage of having multiple power modes is the flexibility it provides to shut down any part of the microcontroller that is not absolutely necessary to function at hand \cite[~p.4]{holberg06}.  
 
 %\subsection{Energy Harvesting}
 
@@ -67,7 +67,7 @@ Both clock gating and power gating are usually incorporated into into different 
 
 Acceleration is defined as the rate of change in velocity with respect to time. It is given by a vector with both magnitude and direction relative to a reference frame. The SI units are length divided by time squared \cite{elert98}.
 
-The working principle of an accelerometer can be viewed as a simple mechanical system, as illustrated in Figure \ref{fig:accel_working_principle}. A proof mass $m$ is connected to a frame by a flexible spring $k$. When an acceleration is imposed along the x-axis, the proof mass will begin to move. Due to Newton's law of inertia, the motion of the proof mass will lag the frame motion. This will cause an oscillation of the proof mass inside the frame. From this oscillation alone, it is possible to get the acceleration. However, to prevent excessive oscillation, the mass vibrations are usually damped by introducing a dampening material (such as gas or liquid) inside the package. This is represented by a dashpot $\gamma$ in Figure \ref{fig:accel_working_principle}.
+The working principle of an accelerometer can be viewed as a simple mechanical system, as illustrated in Figure \ref{fig:accel_working_principle}. A proof mass $m$ is connected to a frame by a flexible spring $k$. When an acceleration is imposed along the x-axis, the proof mass will begin to move. Due to Newton's law of inertia, the motion of the proof mass will lag the frame motion \cite[~p.34]{kaajakari09}. This will cause an oscillation of the proof mass inside the frame. From this oscillation alone, it is possible to get the acceleration. However, to prevent excessive oscillation, the mass vibrations are usually damped by introducing a dampening material (such as gas or liquid) inside the package. This is represented by a dashpot $\gamma$ in Figure \ref{fig:accel_working_principle}.
 
 \begin{figure}[h]
 \centering
@@ -81,13 +81,13 @@ The working principle of an accelerometer can be viewed as a simple mechanical s
 The mechanical noise in an accelerometer is usually specified by the power spectral density (PSD), given by Equation \ref{eq:noise_spectral_density}. If we analyse this equation more closely, we see that the thermal noise energy $k_b T$ is a constant irrespective of the system size \cite[~p.13]{kaajakari09}. This means that the thermal noise induced in mechanical vibrations sets the lower limit for the smallest, measurable acceleration \cite[~p.41]{kaajakari09}. One can also see from Equation \ref{eq:noise_spectral_density} that increasing the mass $m$ and reducing the resonant frequency $\omega_0$ reduces the overall noise. The $Q$ factor, or quality factor, is a dimensionless parameter that describes how under-damped an oscillator or resonator is \cite[~p.216]{harlow04}. Again, we can see from Equation \ref{eq:noise_spectral_density} that increasing the Q factor helps reducing the overall noise.
 
 \begin{equation}
-\bar{\ddot{X_n}} = \sqrt{\frac{4 k_b T \omega_0}{mQ}}
+\bar{\ddot{X_{n}}} = \sqrt{\frac{4 k_b T \omega_0}{mQ}}
 \label{eq:noise_spectral_density}
 \end{equation}
 
 \section{Microelectromechanical Systems (MEMS)}
 
-Microelectromechanical Systems (MEMS) are embedded systems involving one or many micromachined components or structures\cite[p.~3]{maluf04}. The technique is used for a vast number of applications ranging from accelerometers and gyroscopes to fluid nozzles on a inkjet printer.
+Microelectromechanical Systems (MEMS) are embedded systems involving one or many micromachined components or structures \cite[p.~3]{maluf04}. The technique is used for a vast number of applications ranging from accelerometers and gyroscopes to fluid nozzles on an inkjet printer.
 
 \subsection{MEMS Accelerometers}
 
@@ -103,7 +103,7 @@ The following sections presents the most common processing techniques for MEMS e
 
 Surface micromachining is based on patterning deposited thin film materials on top of a substrate wafer \cite[p.~5]{kaajakari09}. The production technique first appeared in the 1980s, and was primarily used as a low cost alternative to accelerometers for the automotive industry \cite[p.~101]{maluf04}. However, recent improvements in the production technique has made it possible to use the technique for other sensors such as pressure sensors, gyroscopes and microphones. 
 
-The surface micromachining process bear a close resemblance to the traditional integrated circuit (IC) manufacturing process, which is also based on processing thin films on a silicon wafer. In fact, the processes are so close that a retired IC manufacturing plant often are converted into a MEMS fabrication plant, as MEMS does not require the latest in fabrication technology \cite[p.~4]{kaajakari09}. The similarities between IC manufacturing and surface micromachined MEMS has several advantages. It is for instance relatively easy to integrate MEMS architectures together with IC to make a single-chip solution, which often leads to better performance and reduced packing-cost. 
+The surface micromachining process bear a close resemblance to the traditional integrated circuit (IC) manufacturing process, which is also based on processing thin films on a silicon wafer. In fact, the processes are so close that a retired IC manufacturing plant often are converted into a MEMS fabrication plant, as MEMS does not require the latest in fabrication technology \cite[p.~4]{kaajakari09}. The similarities between IC manufacturing and surface micromachined MEMS has several advantages. It is for instance relatively easy to integrate MEMS architectures together with IC to make a single-chip solution, which often leads to better performance and reduced packing-cost \cite{mcube_fact_sheet}. 
 
 \subsubsection{Surface Micromachined Accelerometers}
 
@@ -118,9 +118,9 @@ Surface micromachined accelerometers incorporates a comb-like structure, as depi
 
 \subsubsection{Bulk Micromachining}
 
-Bulk micromachining defines structures by selectively etching the substrate \cite[p.~7]{kaajakari09}. This makes it possible to etch much thicker structures when being compared to the surface micromachining process. A typical thickness of bulk micromachined structure is between 500$\si{\micro\meter}$-700$\si{\micro\meter}$, which is about a 100 times the typical thickness of a surface micromachined structure \cite[p.~7]{kaajakari09}. A thicker structure means more mass, which is very beneficial in terms of reducing the noise, which can be seen from Equation \ref{eq:noise_spectral_density}. Bulk micromachined structures can also be made of a single-crystal silicon as opposed to thin film materials in surface micromachined structures. This is very beneficial, since these materials are very predictable and stable. Bulk micromachined accelerometers either use piezoresistive elements or capacative sensing to detect the displacement of the inertial mass.
+Bulk micromachining defines structures by selectively etching. This makes it possible to etch much thicker structures when being compared to the surface micromachining process. A typical thickness of bulk micromachined structure is between 500$\si{\micro\meter}$-700$\si{\micro\meter}$, which is about a 100 times the typical thickness of a surface micromachined structure \cite[p.~7]{kaajakari09}. A thicker structure means more mass, which is very beneficial in terms of reducing the noise, which can be seen from Equation \ref{eq:noise_spectral_density}. Bulk micromachined structures can also be made of a single-crystal silicon as opposed to thin film materials in surface micromachined structures. This is very beneficial, since these materials are very predictable and stable. Bulk micromachined accelerometers either use piezoresistive elements or capacative sensing to detect the displacement of the inertial mass \cite[p.~7]{kaajakari09}.
 
-Pressure sensors and accelerometers were the first commercial products that utilized the bulk micromachining technique. These devices have been very successful, as 90\% of all sold pressure sensors utilize this technique \cite[p.~7]{kaajakari09}. The production process is however more complicated and expensive than surface micromachining, and has therefore lost market shares in the recent years.
+Pressure sensors and accelerometers were the first commercial products that utilized the bulk micromachining technique. These devices have been very successful, as 90\% of all sold pressure sensors utilize this technique. The production process is however more complicated and expensive than surface micromachining, and has therefore lost market shares in the recent years \cite[p.~7]{kaajakari09}.
 
 \subsubsection{Piezoresistive Bulk Micromachining Accelerometer}
 
@@ -146,7 +146,7 @@ A capacitive bulk micromachined accelerometer measures the differential change i
 
 \subsection{Integrating MEMS and ICs}
 
-Most MEMS based sensors must be bonded together with an IC for integration in larger electronic systems. The MEMS element itself is just a transducer, converting some physical parameter (motion, sound, pressure) into an electrical signal. Data converters, amplifiers and signal conditioning is required to be able to make use of the signal from the transducer, which requires additional logic on an IC. A typical functional block diagram of a MEMS accelerometer can be viewed in Figure \ref{fig:ADXL362_functional}. 
+Most MEMS based sensors must be bonded together with an IC for integration in larger electronic systems. The MEMS element itself is just a transducer, converting some physical parameter (i.e. motion, sound, pressure) into an electrical signal. Data converters, amplifiers and signal conditioning is required to be able to make use of the signal from the transducer, which requires additional logic on an IC. A typical functional block diagram of a MEMS accelerometer can be viewed in Figure \ref{fig:ADXL362_functional}. 
 
 \begin{figure}[h]
 \centering
@@ -159,7 +159,7 @@ MEMS and ICs can be integrated together in two separate fashions. The most commo
 
 \subsection{MEMS Accelerometer Parameters}
 
-This section gives an overview, as well as an explanation, of the most common characteristics one should look for when selecting an accelerometer.
+This section gives an overview, as well as an explanation, of the most common characteristics one should look for when selecting a MEMS accelerometer for an embedded application.
 
 \subsubsection{Accelerometer Interface}
 
@@ -170,7 +170,7 @@ Digital accelerometers typically use a serial communication interface like SPI o
 From a power perspective, it is worth noting that SPI is a more efficient communication interface than I2C. This is because SPI is full-duplex and generally operates at a higher clock frequency than I2C, which means that more data can be transmitted in less time. 
 
 \subsubsection{Number of axes}
-MEMS Accelerometers are able to measure acceleration along either one, two or three axes (x,y and z). Two axes (x and y) are usually sufficient for most applications, and are therefore the most common type. 3-axis accelerometers are however becoming more and more popular. Mainly because three axes are very useful for applications such as quad-copters, smart phones and game controllers.
+MEMS accelerometers are able to measure acceleration along either one, two or three axes (x,y and z). Two axes (x and y) are usually sufficient for most applications, and are therefore the most common type. 3-axis accelerometers are however becoming more and more popular. Mainly because three axes are very useful for applications such as quad-copters, smart phones and game controllers.
 
 \subsubsection{Measurement range}
 Measurement range, sometimes called swing level, is defined as the level of acceleration that is supported by the sensor’s output signal specifications \cite{analog_accel_guide}. This level is listed as a number $n$ times the earth’s gravity (i.e. $\pm$1g , $\pm$2g etc.). This number is an upper limit for the accurate measurement range of the part. For example, if the part is rated with a measurement range of $\pm$3g, it means that the part can measure the acceleration accurately up to an acceleration of $\pm$3g.  If the part is accelerated above this limit, the output might rail or be distorted at the output.
@@ -201,7 +201,7 @@ N_{rms}=\sqrt{PSD \cdot BW}
 \label{eq:rms_psd_bw}
 \end{equation}
 
-The PSD noise value that is listed in the component datasheets is actually the square root PSD from the derivation in Equation \ref{eq:rms_psd_bw}, which in turn gives us Equation \ref{eq:rms_psd_bw_2}.
+The PSD noise value that is listed in the component datasheets is usually listed as the square root PSD from the derivation in Equation \ref{eq:rms_psd_bw}, which in turn gives us Equation \ref{eq:rms_psd_bw_2}.
 
 \begin{equation}
 N_{rms}=PSD_{datasheet} \cdot \sqrt{BW}
