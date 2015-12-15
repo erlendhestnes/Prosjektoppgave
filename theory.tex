@@ -1,15 +1,15 @@
 \chapter{Background Theory}
 \label{chap:theory}
 
-To understand the rest of this thesis, some basic knowledge about low-power design, accelerometers in general and microelectromechanical systems (MEMS) are required. This chapter presents an overview of these topics. The presented theory in this chapter is regarded as well-established, and is covered in several books and papers.
+To understand the rest of this thesis, some basic knowledge about low-power design, accelerometers in general and microelectromechanical systems (MEMS) are required. This chapter presents an overview of these topics. The theory presented in this chapter should be regarded as well-established, and is covered in several books and papers.
 
 It is assumed that the reader has a good understanding of embedded systems, as well as some knowledge of basic physical principles. 
 
-\section{Low Power Design}
+\section{Low power design}
 
-A successful realization of the IoT requires devices that can operate their entire lifespan on a tiny coin cell battery. A battery is basically an energy container, and for non-rechargeable batteries this energy is a limited resource. Power is the rate at which we consume energy, which means that reducing the power consumption translates into longer battery life \cite[~p.3]{holberg06}. The following section presents the two main contributors to power consumption in a modern CMOS circuit. 
+A successful realization of the IoT requires devices that can operate their entire lifespan on a very small battery. A battery is basically an energy container, and for non-rechargeable batteries this energy is a limited resource. Power is the rate at which we consume energy, which means that reducing the power consumption translates into longer battery life \cite[~p.3]{holberg06}. The following section presents the two main contributors to power consumption in a modern CMOS circuit. 
 
-\subsection{Power In CMOS}
+\subsection{Power in CMOS}
 \label{sec:cmos_power}
 
 The power consumption in CMOS circuitry can in general be divided into two different domains, static and dynamic power consumption. Static power consumption ($P_{static}$) comes from leakage current in the transistor, which is a result of reverse-bias leakage between diffused regions and the
@@ -29,13 +29,13 @@ P_{dynamic} = P_{transient} + P_{capacitive} = (C_L + C) \cdot V_{ss}^{2} \cdot 
 
 From Equation \ref{eq:p_dynamic} one can see that the dynamic power consumption is proportional to the frequency. This means that a higher performance generally leads to a higher power consumption. Another important aspect to note, is that the supply voltage is present both in the static and dynamic power consumption of CMOS circuits. Reducing the voltage is therefore very important when it comes to reducing the overall power consumption in a CMOS circuit.
 
-\subsection{Power Saving Peripherals}
+\subsection{Power saving peripherals}
 
 Information is always represented as states of variables in a physical system. Energy is consumed when changing or preserving such a state. In order to save energy, one therefore needs reduce the amount of information being processed. Which further implies that in order to save power, one needs to reduce the rate of information processing \cite{sarpeshkar12}.
 
 Modern microcontrollers feature several advanced peripherals which can be utilized to do certain operations more efficient, thereby saving power. In the following sections we are going to look at some of these peripherals.
 
-\subsubsection{DMAC - Direct Memory Access Controller}
+\subsubsection{DMAC - Direct memory access controller}
 
 A Direct Memory Access Controller (DMAC) is basically a peripheral device that can be configured to move data from one location in memory to another. Since peripheral devices almost always are memory mapped in a microcontroller, a DMAC is usually also able to transfer data from and to peripherals as well. 
 
@@ -45,15 +45,15 @@ Direct Memory Access is primarily used as a technique to offload the CPU for lar
 
 An event system enables different peripherals in the microcontroller to interact autonomously with each other by using tasks and events. By using such a system one is able to let peripherals communicate with each other without involving the CPU. This can be exploited to do certain operations while the CPU is sleeping, thereby saving a lot of power.
 
-\subsubsection{Clock Gating}
+\subsubsection{Clock gating}
 
 A clock gating scheme is all about turning off the clock for the unused domains of the chip. Clock gating effectively removes the dynamic power consumption from the gated domain, which can be seen from Equation \ref{eq:p_dynamic}. The static power consumption is however still present, as voltage is still applied to the gated domain. Clock gating can for example be very beneficial for volatile memory (such as SRAM), as the user can reduce power consumption while still maintaining data in memory.
 
-\subsubsection{Power Gating}
+\subsubsection{Power gating}
 
 Power gating is about completely turning off the voltage to unused blocks of the system, thereby removing both static and dynamic power consumption. Modern microcontrollers often have the ability to power gate SRAM blocks, giving the user the option to trade power for RAM or vice versa. It is also common to power gate peripherals that are not used for the application.
 
-\subsubsection{Power Modes}
+\subsubsection{Power modes}
 
 Both clock gating and power gating are usually incorporated into different power modes. Some of these modes may offer a complete shutdown of the entire circuit, while others enables the user to shut down sections or peripherals that are not in use. The advantage of having multiple power modes is the flexibility it provides to shut down any part of the microcontroller that is not absolutely necessary to function at hand \cite[~p.4]{holberg06}.  
 
@@ -63,7 +63,7 @@ Both clock gating and power gating are usually incorporated into different power
 
 %A battery will always run out of power, no matter how little current the system draws. So to be able to make a system that can continue indefinitely, one need to be able to have an infinite power source. Unfortunately, this does not exist. There is however a lot of research going into developing solutions that can turn energy from our surroundings into electrical energy. The principal is called energy harvesting, and it is truly a term that goes hand in hand with the IoT movement. Energy can be harvested from vibrations, sunlight, heat and a lot of other sources. A product that can implement one or more of these energy harvesting techniques has the potential to run indefinitely. Energy harvesting is something that has existed for a long time, but it is only with today's ultra low power components that it is actually possible to use this energy to power our devices.
 
-\section{Accelerometers - Working Principle} \label{sec:accel_working_principle}
+\section{Accelerometers - Working principle} \label{sec:accel_working_principle}
 
 Acceleration is defined as the rate of change in velocity with respect to time. It is given by a vector with both magnitude and direction relative to a reference frame. The SI units are length divided by time squared \cite{elert98}.
 
@@ -85,27 +85,27 @@ The mechanical noise in an accelerometer is usually specified by the power spect
 \label{eq:noise_spectral_density}
 \end{equation}
 
-\section{Microelectromechanical Systems (MEMS)}
+\section{Microelectromechanical systems (MEMS)}
 
 Microelectromechanical Systems (MEMS) are embedded systems involving one or many micromachined components or structures \cite[p.~3]{maluf04}. The technique is used for a vast number of applications ranging from accelerometers and gyroscopes to fluid nozzles on an inkjet printer.
 
-\subsection{MEMS Accelerometers}
+\subsection{MEMS accelerometers}
 
 The basic working principles of an accelerometer, described in section \ref{sec:accel_working_principle}, also applies for all types of MEMS accelerometers. The different MEMS accelerometers do however differ in the way that they sense the displacement of the inertial mass. One of the most common methods involve sensing the change in capacitance when the inertial mass is displaced, then converting it into an amplified output voltage. Another method involves sensing the internal stress in the spring by using piezoresistors. One also see solutions were the spring is replaced with a piezoelectric element, providing a voltage in direct proportion to the displacement itself.
 
 The first micromachined accelerometer was demonstrated at Stanford University in 1979. However, it took nearly 15 years for the technology to become accepted into mainstream products \cite[p.~8]{maluf04}. The automotive industry has undoubtedly been a big contributor for the technology, as accelerometers has an apparent application in detecting crashes for airbag deployment systems. MEMS accelerometers has in recent years also found its way into other applications, such as smart phones, quad-copters and game controllers. 
 
-\subsection{MEMS Processing Techniques}
+\subsection{MEMS processing techniques}
 
 The following sections presents the most common processing techniques for MEMS elements.  
 
-\subsubsection{Surface Micromachining}
+\subsubsection{Surface micromachining}
 
 Surface micromachining is based on patterning deposited thin film materials on top of a substrate wafer \cite[p.~5]{kaajakari09}. The production technique first appeared in the 1980s, and was primarily used as a low cost alternative to accelerometers for the automotive industry \cite[p.~101]{maluf04}. However, recent improvements in the production technique has made it possible to use the technique for other sensors such as pressure sensors, gyroscopes and microphones. 
 
 The surface micromachining process bear a close resemblance to the traditional integrated circuit (IC) manufacturing process, which is also based on processing thin films on a silicon wafer. In fact, the processes are so close that a retired IC manufacturing plant often are converted into a MEMS fabrication plant, as MEMS does not require the latest in fabrication technology \cite[p.~4]{kaajakari09}. The similarities between IC manufacturing and surface micromachined MEMS has several advantages. It is for instance relatively easy to integrate MEMS architectures together with IC to make a single-chip solution, which often leads to better performance and reduced packing-cost \cite{mcube_fact_sheet}. 
 
-\subsubsection{Surface Micromachined Accelerometers}
+\subsubsection{Surface micromachined accelerometers}
 
 Surface micromachined accelerometers incorporates a comb-like structure, as depicted in Figure \ref{fig:surface_micromachined}. The primary axis is located in the plane of the die, and is often referred to as an x-axis or y-axis. Two sets of electrodes are anchored down in the substrate. These two electrodes are interlaced with a third set connected to the inertial mass. This mass is being suspended over the surface by means of two long beams, acting as a suspension spring. Thereby, it is free to move about as acceleration is applied along the primary axis. When the inertial mass is displaced due to an acceleration, it is causing the capacitance to change between the fingers of the comb-like structure. The change in capacitance is typically very small, in the order of 100 $\si{\femto\farad}$ \cite[p.~101]{maluf04}. To mitigate this problem, several sensing fingers are often combined in parallel to increase the overall capacitance.
 
@@ -116,13 +116,13 @@ Surface micromachined accelerometers incorporates a comb-like structure, as depi
 \label{fig:surface_micromachined}
 \end{figure}
 
-\subsubsection{Bulk Micromachining}
+\subsubsection{Bulk micromachining}
 
 Bulk micromachining defines structures by selectively etching. This makes it possible to etch much thicker structures when being compared to the surface micromachining process. A typical thickness of bulk micromachined structure is between 500$\si{\micro\meter}$-700$\si{\micro\meter}$, which is about a 100 times the typical thickness of a surface micromachined structure \cite[p.~7]{kaajakari09}. A thicker structure means more mass, which is very beneficial in terms of reducing the noise, which can be seen from Equation \ref{eq:noise_spectral_density}. Bulk micromachined structures can also be made of a single-crystal silicon as opposed to thin film materials in surface micromachined structures. This is very beneficial, since these materials are very predictable and stable. Bulk micromachined accelerometers either use piezoresistive elements or capacative sensing to detect the displacement of the inertial mass \cite[p.~7]{kaajakari09}.
 
 Pressure sensors and accelerometers were the first commercial products that utilized the bulk micromachining technique. These devices have been very successful, as 90\% of all sold pressure sensors utilize this technique. The production process is however more complicated and expensive than surface micromachining, and has therefore lost market shares in the recent years \cite[p.~7]{kaajakari09}.
 
-\subsubsection{Piezoresistive Bulk Micromachining Accelerometer}
+\subsubsection{Piezoresistive bulk micromachined accelerometers}
 
 Electrical resistance changes due to mechanical stress. This effect occurs in all materials and it is called the piezoresistive effect \cite[p.~73]{kaajakari09}. For an accelerometer of this type, piezoresistive springs are used to sense the displacement of the inertial mass. In general, the sensing technique offers two advantages. The resistance measurement circuitry is very simple to implement compared to that of capacitive sensors. The second is that piezoresistors are inherently shielded structures, so no hermetic packaging is required. However, piezoresistive sensing suffers from noise, as the elements themselves has a large temperature dependency, and they also consumes a significant amount of power. Because of this, sensors with this sensing technique has lost market share to capacitive sensors.
 
@@ -133,7 +133,7 @@ Electrical resistance changes due to mechanical stress. This effect occurs in al
 \label{fig:piezoresistive_accel}
 \end{figure}
 
-\subsubsection{Capacitive Bulk Micromachining Accelerometer}
+\subsubsection{Capacitive bulk micromachined accelerometers}
 
 A capacitive bulk micromachined accelerometer measures the differential change in capacitance when the inertial mass is displaced. Capacitive sensors provides an excellent noise performance and low power consumption \cite[p.~91]{kaajakari09}. One of the main challenges with capacitive sensors is to accurately measure the change in capacitance, as these changes themselves are extremely small. 
 
@@ -144,7 +144,7 @@ A capacitive bulk micromachined accelerometer measures the differential change i
 \label{fig:bulk_micromachined}
 \end{figure}
 
-\subsection{Integrating MEMS and ICs}
+\subsection{Integrating MEMS and IC's}
 
 Most MEMS based sensors must be bonded together with an IC for integration in larger electronic systems. The MEMS element itself is just a transducer, converting some physical parameter (i.e. motion, sound, pressure) into an electrical signal. Data converters, amplifiers and signal conditioning is required to be able to make use of the signal from the transducer, which requires additional logic on an IC. A typical functional block diagram of a MEMS accelerometer can be viewed in Figure \ref{fig:ADXL362_functional}. 
 
@@ -155,13 +155,13 @@ Most MEMS based sensors must be bonded together with an IC for integration in la
 \label{fig:ADXL362_functional}
 \end{figure}
 
-MEMS and ICs can be integrated together in two separate fashions. The most common approach is to manufacture MEMS and ICs on separate substrates using their dedicated production processes respectively, and then bond them together in the final system. This approach is typically referred to as a multi-chip solution or a system-in-package (SiP), depending on whether the chips are stacked horizontally or vertically. In the other integration approach, MEMS and ICs are manufactured on the same substrate, using consecutive or interlaced processing schemes. This approach is often referred to a system-on-chip (SoC) solution \cite{fischer15}. 
+MEMS and IC's can be integrated together in two separate fashions. The most common approach is to manufacture MEMS and IC's on separate substrates using their dedicated production processes respectively, and then bond them together in the final system. This approach is typically referred to as a multi-chip solution or a system-in-package (SiP), depending on whether the chips are stacked horizontally or vertically. In the other integration approach, MEMS and IC's are manufactured on the same substrate, using consecutive or interlaced processing schemes. This approach is often referred to a system-on-chip (SoC) solution \cite{fischer15}. 
 
-\subsection{MEMS Accelerometer Parameters}
+\subsection{MEMS accelerometer parameters}
 
 This section gives an overview, as well as an explanation, of the most common characteristics one should look for when selecting a MEMS accelerometer for an embedded application.
 
-\subsubsection{Accelerometer Interface}
+\subsubsection{Accelerometer interface}
 
 Primarily one differentiates between two interface types when it comes to accelerometers, analog and digital. Analog accelerometers have an output that is a continuous voltage proportional to the acceleration. An analog accelerometer is therefore best suited for a completely analog circuit. An analog to digital converter (ADC) is a required peripheral for a microcontroller to make use of such a sensor in a digital system.
 
@@ -208,7 +208,7 @@ N_{rms}=PSD_{datasheet} \cdot \sqrt{BW}
 \label{eq:rms_psd_bw_2}
 \end{equation}
 
-\subsubsection{Digital Resolution}
+\subsubsection{Digital resolution}
 
 An accelerometers digital resolution is normally specified as the number of bits in the ADC. The devices that are available today typically range between 12 and 16-bits. However, this number might sometimes be misleading. Every MEMS accelerometer suffers from system noise to a certain extent, which in turn will limit the number of effective bits in the ADC \cite[~p.3]{freescale_accel_terminology}. In other words, it does not help to have a 16-bit ADC if four of the lower bits are full of noise. The number of effective bits (ENOB) is possible to calculate if the system noise is specified in the datasheet. One first need to calculate the system noise for a specific measurement range and bandwidth. This can be done by using Equation \ref{eq:system_noise} together with Equation \ref{eq:rms_psd_bw_2}. A measurement range of $\pm$2g (4g in total) is assumed in Equation \ref{eq:system_noise}. By combining Equation \ref{eq:effective_bits} with Equation \ref{eq:system_noise} one is able to calculate the number of effective bits. 
 
