@@ -213,11 +213,11 @@ N_{rms}=PSD_{datasheet} \cdot \sqrt{BW}
 An accelerometers digital resolution is normally specified as the number of bits in the ADC. The devices that are available today typically range between 12 and 16-bits. However, this number might sometimes be misleading. Every MEMS accelerometer suffers from system noise to a certain extent, which in turn will limit the number of effective bits in the ADC \cite[~p.3]{freescale_accel_terminology}. In other words, it does not help to have a 16-bit ADC if four of the lower bits are full of noise. The number of effective bits (ENOB) is possible to calculate if the system noise is specified in the datasheet. One first need to calculate the system noise for a specific measurement range and bandwidth. This can be done by using Equation \ref{eq:system_noise} together with Equation \ref{eq:rms_psd_bw_2}. A measurement range of $\pm$2g (4g in total) is assumed in Equation \ref{eq:system_noise}. By combining Equation \ref{eq:effective_bits} with Equation \ref{eq:system_noise} one is able to calculate the number of effective bits. 
 
 \begin{equation}
-SND(db) = 20\log{\frac{\frac{4g}{2\sqrt{2}}}{N_{rms}}}
+SND(dB) = 20\log{\frac{\frac{4g}{2\sqrt{2}}}{N_{rms}}}
 \label{eq:system_noise}
 \end{equation}
 
 \begin{equation}
-ENOB = \frac{SND(db)-1.76}{6.02}
+ENOB = \frac{SND(dB)-1.76}{6.02}
 \label{eq:effective_bits}
 \end{equation}

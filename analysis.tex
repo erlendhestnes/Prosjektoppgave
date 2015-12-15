@@ -3,11 +3,11 @@
 
 This chapter presents a thorough analysis of the accelerometers presented in Chapter \ref{chap:overview}. The analysis focuses on finding the accelerometer that gives the best trade-off in terms of functionality and power consumption, with a slightly larger emphasis on the latter. The chosen accelerometer will be used for the custom reference PCB presented in Chapter \ref{chap:reference}.
 
-\section{Important Criteria}
+\section{Important criteria}
 
-In almost any accelerometer based application, the accelerometer will only be active for a fraction of the time \cite{moldsvor15}. This means that the power requirements for the inactive period of the accelerometer should be emphasized when selecting a component for a low power system, as it is going to spend most of its time in this state. This may be seen as an evident observation, but we will soon see that there are other considerations that also need to be taken into consideration when selecting a component for an embedded system.
+In almost any accelerometer based application, the accelerometer will only be active for a fraction of the time \cite{moldsvor15}. This means that the power requirements for the inactive period of the accelerometer should be emphasized when selecting a component for a low power system, as it is going to spend most of its time in this state. This may be seen as an evident observation, but we will soon see that there are other considerations that also need to be taken into account when selecting an accelerometer for an embedded system.
 
-\subsection{Shutdown Power}
+\subsection{Shutdown power}
 
 Lets say that the accelerometer is going to be used in an application where it is awoken by an external trigger. For instance, the accelerometer is only turned on when the user is entering a certain smart phone application that requires the accelerometer for gesture control. For such an application it is most beneficial to select a component with a low shutdown power, as the component is going to spend most of its time in a powered-down state. In this state the accelerometer it power gated and can therefore do nothing useful. Still, all devices consume a small amount of current in this state due to leakage from the power gating mechanism.   
 
@@ -64,7 +64,7 @@ From the comparison in Table \ref{tab:accel_comparison} from Chapter \ref{chap:o
     \end{semilogyaxis}
 \end{tikzpicture}
 
-\subsection{Wake-up Power}
+\subsection{Wake-up power}
 
 As previously mentioned, shutdown power is necessary to take into consideration if the accelerometer is going to be awoken by an external trigger. However, it might not be relevant at all for other applications. A more common use-case for an ultra low power accelerometer is namely to use the device itself as the trigger. The accelerometer then becomes responsible to wake-up the rest of the system when motion is detected. For such a configuration, we would ideally want the accelerometer to take measurements only when movement is detected. Such a scheme does however require the device to know when a motion is going to be applied, which in most applications is not feasible. A more common approach is therefore to incorporate a low power wake-up mode. In this mode the accelerometer is always sampling, but with a very low sampling rate. When a motion is detected, a sample gets above a specified threshold, the sensor can enter normal operation and begin to sample at a normal rate. 
 
@@ -139,7 +139,7 @@ All of the accelerometers in Table \ref{tab:accel_comparison}, except the MMA849
 \label{tab:fifo_size}
 \end{figure}
 
-\subsection{ODR Power}
+\subsection{ODR power}
 
 Even though the accelerometer spends most of it time in either a motion activated wake-up state or shutdown state, it is still important to take into account the power usage when sampling at normal bandwidth. This is especially important for applications that uses an ultra small power source, since these often are incapable of delivering high continuous currents \cite{coin_cell}.
 
@@ -194,9 +194,9 @@ From Table \ref{tab:accel_comparison} we see that the ADXL362 is the best device
     \end{semilogyaxis}
 \end{tikzpicture}
 
-\subsection{Precision and Noise}
+\subsection{Precision and noise}
 
-A good PSD noise and digital resolution is not that important if the accelerometer is only going to be used as a motion activated trigger. It does however become an important factor if the motion data is going to be used for the application itself. A motion controlled game controller does for instance require fairly accurate motion data to be usable. Ideally, we would like to use the same sensor for both purposes. This is often difficult, as low power consumption often comes at the cost of additional noise and less precision. Some accelerometers in this comparison do however offer several power modes, which trades increased accuracy and precision for an increase in current consumption. 
+A good PSD noise and digital resolution is not that important if the accelerometer is only going to be used as a motion activated trigger. It does however become an important factor if the motion data is going to be used for the application itself. A motion controlled joystick does for instance require fairly accurate motion data to be usable. Ideally, we would like to use the same sensor for both purposes. This is often difficult, as low power consumption often comes at the cost of additional noise and less precision. Some accelerometers in this comparison do however offer several power modes, which trades increased accuracy and precision for an increase in current consumption. 
 
 The KX123 fro Kionix is the most precise device in this comparison, with a resolution of 16-bit and PSD noise of only 106$\si{\micro}$g/$\sqrt{Hz}$. The KX123 also has the highest output data rate of the compared accelerometers. The next best device when it comes to noise and resolution is the LIS3DH from STMicroelectronics. The LIS3DH has the same resolution as the KX123, but over twice the PSD. The third place goes to the MC3610 with a resolution of 14-bit and best spectral noise of 204$\si{\micro}$g/$\sqrt{Hz}$. Table \ref{tab:psd_resolution} shows the best achievable PSD noise at 100Hz ODR.  
 
@@ -247,7 +247,7 @@ The KX123 fro Kionix is the most precise device in this comparison, with a resol
     \end{axis}
 \end{tikzpicture}
 
-\section{Reference Board Requirements}
+\section{Reference board requirements}
 
 The requirements for any embedded sensor is highly dependent on which application it is going to be used for. It is therefore important to properly define the application requirements before selecting a sensor for a design. The bullet points below reaffirms the hard requirements for choosing an accelerometer for the reference board. 
 
@@ -259,10 +259,15 @@ The requirements for any embedded sensor is highly dependent on which applicatio
 \item The accelerometer must have at least one interrupt pin. It should be possible to configure this pin to generate an interrupt when a specified motion threshold is breached.
 \end{itemize}
 
-\section{Choosing an Accelerometer}
+\section{Choosing an accelerometer}
 
-The reference board requirements rules out the MMA8491Q from Freescale Semiconductor. The device has only I2C and requires a supply voltage greater than 1.95V for functional operation. The device does not have a FIFO, which also limits the possibility of autonomous operation. The device does on the other hand have the lowest shutdown current, and could therefore be a very good option for a different application where the accelerometer is usually turned off. 
+The reference board requirements presented in the above section rules out the MMA8491Q from Freescale Semiconductor. The device has only I2C and requires a supply voltage greater than 1.95V for functional operation. The device does not have a FIFO, which also limits the possibility of autonomous operation. The device does on the other hand have the lowest shutdown current, and could therefore be a good option for a different application where the accelerometer is usually turned off. 
 
-The four accelerometers we are left with can be further divided into two sub-categories. The first category consists of the ADXL362 and the MC3610, whereas the second category consists of the LIS3DH and the KX123. The first category devices focuses on ultra power consumption above anything else, while the second category devices have a more abundant focus on precision. The low power requirement is stronger than the precision requirement for the reference board, which means that the second category devices can be ruled out as well. We are then left with the ADXL362 and MC3610. When comparing these devices, it is clear that the ADXL362 is the best device when it comes to overall power consumption. It uses half the power of the MC3610 both in wake-up mode and sampling mode. This is especially important, as these figures are the most important criteria for the reference board. The MC3610 does on the other hand have better digital resolution and a larger number of measurement ranges than the ADXL362, but this is again seen as less important than power consumption. However, what truly makes the biggest difference between the two devices is the FIFO. While the ADXL362 is able to hold 512 12-bit samples, the MC3610 is only able to hold 32 12-bit samples.
+The four accelerometers we are left with can be further divided into two sub-categories. The first category consists of the ADXL362 and the MC3610, whereas the second category consists of the LIS3DH and the KX123. The first category devices focuses on ultra power consumption above anything else, which can be seen from Figure \ref{tab:shutdown_current}, \ref{tab:wake_current} and \ref{tab:odr_current}.The second category devices have a more abundant focus on precision, as seen from Figure \ref{tab:psd_resolution}. That being said, both the ADXL362 and MC3610 are able to improve their precision by using dedicated modes that trades a better PSD for an increase in power consumption. The ADXL362 is able to achieve a PSD noise of 250$\si{\micro}$g/$\sqrt{Hz}$ in precision mode, while the MC3610 is able to achieve a PSD noise of 204$\si{\micro}$g/$\sqrt{Hz}$ in its best precision mode. From this, it is quite interesting to see that ADXL362 is able to achieve a PSD noise that is comparable to the LIS3DH, while only using almost half the current. The LIS3DH does on the other hand have a higher digital resolution, and the ability to sample at a much higher frequency. The MC3610, in its best precision mode, beats the LIS3DH when comparing PSD noise. The MC3610 does however consume more current, but only if the FIFO is enabled. 
 
-The ADXL362 is also a highly configurable device. By using different modes, it is able to trade an increased power consumption for a better precision. In its precision mode, it has PSD noise of 250$\si{\micro}$g/$\sqrt{Hz}$, which is not far from the LIS3DH. This configurable makes the ADXL362 quite versatile for a broad range of IoT applications.
+The ability to switch between different power modes, makes both the ADXL362 and the MC3610 quite versatile. 
+This configurability makes the ADXL362 quite versatile for a broad range of different IoT applications.
+
+The low power requirement is stronger than the precision requirement for the reference board, which means that the second category devices can be ruled out as well. We are then left with the ADXL362 and MC3610. When comparing these devices, it is clear that the ADXL362 is the best device when it comes to overall power consumption. It uses half the power of the MC3610 both in wake-up mode and sampling mode. This is especially important, as these figures are the most important criteria for the reference board. The MC3610 does on the other hand have better digital resolution of 14-bit and two additional measurement ranges. However, what truly makes the biggest difference between the two devices is the FIFO. While the ADXL362 is able to hold 512 12-bit samples, the MC3610 is only able to hold 32 12-bit samples. The FIFO in the MC3610 does also consume a significant amount of power when in use. As previously stated, a large FIFO enables the accelerometer to work autonomously for a longer period of time. It also enables more data to be transferred with less overhead, as large bulk transfers are more cycle efficient than small transfers. Both of these factors contributes to a lower power consumption. 
+
+The ADXL362 was therefore chosen to be used for the reference board presented in Chapter \ref{chap:reference}. Schematic and 3D-renders for this board can viewed in Appendix \ref{chap:appendix_a}.
