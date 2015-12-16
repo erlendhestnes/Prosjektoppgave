@@ -1,20 +1,20 @@
 \chapter{Accelerometer Overview}
 \label{chap:overview}
 
-This chapter presents an overview of five of the most low power, consumer grade, MEMS accelerometers that are currently available on the market.
+This chapter presents an overview of five of the most low power MEMS accelerometers that are commercially available on the market.
 
 \section{Methodology}
 \label{sec:methodology}
 
 The accelerometers presented in this chapter has been selected after carefully looking through the product portfolio of every semiconductor company that provides consumer grade MEMS accelerometers. These companies were found by inspecting the vendor list from well-established component suppliers like Digi-Key, Farnell and Mouser Electronics. 
 
-It is quite common for semiconductor companies to have a large set of product families, in order to support a broad range of applications. Some search constraints was therefore necessary in order to limit the number of comparable devices. The search was therefore confined to only look at accelerometers with a shutdown current of less than 1$\si{\micro\ampere}$ and a ODR current of less than 500$\si{\nano\ampere}$/Hz. In addition to this, the search was further constrained by only looking at 3-axis devices (X, Y and Z) with a digital interface of either SPI or I2C.
+It is common for semiconductor companies to have a large set of product families, in order to support a broad range of applications. Some search constraints was therefore necessary in order to limit the number of comparable devices. The search was therefore confined to only look at accelerometers with a shutdown current of less than 1$\si{\micro\ampere}$ and a ODR current of less than 500$\si{\nano\ampere}$/Hz. These devices are by some vendors characterized as being ultra-low power. In addition to the power constraint, the search was further narrowed by only looking at 3-axis devices (X, Y and Z) with a digital interface of either SPI or I2C.
 
 \newpage
 
 \section{Comparison}
 
-Based on the constraints presented in Section \ref{sec:methodology}, five accelerometers from five different semiconductor vendors were selected. These devices, along with their respective specifications, are presented in Table \ref{tab:accel_comparison}. The figures are gathered from the datasheets of each individual component. All of numbers presented in Table \ref{tab:accel_comparison} denotes typical values, unless stated otherwise. 
+Based on the constraints presented in Section \ref{sec:methodology}, five accelerometers from five different semiconductor vendors were selected. These devices, along with their respective specifications, are presented in Table \ref{tab:accel_comparison}. The figures are gathered from the datasheets of each individual component. All of the numbers presented in Table \ref{tab:accel_comparison} denotes typical values, unless stated otherwise. 
 
 
 \begin{figure}[h]
@@ -62,21 +62,21 @@ Based on the constraints presented in Section \ref{sec:methodology}, five accele
     
     \end{tabular}
     }
-    \caption{Comparison of five ultra-low power MEMS accelerometers that are currently available on the market.}
+    \caption{Comparison of five of the most low power MEMS accelerometers available.}
     \label{tab:accel_comparison}
 \end{center}
 \end{figure}
 
 \footnotetext[1]{Specified at 400nA/Hz in datasheet}
-\footnotetext[2]{Normal mode/Ultra low noise mode}
+\footnotetext[2]{Normal mode/ultra-low noise mode}
 \footnotetext[3]{Normal mode/Low power mode}
-\footnotetext[4]{Ultra low power mode/Low power mode/Precision mode}
+\footnotetext[4]{ultra-low power mode/Low power mode/Precision mode}
 \footnotetext[5]{Low power mode/High resolution mode}
-\footnotetext[6]{$PSD = Nrms / 4*sqrt(BW)$}
+\footnotetext[6]{Calculated by using Equation \ref{eq6}}
 
 \subsection{General comments}
 
-All of the listed accelerometers in Table \ref{tab:accel_comparison} uses the surface micromachined fabrication process. As a result of this, the PSD noise for each accelerometer is in the same order of magnitude. Had one of the accelerometers been produced using the bulk micromachining technique, the PSD noise would most likely be decades less. As seen in Chapter \ref{chap:theory}, bulk micromachined accelerometers have a much larger mass than surface micromachined accelerometers. This would have caused a significant decrease in PSD noise, which can easily be seen from Equation \ref{eq:noise_spectral_density}.
+All of the listed accelerometers in Table \ref{tab:accel_comparison} uses the surface micromachined fabrication process, which can be seen from \cite{ADXL362, MMA8491Q, MC3610, LIS3DH, KX123}. As a result of this, the PSD noise for each accelerometer is in the same order of magnitude. Had one of the accelerometers been produced using the bulk micromachining technique, the PSD noise would most likely be decades less. As seen in Chapter \ref{chap:theory}, bulk micromachined accelerometers have a much larger mass than surface micromachined accelerometers. This would have caused a significant decrease in PSD noise, which can easily be seen from Equation \ref{eq:noise_spectral_density}.
 
 The effective number of bits (ENOB) was calculated for every accelerometer, as seen in Table \ref{tab:accel_comparison}. This was done by using Equation \ref{eq:effective_bits} from Chapter \ref{chap:theory}. It is worth pointing out that the digital resolution for each accelerometer is less than or equal to the effective number of bits. This indicates that the MEMS manufacturers are not trying to deceive the customers by using an unnecessary high digital resolution on the embedded ADC.
 
@@ -92,7 +92,7 @@ In the motion wake-up mode the accelerometer samples at a fixed rate of 6Hz. A t
 
 The FIFO in the ADXL362 can be configured to either hold 170 sample sets of concurrent 3-axis data or 128 sample sets of concurrent 3-axis and temperature data. The FIFO has three different configuration options; oldest-save mode, stream mode and triggered mode. In oldest save-mode, the  FIFO accumulates data until it is full and then stops. Additional data is collected only when space is made available by reading samples out of the FIFO buffer. In the stream-mode, the FIFO always contains the most recent data. The oldest sample is discarded when space is needed to make room for new samples. In triggered mode, the FIFO saves samples surrounding an activity detection event \cite[p~38]{ADXL362}.
 
-From Table \ref{tab:accel_comparison} one can see that ultra-low power consumption of the ADXL362 comes at a cost. The ADXL362 has a relatively high spectral noise density, only 12-bit digital resolution and only three measurement ranges. Although, the spectral noise for the ADXL362 can be reduced by using an ultra low noise mode. This mode uses almost ten times more current, but halves the spectral noise.
+From Table \ref{tab:accel_comparison} one can see that ultra-low power consumption of the ADXL362 comes at a cost. The ADXL362 has a relatively high spectral noise density, only 12-bit digital resolution and only three measurement ranges. Although, the spectral noise for the ADXL362 can be reduced by using an ultra-low noise mode. This mode uses almost ten times more current, but halves the spectral noise.
 
 The ADXL362 has a SPI interface which can handle a bus clock frequency of 8MHz. The digital interface also supports burst read and writes in order to reduce the number of communication cycles required to configure the part and retrieve data. The FIFO is also implemented in such a way that consecutive samples can be read continuously, thereby enabling the usage of direct memory access (DMA) to read out the FIFO contents.
 
@@ -111,7 +111,7 @@ The FIFO can hold 32 samples, of which can be arranged as 10 samples for each ax
 
 The motion activated wake-up mode operates at a fixed rate of 6Hz, same as the ADXL362. A threshold value can be specified in a dedicated register, for which the device can wake from when breached. Upon wake-up, the sensor can either enter normal operation and begin to sample at full bandwidth or signal an interrupt to the host controller.
 
-The device has three power modes; ultra low power, low power and precision mode. Each mode trades increased current consumption for a better noise spectral density. At the ultra low power mode, the MC3610 is one of the best accelerometers when it comes to sampling current, consuming 6$\si{\micro\ampere}$ at 100Hz ODR. The device is also able to work at a very low supply voltage of 1.6V. However, there are some restrictions when it comes to using the component at lowest power settings. The FIFO does for instance use a lot of additional current when in use, and the spectral noise is fairly high when operating in the lowest power mode. As the ADXL362, the MC3610 also features a precision mode which trades increased current consumption for a better noise spectral density. With both FIFO and precision mode enabled, the device consumes 26$\si{\micro\ampere}$ at 100Hz ODR. 
+The device has three power modes; ultra-low power, low power and precision mode. Each mode trades increased current consumption for a better noise spectral density. At the ultra-low power mode, the MC3610 is one of the best accelerometers when it comes to sampling current, consuming 6$\si{\micro\ampere}$ at 100Hz ODR. The device is also able to work at a very low supply voltage of 1.6V. However, there are some restrictions when it comes to using the component at lowest power settings. The FIFO does for instance use a lot of additional current when in use, and the spectral noise is fairly high when operating in the lowest power mode. As the ADXL362, the MC3610 also features a precision mode which trades increased current consumption for a better noise spectral density. With both FIFO and precision mode enabled, the device consumes 26$\si{\micro\ampere}$ at 100Hz ODR. 
 
 The device has both SPI and I2C, whereas the SPI interface goes up to a speed of 2MHz, and the I2C interface up to a speed of 400kHz. The interface supports burst read for both I2C and SPI.
 

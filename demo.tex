@@ -1,7 +1,7 @@
 \chapter{Reference Board}
 \label{chap:reference}
 
-A custom printed circuit board (PCB) was created for this thesis. The board is planned to be used as development platform to showcase possible IoT applications that can be benefit from using an ultra low power accelerometer.
+A custom printed circuit board (PCB) was created for this thesis. The board is planned to be used as development platform to showcase possible IoT applications that can be benefit from using an ultra-low power accelerometer.
 
 \section{Board specification}
 
@@ -31,7 +31,7 @@ Bluetooth Low Energy (BLE) is wireless communication protocol designed by the Bl
 
 \section{Data acquisition scheme}
 
-The reference board was designed with ultra low power operation in mind. This section presents the planned data acquisition scheme for the reference board. The essence of the scheme is to only utilize low power peripherals to acquire data in such a way that the entire operation can be accomplished without using any CPU intervention  
+The reference board was designed with ultra-low power operation in mind. This section presents the planned data acquisition scheme for the reference board. The essence of the scheme is to only utilize low power peripherals to acquire data in such a way that the entire operation can be accomplished without using any CPU intervention  
 
 The theoretical configuration uses EasyDMA, PPI, GPIOTE, SPI and the radio of the nRF51, as viewed with red boxes in Figure \ref{fig:nrf51}. The Cortex-M0+ CPU core should only be used for configuration of the system, and will be sleeping during data collection. The accelerometer will act as the system power switch by utilizing a low power motion activated wake-up mode. When a motion is detected above a predefined threshold, the accelerometer will signal an interrupt to nRF51. The PPI will be configured to listen to for this interrupt and to trigger a SPI block transfer when it is detected. As data is being transferred to the SPI module, the EasyDMA can shuffle data into RAM. This data can further be broadcasted by the radio. This entire operation should be possible to do without any CPU intervention at all.
 

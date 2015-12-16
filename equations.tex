@@ -1,6 +1,6 @@
 %This is chapter 2
 %%=========================================
-\chapter[Equations, etc]{Equations, Figures, and Tables}
+\chapter[Equations]{Equations}
 %The content of this chapter will vary with the topic of your thesis. 
 %\begin{remark}
 %If you want a shorter chapter or section title to appear in the Table of Contents and in the headings of the chapter, you just include the short title in square brackets before the title of the chapter/section.
@@ -8,17 +8,7 @@
 
 %%=========================================
 \section{Equations}
-Power Spectral Density
-\begin{equation}
-F(t)=\int_0^t \exp(-\lambda x)\,dx
-\label{eq1}
-\end{equation}
-
-\begin{equation}
-N_{mech}=\frac{\sqrt{\frac{4 k_b T \omega}{m Q}}}{g}
-\label{eq1}
-\end{equation}
-
+Relationship between power spectral density (PSD) and root-mean-square (RMS) \cite{freescale_accel_terminology}.
 
 \begin{equation}
 N^{2}_{rms}=\int_0^\infty{PSD(f)df}
@@ -45,7 +35,7 @@ PSD = \frac{N_{rms}}{\sqrt{BW}}
 \label{eq6}
 \end{equation}
 
-Calculating the effective number of bits
+Calculating the effective number of bits (ENOB), from \cite{freescale_accel_terminology}.
 
 \begin{equation}
 \frac{S_{rms}}{N_{rms}} = \frac{\frac{2^n}{2\sqrt{2}}}{\frac{1}{\sqrt{12}}} = 2^n \cdot \frac{\sqrt{3}}{\sqrt{2}}
@@ -53,20 +43,20 @@ Calculating the effective number of bits
 \end{equation}
 
 \begin{equation}
-(\frac{S_{rms}}{N_{rms}})db = 20\log{2^n \cdot \frac{\sqrt{3}}{\sqrt{2}}}
-\label{eq7}
+(\frac{S_{rms}}{N_{rms}})dB = 20\log{2^n \cdot \frac{\sqrt{3}}{\sqrt{2}}}
+\label{eq8}
 \end{equation}
 
 \begin{equation}
-(\frac{S_{rms}}{N_{rms}})db = 20\log{2^n} + 20\log{1.225}
-\label{eq7}
+(\frac{S_{rms}}{N_{rms}})dB = 20\log{2^n} + 20\log{1.225}
+\label{eq9}
 \end{equation}
 
 \begin{equation}
-(\frac{S_{rms}}{N_{rms}})db = 602n + 1.76
-\label{eq7}
+(\frac{S_{rms}}{N_{rms}})dB = 602n + 1.76
+\label{eq10}
 \end{equation}
 
 \begin{equation}
-n = \frac{SND(db)-1.76}{6.02}
+ENOB = \frac{SND(dB)-1.76}{6.02}
 \end{equation}
