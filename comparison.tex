@@ -14,7 +14,7 @@ It is common for semiconductor companies to have a large set of product families
 
 \section{Comparison}
 
-Based on the constraints presented in Section \ref{sec:methodology}, five accelerometers from five different semiconductor vendors were selected. These devices, along with their respective specifications, are presented in Table \ref{tab:accel_comparison}. The figures are gathered from the datasheets of each individual component. All of the numbers presented in Table \ref{tab:accel_comparison} denotes typical values, unless stated otherwise. 
+Based on the constraints presented in Section \ref{sec:methodology}, five accelerometers from five different semiconductor vendors were selected. These devices, along with their respective specifications, are presented in Table \ref{tab:accel_comparison}. The figures are gathered from the datasheets of each individual component \cite{ADXL362, MMA8491Q, MC3610, LIS3DH, KX123}. All of the numbers presented in Table \ref{tab:accel_comparison} denotes typical values, unless stated otherwise. 
 
 
 \begin{figure}[h]
@@ -28,21 +28,21 @@ Based on the constraints presented in Section \ref{sec:methodology}, five accele
     
     \textbf{Supply Voltage} & 1.6-3.5V  & 1.95-3.6V & 1.6-3.6V & 1.71-3.6V & 1.71-3.6V \\ \hline
     
-    \textbf{Shutdown current} & 10$\si{\nano\ampere}$ ,$V_s = 2.0 V$ & 1.8$\si{\nano\ampere}$ ,$V_s = 2.8 V$ & 400$\si{\nano\ampere}$ ,$V_s = 1.8 V$ & 500$\si{\nano\ampere}$ ,$V_s = 2.5 V$ & 900$\si{\nano\ampere}$ ,$V_s = 2.5 V$ \\ \hline
+    \textbf{Shutdown current} & 10$\si{\nano\ampere}$ ,$V_{DD} = 2.0 V$ & 1.8$\si{\nano\ampere}$ ,$V_{DD} = 2.8 V$ & 400$\si{\nano\ampere}$ ,$V_{DD} = 1.8 V$ & 500$\si{\nano\ampere}$ ,$V_{DD} = 2.5 V$ & 900$\si{\nano\ampere}$ ,$V_{DD} = 2.5 V$ \\ \hline
     
     \textbf{Max ODR} & 400Hz & 800Hz & 400Hz & 5kHz & 25.6kHz \\ \hline
     
     \textbf{ODR current} & 1.8/13$\si{\micro\ampere}$ \footnote[2] & 20$\si{\micro\ampere}$ \footnote[1] & 6/9/26$\si{\micro\ampere}$, (FIFO On) \footnote[4] & 20/10$\si{\micro\ampere}$ \footnote[3] & 21$\si{\micro\ampere}$ \\
     
-    & $V_s = 2.0 V$, 100Hz ODR & $V_s = 2.8 V$, 100Hz ODR & 3/6/17 $\si{\micro\ampere}$, (FIFO Off) \footnote[4] & $V_s = 2.5 V$, 100Hz ODR  & $V_s = 2.5 V$, 100Hz ODR \\
+    & $V_{DD} = 2.0 V$, 100Hz ODR & $V_{DD} = 2.8 V$, 100Hz ODR & 3/6/17 $\si{\micro\ampere}$, (FIFO Off) \footnote[4] & $V_{DD} = 2.5 V$, 100Hz ODR  & $V_{DD} = 2.5 V$, 100Hz ODR \\
     
-    & & & $V_s = 1.8 V$, 100Hz ODR & &  \\ \hline
+    & & & $V_{DD} = 1.8 V$, 100Hz ODR & &  \\ \hline
     
     \textbf{Sensitivity} & 1mg/LSB (@ $\pm$2g) & 1mg/LSB & 0.24-125mg/LSB & 1mg/LSB (@ $\pm$2g) & 0.6mg/LSB (@ $\pm$2g)\\ \hline
 
     \textbf{Spectral Noise (X,Y)} & 550 / 250$\si{\micro}$g/$\sqrt{Hz}$ \footnote[2] & 406$\si{\micro}$g/$\sqrt{Hz}$ \footnote[6] & 560/400/204$\si{\micro}$g/$\sqrt{Hz}$ \footnote[4] & 220 / N.A. $\si{\micro}$g/$\sqrt{Hz}$ \footnote[3] & 106 $\si{\micro}$g/$\sqrt{Hz}$\\ 
     
-    & $V_s = 2.0 V$,100Hz ODR & $V_s = 2.8 V$,100Hz ODR & $V_s = 1.8 V$,100Hz ODR & $V_s = 2.5 V$,100Hz ODR & $V_s = 2.5 V$,100Hz ODR \\ \hline
+    & $V_{DD} = 2.0 V$,100Hz ODR & $V_{DD} = 2.8 V$,100Hz ODR & $V_{DD} = 1.8 V$,100Hz ODR & $V_{DD} = 2.5 V$,100Hz ODR & $V_{DD} = 2.5 V$,100Hz ODR \\ \hline
     
     \textbf{Digital Resolution} & 12-bit & 14-bit & 14-bit & 16-bit & 16-bit \\ \hline
     
@@ -72,7 +72,7 @@ Based on the constraints presented in Section \ref{sec:methodology}, five accele
 \footnotetext[3]{Normal mode/Low power mode}
 \footnotetext[4]{ultra-low power mode/Low power mode/Precision mode}
 \footnotetext[5]{Low power mode/High resolution mode}
-\footnotetext[6]{Calculated by using Equation \ref{eq6}}
+\footnotetext[6]{Calculated by using Equation \ref{eq6} in Appendix \ref{chap:equations}}
 
 \subsection{General comments}
 
@@ -80,15 +80,15 @@ All of the listed accelerometers in Table \ref{tab:accel_comparison} uses the su
 
 The effective number of bits (ENOB) was calculated for every accelerometer, as seen in Table \ref{tab:accel_comparison}. This was done by using Equation \ref{eq:effective_bits} from Chapter \ref{chap:theory}. It is worth pointing out that the digital resolution for each accelerometer is less than or equal to the effective number of bits. This indicates that the MEMS manufacturers are not trying to deceive the customers by using an unnecessary high digital resolution on the embedded ADC.
 
-From Chapter \ref{chap:theory} we know that power is the rate at which we consume energy, which means that reducing the power consumption translates into longer battery life for our devices. Power consumption is given by the product of operating voltage and current consumption. 
+From Chapter \ref{chap:theory} we know that power is the rate at which we consume energy, which means that reducing the power consumption translates into longer battery life. Power consumption is given by the product of operating voltage and current consumption. 
 
-The power characteristics of a component is usually given by the current consumption at a specific operating voltage. Which voltage level the vendor decides to test the components current consumption on can vary quite a bit, as seen from Table \ref{tab:accel_comparison}. This can easily result in some misleading figures, as a decrease in operating voltage directly reduces the current consumption and the overall power drain \cite[~p.3]{holberg06}. This means that devices that are tested at a low supply voltage will have a benefit from that in terms of having a lower current consumption. To avoid an unfair comparison between the devices, the best course of action would have been to measure the current consumption of all devices at the same operating voltage. Alternatively, test the current consumption for each device at its lowest operating voltage, as this would have given us figures for the lowest possible power consumption for each device. Both of these possibilities would require a reference board for each and every component, as well as some very precise measurement equipment to test the components with. Both of these possibilities was therefore deemed insurmountable. Fortunately, the test supply voltage is around $2V$ for each device in Table \ref{tab:accel_comparison}, which means that a direct comparison between the devices current consumption should not be to unreasonable. It is however worth noting that a direct comparison of the current consumption between two devices with a large supply voltage span might be a bit unfair.
+The power characteristics of a component is usually given by the current consumption at a specific operating voltage. Which voltage level the vendor decides to test the components current consumption on can vary quite a bit, as seen from Table \ref{tab:accel_comparison}. This can easily result in some misleading figures, as a decrease in operating voltage directly reduces the current consumption and the overall power drain \cite[~p.3]{holberg06}. To avoid an unfair comparison between the devices, the best course of action would have been to measure the current consumption of all devices at the same operating voltage. Alternatively, test the current consumption for each device at its lowest operating voltage, as this would have given us figures for the lowest possible power consumption for each device. Both of these possibilities would require a reference board for each and every component, as well as some very precise measurement equipment to test the components with. Both of these possibilities was therefore deemed insurmountable. Fortunately, the test supply voltage is around $2V$ for each device in Table \ref{tab:accel_comparison}. It is however worth noting that a direct comparison of the current consumption between two devices with a large supply voltage span might be a bit unfair.
 
 \subsection{ADXL362}
 
 The ADXL362 from Analog Devices claim to be the lowest power accelerometer in the industry, according to Analog Devices themselves \cite{analog12}. At a supply voltage of $V_s = 2.0 V$ it uses 10nA in shutdown mode and 1.8$\si{\micro\ampere}$ at a ODR of 100Hz in its lowest power mode. It also has several features, such as 270nA wake-up mode, two interrupt pins, a temperature sensor and a deep embedded FIFO that can hold 512 full resolution samples. The device can operate on a quite diverse voltage range of $1.6-3.5V$.
 
-In the motion wake-up mode the accelerometer samples at a fixed rate of 6Hz. A threshold value can be specified in a dedicated register, for which the device can wake from when breached. Upon wake-up, the sensor can either enter normal operation and begin to sample at a full bandwidth or signal an interrupt to the host controller.
+In the motion wake-up mode the accelerometer samples at a fixed rate of 6Hz. A threshold value can be specified in a dedicated register. Upon wake-up, the sensor can either enter normal operation and begin to sample at a full bandwidth or signal an interrupt to the host controller.
 
 The FIFO in the ADXL362 can be configured to either hold 170 sample sets of concurrent 3-axis data or 128 sample sets of concurrent 3-axis and temperature data. The FIFO has three different configuration options; oldest-save mode, stream mode and triggered mode. In oldest save-mode, the  FIFO accumulates data until it is full and then stops. Additional data is collected only when space is made available by reading samples out of the FIFO buffer. In the stream-mode, the FIFO always contains the most recent data. The oldest sample is discarded when space is needed to make room for new samples. In triggered mode, the FIFO saves samples surrounding an activity detection event \cite[p~38]{ADXL362}.
 
@@ -109,7 +109,7 @@ mCube is a relatively new and small MEMS manufacturer in this comparison. Yet, t
 
 The FIFO can hold 32 samples, of which can be arranged as 10 samples for each axis (X, Y and Z) or 16 samples for two axes. The FIFO sample resolution is limited to 12-bits. The FIFO has two different modes; normal mode and watermark mode. In normal mode the FIFO continues to accept new samples as long as there is space remaining in the FIFO, and stops when the FIFO is full. In watermark mode, the FIFO samples until the amount of samples in the FIFO reaches or exceeds a specified threshold level. When the limit is reached, the FIFO stops accepting new data and any additional samples are dropped.
 
-The motion activated wake-up mode operates at a fixed rate of 6Hz, same as the ADXL362. A threshold value can be specified in a dedicated register, for which the device can wake from when breached. Upon wake-up, the sensor can either enter normal operation and begin to sample at full bandwidth or signal an interrupt to the host controller.
+The motion activated wake-up mode operates at a fixed rate of 6Hz, same as the ADXL362. A threshold value can be specified in a dedicated register, for which the device can wake from when reached. Upon wake-up, the sensor can either enter normal operation and begin to sample at full bandwidth or signal an interrupt to the host controller.
 
 The device has three power modes; ultra-low power, low power and precision mode. Each mode trades increased current consumption for a better noise spectral density. At the ultra-low power mode, the MC3610 is one of the best accelerometers when it comes to sampling current, consuming 6$\si{\micro\ampere}$ at 100Hz ODR. The device is also able to work at a very low supply voltage of 1.6V. However, there are some restrictions when it comes to using the component at lowest power settings. The FIFO does for instance use a lot of additional current when in use, and the spectral noise is fairly high when operating in the lowest power mode. As the ADXL362, the MC3610 also features a precision mode which trades increased current consumption for a better noise spectral density. With both FIFO and precision mode enabled, the device consumes 26$\si{\micro\ampere}$ at 100Hz ODR. 
 

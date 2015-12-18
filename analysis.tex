@@ -16,7 +16,7 @@ An estimate for the lowest possible power consumption has been calculated for ea
 
 From the comparison in Table \ref{tab:accel_comparison} from Chapter \ref{chap:overview} we can see that the MMA8491Q from Freescale Semiconductor has the lowest shutdown current, consuming 1.8nA at a relatively high supply voltage of 2.8V. The device is able to operate down to 1.95V, which gives us an estimated power consumption of 3.51nW. Freescale do however state in their datasheet \cite[p~9]{MMA8491Q} that the current consumption figures is only evaluation data, and that it has not been tested in production. Which raises some questions whether this number can be trusted as a typical value or not. The ADXL362 from Analog Devices comes in at second place with a shutdown current consumption of 10nA at 2.0V. The device can operate as low as 1.6V, which gives an estimated power consumption of 16nW. On third place we find the MC3610 with a current consumption of 400nA at 1.8V. The MC3610 can operate down to 1.6V, which gives a power consumption estimate of 640nW. The LIS3DH and KX123 does not excel in this area, with a current consumption of 500nA and 900nA respectively. Both devices are tested at 2.5V, and both devices are able to operate down to 1.71V. This gives an estimated power consumption of 855nW for the LIS3DH and 1529nW for the KX123. Both shutdown current and estimated power consumption for each device is shown in Table \ref{tab:shutdown_current}.
 
-\begin{table}[h]
+\begin{figure}[h]
 \begin{center}
     \begin{tabular}{| l | l | l | l | l | l |}
     \hline
@@ -29,7 +29,7 @@ From the comparison in Table \ref{tab:accel_comparison} from Chapter \ref{chap:o
 \end{center}
 \caption{Shutdown current and estimated shutdown power}
 \label{tab:shutdown_current}
-\end{table}
+\end{figure}
 
 \begin{tikzpicture}
     \begin{semilogyaxis}[
@@ -82,7 +82,7 @@ From the comparison in Table \ref{tab:accel_comparison} we can see that the ADXL
      & @ 1.6V & @ 1.95V & @ 1.6V & @ 1.71 & @ 1.71 \\ \hline
     \end{tabular}
 \end{center}
-\caption{Wake-up current and estiamted wake-up power}
+\caption{Wake-up current and estimated wake-up power}
 \label{tab:wake_current}
 \end{figure}
 
@@ -132,7 +132,7 @@ All of the accelerometers in Table \ref{tab:accel_comparison}, except the MMA849
     \begin{tabular}{| l | l | l | l | l | l |}
     \hline
     Device & ADXL362 & MMA8491Q & MC3610 & LIS3DH & KX123 \\ \hline
-    FIFO Size & 500 samples & - & 32 samples & 96 samples & 1024 samples \\ \hline
+    FIFO Size & 512 samples & - & 32 samples & 96 samples & 1024 samples \\ \hline
     FIFO Resolution & 12-bit & - & 12-bit & 10-bit & 16-bit \\ \hline
     \end{tabular}
 \end{center}
@@ -268,4 +268,4 @@ The four accelerometers we are left with can be divided into two categories. The
 
 As mentioned in the reference board requirements, the chosen accelerometer is going to be used as an external trigger that wakes the rest off the system. This means that the wake-up power is going to be the most important power requirements to look for when selecting a device, as it is going to spend most of its time in this state. As we can see from Figure \ref{tab:wake_current}, the second category devices (LIS3DH and KX123) have wake-up power consumption that is over twenty times larger than the first category devices (ADXL362 and MC3610). Since the low power requirement is stronger than the precision requirement for the reference board, the second category devices can be ruled out as well. We are then left with the ADXL362 and MC3610. When comparing these devices, we can see that the ADXL362 uses nearly half the power of the MC3610 both in wake-up mode and sampling mode. The MC3610 does on the other hand have better digital resolution of 14-bit and two additional measurement ranges. However, what truly makes the biggest difference between the two devices is the FIFO. While the ADXL362 is able to hold 512 12-bit samples, the MC3610 is only able to hold 32 12-bit samples. The FIFO in the MC3610 does also consume a significant amount of power when in use. As previously stated, a large FIFO enables the accelerometer to work autonomously for a longer period of time. It also enables more data to be transferred with less overhead, as large bulk transfers are more cycle efficient than small transfers. Both of these factors contributes to a lower power consumption. 
 
-Based on the analysis presented in this section, it is apparent that the ADXL362 is the best device when it comes to overall power consumption. It is also a quite versatile device, that is able to be precise when required. The ADXL362 was therefore chosen to be used for the reference board presented in Chapter \ref{chap:reference}. Schematic and 3D-renders for this board can viewed in Appendix \ref{chap:appendix_a}.
+Based on the analysis presented in this section, it is apparent that the ADXL362 is the best device when it comes to overall power consumption. It is also a versatile device, that is able to be precise when required. The ADXL362 was therefore chosen to be used for the reference board presented in Chapter \ref{chap:reference}. Schematic and 3D-renders for this board can viewed in Appendix \ref{chap:appendix_a}.

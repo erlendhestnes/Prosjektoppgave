@@ -1,6 +1,7 @@
 %This is chapter 2
 %%=========================================
 \chapter[Equations]{Equations}
+\label{chap:equations}
 %The content of this chapter will vary with the topic of your thesis. 
 %\begin{remark}
 %If you want a shorter chapter or section title to appear in the Table of Contents and in the headings of the chapter, you just include the short title in square brackets before the title of the chapter/section.
@@ -35,6 +36,8 @@ PSD = \frac{N_{rms}}{\sqrt{BW}}
 \label{eq6}
 \end{equation}
 
+\newpage
+
 Calculating the effective number of bits (ENOB), from \cite{freescale_accel_terminology}.
 
 \begin{equation}
@@ -53,10 +56,10 @@ Calculating the effective number of bits (ENOB), from \cite{freescale_accel_term
 \end{equation}
 
 \begin{equation}
-(\frac{S_{rms}}{N_{rms}})dB = 602n + 1.76
+SNR(dB) = (\frac{S_{rms}}{N_{rms}})dB = 602n + 1.76
 \label{eq10}
 \end{equation}
 
 \begin{equation}
-ENOB = \frac{SND(dB)-1.76}{6.02}
+ENOB = n = \frac{SNR(dB)-1.76}{6.02}
 \end{equation}
