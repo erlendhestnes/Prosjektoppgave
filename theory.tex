@@ -12,7 +12,7 @@ A successful realization of the IoT requires devices that can operate their enti
 \subsection{Power in CMOS}
 \label{sec:cmos_power}
 
-The power dissipation in digital CMOS circuitry can in general be divided into two different domains, static and dynamic power consumption. Static power consumption ($P_{static}$) comes from leakage current in the transistor, which is a result of reverse-bias leakage between diffused regions and the
+The power consumption in digital CMOS circuitry can in general be divided into two different domains, static and dynamic power consumption. Static power consumption ($P_{static}$) comes from leakage current in the transistor, which is a result of reverse-bias leakage between diffused regions and the
 substrate in the transistor \cite[p.~2]{static_dynamic_power}. The static power consumption is given by the product of the leakage current ($I_{leakage}$) and the supply voltage ($V_{DD}$), as seen in Equation \ref{eq:p_static}, from \cite[p.~3]{static_dynamic_power}. 
 
 \begin{equation}
@@ -152,12 +152,12 @@ A capacitive bulk micromachined accelerometer measures the differential change i
 
 \subsection{Integrating MEMS and IC's}
 
-Most MEMS based sensors must be bonded together with an IC for integration in larger electronic systems. The MEMS element itself is just a transducer, converting some physical parameter (i.e. motion, sound, pressure) into an electrical signal. Data converters, amplifiers and signal conditioning is required to be able to make use of the signal from the transducer, which requires additional logic on an IC. A typical functional block diagram of a MEMS accelerometer can be viewed in Figure \ref{fig:ADXL362_functional}. 
+Most MEMS based sensors must be bonded together with an IC for integration in larger electronic systems \cite{fischer15}. The MEMS element itself is just a transducer, converting some physical parameter (i.e. motion, sound, pressure) into an electrical signal. Data converters, amplifiers and signal conditioning is required to be able to make use of the signal from the transducer, which requires additional logic on an IC. A typical functional block diagram of a MEMS accelerometer can be viewed in Figure \ref{fig:ADXL362_functional}. 
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.4]{fig/ADXL362_functional_block.png}
-\caption{Functional block diagram of ADXL362 from Analog Devices.}
+\caption{Functional block diagram of ADXL362 from Analog Devices \cite{ADXL362}}
 \label{fig:ADXL362_functional}
 \end{figure}
 

@@ -22,8 +22,6 @@
 \setlength{\parskip}{0em}
 \tableofcontents
 \setlength{\parskip}{1em}
-\setcounter{page}{0}
-\pagenumbering{arabic}
 \include{introduction}
 \include{theory}
 \include{comparison}
@@ -40,11 +38,12 @@
 %\include{appendix-b}
 % Include more appendices as required.
 %%=========================================
-\bibliographystyle{abbrvnat}
+\raggedright
+\bibliographystyle{unsrt}
 \addcontentsline{toc}{chapter}{\bibname}
 \bibliography{refs}  
 %%=========================================
-\include{vitae}         % Your curriculum Vitae     
+%\include{vitae}         % Your curriculum Vitae     
 %%=============================================
 
 \end{document}
